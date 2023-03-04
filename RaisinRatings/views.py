@@ -39,5 +39,5 @@ def add_movie(request):
             return redirect('movies_list')  # replace movies_list with your own view name
     else:
         form = MovieForm()
-    return render(request, 'movies/add_movie.html', {'form': form})
+    return render(request, 'RaisinRatings/add_movie.html', {'form': form})
 

@@ -10,4 +10,4 @@ class Movie(models.Model):
     main_actor = models.CharField(max_length=128)
     likes = models.IntegerField()
     username = models.CharField(max_length=128)
-    # poster = models.imageField()
+    # poster = models.imageField() #i forgor how to do this
