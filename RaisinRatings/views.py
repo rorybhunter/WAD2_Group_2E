@@ -1,6 +1,7 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from .forms import MovieForm
 # Create your views here.
+
 
 def index(request):
     # will uncomment and modifiy these to fit actual models later:
@@ -28,3 +29,15 @@ def index(request):
 
     response = render(request, 'RaisinRatings/index.html', context=context_dict)
     return response
+
+
+def add_movie(request):
+    if request.method == 'POST':
+        form = MovieForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('movies_list')  # replace movies_list with your own view name
+    else:
+        form = MovieForm()
+    return render(request, 'movies/add_movie.html', {'form': form})
+
