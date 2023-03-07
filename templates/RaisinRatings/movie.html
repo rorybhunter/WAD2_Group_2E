@@ -1,0 +1,51 @@
+{% extends 'RaisinRatings/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {{movie.title}}
+{% endblock %}
+
+{% block body_block %}
+<div>
+    
+    
+    <div>
+        <a href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
+        <a href="{% url 'RaisinRatings:like' movie.slug %}">Like</a>
+        
+        
+    </div>
+
+
+    <p>
+        <div>Number of likes: <strong>{{ likes }}</strong></div>
+        <div>Main Star: <strong>{{ movie.main_star }}</strong></div>
+        <div>Category: </div>
+        <p><div> {{movie.summary}} </div></p>
+        
+      <div>  <a href="{% url 'RaisinRatings:movies' %}">Movies</a></div>  
+    </p>
+    <div> 
+        <div>
+        <hr />
+        <div>
+                {% for r in reviews %}
+                <p>
+                    <ul> 
+                    <strong> {{ r.title }} </strong> 
+                    <div>
+                    {{r.review}}
+                    </div>
+                    </ul>
+                </p>
+           
+        </div>
+    </div>
+   
+            {% endfor %}   
+    </div>
+    
+</div>
+{% endblock %}
+
+

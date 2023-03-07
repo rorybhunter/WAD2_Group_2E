@@ -1,4 +1,6 @@
 from django.db import models
+
+from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 
@@ -35,4 +37,13 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Review(models.Model):
+    title = models.CharField(max_length=20)
+    review = models.CharField(max_length=500)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+    def __str__(self) :
+        return self.review 
 
