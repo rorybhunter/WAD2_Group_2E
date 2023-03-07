@@ -1,3 +1,6 @@
 from django.contrib import admin
-#nelle was here
+
+from RaisinRatings.models import UserProfile
 # Register your models here.
+
+admin.site.register(UserProfile)

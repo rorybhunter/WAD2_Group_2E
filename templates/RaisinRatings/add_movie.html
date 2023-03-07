@@ -17,12 +17,23 @@
             This is body_block's default content.
         {% endblock %}
         </div>
+        
         <div>
             <ul>
                 <!-- add page links here (this can become the nav bar at some point) -->
                 <li><a href="{% url 'RaisinRatings:index' %}">Index</a></li>
             </ul>
         </div>
+
+        <div>
+            {% block content %}
+                <h1>Add a Movie</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Save</button>
+                </form>
+            {% endblock %}
+        </div>
     </body>
 </html>
-
