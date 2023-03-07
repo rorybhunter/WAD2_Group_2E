@@ -1,0 +1,51 @@
+{% extends 'RaisinRatings/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Homepage
+{% endblock %}
+
+{% block body_block %}
+    <!-- 
+    <div>
+        {% if user.is_authenticated %}
+            hey {{ user.username }}!
+        {% else %}
+            you are not logged in
+        {% endif %}
+        <br />
+    </div> -->
+
+    <div>
+        <h2>Most Liked Categories</h2>
+        {% if categories %}
+            <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="">{{ category.name }}</a>
+                    <p>likes: {{ category.likes}}</p>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no categories present.</strong>
+        {% endif %}
+    </div>
+
+    <div>
+        <h2>Most Viewed Movies</h2>
+        {% if movies %}
+            <ul>
+            {% for movie in movies %}
+                <li>
+                    <a href="">{{ movie.name }}</a> 
+                    <p>likes: {{ movie.likes }}</p>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no movies present.</strong>
+        {% endif %}
+        </div>
+
+{% endblock %}
