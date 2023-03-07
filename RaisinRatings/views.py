@@ -1,5 +1,5 @@
-from RaisinRatings.forms import ReviewForm, AddMovie, UserForm, UserProfileForm, MovieForm, Category
-from RaisinRatings.models import Review, Movie
+from RaisinRatings.forms import ReviewForm, AddMovie, UserForm, UserProfileForm, MovieForm
+from RaisinRatings.models import Review, Movie, Category
 from django.urls import reverse 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
