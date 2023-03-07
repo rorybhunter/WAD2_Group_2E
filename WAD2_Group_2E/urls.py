@@ -1,5 +1,4 @@
 """WAD2_Group_2E URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
 Examples:
@@ -15,7 +14,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
+from RaisinRatings import views
 
 urlpatterns = [
+    path('', views.index, name='index'),
+    path('RaisinRatings/', include('RaisinRatings.urls')),
     path('admin/', admin.site.urls),
 ]
