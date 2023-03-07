@@ -21,8 +21,11 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL = '/media/'
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
@@ -65,9 +68,8 @@ ROOT_URLCONF = 'WAD2_Group_2E.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR, ],
+        'DIRS': [TEMPLATE_DIR,],
         'APP_DIRS': True,
-        'DIRS': [TEMPLATES_DIR,],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -130,7 +132,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [STATIC_DIR, ]
 
 # Login & Logout URLs
 LOGIN_URL = '/login/'

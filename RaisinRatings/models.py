@@ -1,5 +1,4 @@
 from django.db import models
-
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
@@ -16,6 +15,23 @@ class Movie(models.Model):
     username = models.CharField(max_length=128)
     # poster = models.imageField() #i forgor how to do this
 
+class Category(models.Model):
+    name = models.CharField(max_length=128, unique=True)
+
+    class Meta:
+        verbose_name_plural = "Categories"
+    
+    def __str__(self): 
+        return self.name
+    
+class Page(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE) 
+    title = models.CharField(max_length=128)
+    url = models.URLField()
+    views = models.IntegerField(default=0)
+    
+    def __str__(self): 
+        return self.title
 
 class UserProfile(models.Model):
     # Link User profile to User model instance.
@@ -46,4 +62,3 @@ class Review(models.Model):
 
     def __str__(self) :
         return self.review 
-

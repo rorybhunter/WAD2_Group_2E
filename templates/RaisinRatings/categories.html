@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+    <head> 
+        <title>Categories</title>
+    </head>
+
+    <body>
+        <h1>RaisinRatings</h1> 
+        <div>
+            This is the main categories page. <br />
+            <strong>{{ boldmessage }}</strong><br /> 
+        </div>
+
+
+        <div>
+            <a href="/RaisinRatings/cat_page/">Specific category</a><br />
+            <img src="{% static 'images/cd.jpeg' %}"
+            alt=""Picture of cats" />
+        </div> 
+    </body>
+</html>

@@ -1,4 +1,4 @@
-from RaisinRatings.forms import ReviewForm, AddMovie, UserForm, UserProfileForm, MovieForm
+from RaisinRatings.forms import ReviewForm, AddMovie, UserForm, UserProfileForm, MovieForm, Category
 from RaisinRatings.models import Review, Movie
 from django.urls import reverse 
 from django.shortcuts import render, redirect
@@ -139,4 +139,17 @@ def add_review(request, movie_title_slug):
     context_dict = {'form': form, 'movie': movie}
     return render(request, 'RaisinRatings/add_review.html', context=context_dict)
 
+
+def categories(request):
+    category_list = Category.objects.order_by('-likes')[:5]
+
+    context_dict = {}
+    context_dict['boldmessage'] = 'Select a category:'
+    context_dict['categories'] = category_list
+    
+    return render(request, 'RaisinRatings/categories.html', context=context_dict)
+
+def cat_page(request):
+    context_dict = {'boldmessage': 'Hmm'}
+    return render(request, 'RaisinRatings/cat_page.html', context=context_dict)
 
