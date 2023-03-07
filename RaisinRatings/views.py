@@ -1,10 +1,10 @@
-
+from RaisinRatings.forms import ReviewForm, AddMovie, UserForm, UserProfileForm, MovieForm
+from RaisinRatings.models import Review, Movie
+from django.urls import reverse 
 from django.shortcuts import render, redirect
-from .forms import MovieForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
-from django.urls import reverse
-from RaisinRatings.forms import UserForm, UserProfileForm
+
 
 
 def index(request):
@@ -35,15 +35,7 @@ def index(request):
     return response
 
 
-def add_movie(request):
-    if request.method == 'POST':
-        form = MovieForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('movies_list')  # replace movies_list with your own view name
-    else:
-        form = MovieForm()
-    return render(request, 'RaisinRatings/add_movie.html', {'form': form})
+
 
 def register(request):
     registered = False
@@ -96,3 +88,55 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'RaisinRatings/login.html')
+ 
+def add_movie(request):
+    if request.method == 'POST':
+        form = MovieForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('movies_list')  # replace movies_list with your own view name
+    else:
+        form = MovieForm()
+    return render(request, 'RaisinRatings/add_movie.html', {'form': form})
+    
+    
+def show_movie(request, movie_title_slug):
+    context_dir = {}
+    movie = Movie.objects.get(slug=movie_title_slug)
+    reviews = Review.objects.filter(movie=movie)
+    likes = movie.likes
+    context_dir['movie'] = movie
+    context_dir['reviews'] = reviews
+    context_dir['likes'] = likes
+
+    return render(request, 'RaisinRatings/movie.html', context=context_dir)
+
+def like(request, movie_title_slug):
+    movie = Movie.objects.get(slug=movie_title_slug)
+    print(movie.likes)
+    movie.likes += 1
+    movie.save()
+    print(movie.likes)
+    
+    return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+    
+    
+def add_review(request, movie_title_slug):
+    movie = Movie.objects.get(slug=movie_title_slug) 
+
+    form = ReviewForm()
+    
+    if request.method == 'POST':
+        form  = ReviewForm(request.POST)
+        if form.is_valid():
+            if movie:
+                review = form.save()
+                review.movie = movie 
+                review.save()
+            return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+        else:
+            print(form.errors)
+    context_dict = {'form': form, 'movie': movie}
+    return render(request, 'RaisinRatings/add_review.html', context=context_dict)
+
+
