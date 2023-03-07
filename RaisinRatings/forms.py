@@ -1,4 +1,5 @@
 from django import forms
+from .models import Movie
 from django.contrib.auth.models import User
 from RaisinRatings.models import UserProfile
 
@@ -14,3 +15,9 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('picture', 'user_type')
+
+
+class MovieForm(forms.ModelForm):
+    class Meta:
+        model = Movie
+        fields = ['movie_name', 'movie_id', 'category_id', 'main_actor', 'likes', 'username',]

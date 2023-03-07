@@ -1,7 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
+
+
+class Movie(models.Model):
+    movie_name = models.CharField(max_length=128, unique=True)
+    movie_id = models.IntegerField()
+    category_id = models.IntegerField()
+    main_actor = models.CharField(max_length=128)
+    likes = models.IntegerField()
+    username = models.CharField(max_length=128)
+    # poster = models.imageField() #i forgor how to do this
 
 
 class UserProfile(models.Model):
@@ -24,3 +35,4 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+

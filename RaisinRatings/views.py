@@ -1,12 +1,10 @@
+
+from django.shortcuts import render, redirect
+from .forms import MovieForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
-
-# Create your views here.
 from django.urls import reverse
-
 from RaisinRatings.forms import UserForm, UserProfileForm
-
 
 
 def index(request):
@@ -36,6 +34,16 @@ def index(request):
     response = render(request, 'RaisinRatings/index.html', context=context_dict)
     return response
 
+
+def add_movie(request):
+    if request.method == 'POST':
+        form = MovieForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('movies_list')  # replace movies_list with your own view name
+    else:
+        form = MovieForm()
+    return render(request, 'RaisinRatings/add_movie.html', {'form': form})
 
 def register(request):
     registered = False
