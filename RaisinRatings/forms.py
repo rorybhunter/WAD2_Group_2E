@@ -20,4 +20,4 @@ class UserProfileForm(forms.ModelForm):
 class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
-        fields = ['movie_name', 'movie_id', 'category_id', 'main_actor', 'likes', 'username',]
+        fields = ['name', 'category', 'main_actor', 'likes', 'poster']

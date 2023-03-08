@@ -5,7 +5,8 @@ app_name = 'RaisinRatings'
 
 urlpatterns = [
     path('',views.index, name='index'),   
-    path('add_movie/', views.add_movie, name='add_movie')
+    path('add_movie/', views.add_movie, name='add_movie'),
+    path('categories/', views.categories, name='categories'),
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login')
 ]
