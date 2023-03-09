@@ -20,10 +20,10 @@
         <h2>Most Liked Categories</h2>
         {% if categories %}
             <ul>
-            {% for category in categories %}
+            {% for c in category %}
                 <li>
-                    <a href="">{{ category.name }}</a>
-                    <p>likes: {{ category.likes}}</p>
+                    <a href="">{{ c.name }}</a>
+                    
                 </li>
             {% endfor %}
             </ul>
@@ -38,8 +38,8 @@
             <ul>
             {% for movie in movies %}
                 <li>
-                    <a href="">{{ movie.name }}</a> 
-                    <p>likes: {{ movie.likes }}</p>
+                    <p> <strong><a href="{% url 'RaisinRatings:show_movie' movie.slug %}">{{ movie.movie_name }}</a> </strong>
+                    {{ movie.likes }} likes </p>
                 </li>
             {% endfor %}
             </ul>
@@ -47,5 +47,4 @@
             <strong>There are no movies present.</strong>
         {% endif %}
         </div>
-
 {% endblock %}

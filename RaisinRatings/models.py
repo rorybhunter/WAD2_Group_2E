@@ -3,16 +3,26 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 
-# Create your models here.
-
-
 class Movie(models.Model):
-    movie_name = models.CharField(max_length=128, unique=True)
-    movie_id = models.IntegerField()
-    category_id = models.IntegerField()
-    main_actor = models.CharField(max_length=128)
-    likes = models.IntegerField()
-    username = models.CharField(max_length=128)
+    MOVIE_TITLE_MAX_LENGTH = 128
+    MAIN_ACTOR_MAX_LENGTH = 128
+    USERNAME_MAX_LENGTH = 128
+    SUMMARY_MAX_LENGTH = 500
+
+    movie_name = models.CharField(max_length=MOVIE_TITLE_MAX_LENGTH, unique=True)
+    main_actor = models.CharField(max_length=MAIN_ACTOR_MAX_LENGTH)
+    likes = models.IntegerField(default=0)
+    username = models.CharField(max_length=USERNAME_MAX_LENGTH)
+    summary = models.CharField(max_length=SUMMARY_MAX_LENGTH)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.movie_name)
+        super(Movie, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.movie_name
+
     # poster = models.imageField() #i forgor how to do this
 
 class Category(models.Model):

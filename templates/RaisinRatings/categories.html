@@ -1,23 +1,26 @@
-<!DOCTYPE html>
+{% extends 'RaisinRatings/base.html' %}
 {% load staticfiles %}
 
-<html>
-    <head> 
-        <title>Categories</title>
-    </head>
+{% block title_block %}
+    Categories
+{% endblock %}
 
-    <body>
-        <h1>RaisinRatings</h1> 
-        <div>
-            This is the main categories page. <br />
-            <strong>{{ boldmessage }}</strong><br /> 
-        </div>
+{% block body_block %}
 
+    <h1>Categories</h1> 
+    <div>
+        {% if categories %}
+        {% for c in categories %}
+        <li>c.name</li>
+        {% endfor %}
+        {% else %}
+        <strong>There are no categories yet</strong>
+        {% endif %}
+    
+    </div>
 
-        <div>
-            <a href="/RaisinRatings/cat_page/">Specific category</a><br />
-            <img src="{% static 'images/cd.jpeg' %}"
-            alt=""Picture of cats" />
-        </div> 
-    </body>
-</html>
+    <div>
+    <img src="{% static 'images/cd.jpeg' %}"
+    alt=""Picture of cats" />
+    </div> 
+{% endblock %}

@@ -8,10 +8,10 @@
 {% block body_block %}
 <h1>Register for RaisinRatings</h1>
 {% if registered %}
-RaisinRatings says: <strong>thank you for registering!</strong>
+Rango says: <strong>thank you for registering!</strong>
 <a href="{% url 'RaisinRatings:index' %}">Return to the homepage.</a><br />
 {% else %}
-RaisinRatings says: <strong>register here!</strong><br />
+Rango says: <strong>register here!</strong><br />
 <form id="user_form" method="post" action="{% url 'RaisinRatings:register' %}"
       enctype="multipart/form-data">
     {% csrf_token %}

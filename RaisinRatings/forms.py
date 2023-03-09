@@ -20,9 +20,15 @@ class UserProfileForm(forms.ModelForm):
 
 
 class MovieForm(forms.ModelForm):
+    movie_name = forms.CharField(max_length=Movie.MOVIE_TITLE_MAX_LENGTH)
+    main_actor = forms.CharField(max_length=Movie.MAIN_ACTOR_MAX_LENGTH)
+    username = forms.CharField(max_length=Movie.USERNAME_MAX_LENGTH)
+    summary = forms.CharField(max_length=Movie.SUMMARY_MAX_LENGTH)
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+
     class Meta:
         model = Movie
-        fields = ['movie_name', 'movie_id', 'category_id', 'main_actor', 'likes', 'username',]
+        fields = ['movie_name', 'main_actor', 'username', 'summary' ]
         
 class ReviewForm(forms.ModelForm):
     title = forms.CharField(max_length=20, help_text = 'Enter your review title: ')
@@ -31,15 +37,5 @@ class ReviewForm(forms.ModelForm):
     class Meta:
        model = Review 
        fields = ('movie', 'title', 'review')
-       
 
-class AddMovie(forms.ModelForm):
-    title = forms.CharField(max_length=20, help_text="Enter movie title here: ")
-    summary = forms.CharField(max_length=500, help_text="Enter movie summary here: ")
-    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
-    main_star = forms.CharField(max_length=50, help_text = "Enter the main star of the movie here: ")
-
-    class Meta:
-       model = Movie
-       fields = ('title', 'summary', 'main_star')
 
