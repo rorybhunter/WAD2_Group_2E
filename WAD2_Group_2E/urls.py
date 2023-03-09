@@ -19,9 +19,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 urlpatterns = [
-
+    path('', views.index, name='index'),
     path('RaisinRatings/', include('RaisinRatings.urls')),
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
   ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
