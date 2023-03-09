@@ -1,0 +1,21 @@
+{% extends 'RaisinRatings/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Category
+{% endblock %}
+
+{% block body_block %}
+    <h1> Category name </h1> 
+    <div>
+    This is a specific category page. <br />
+    <strong>{{ boldmessage }}</strong><br /> 
+    </div>
+    <div>§
+    <a href="/RaisinRatings/">Return to all categories</a><br />
+    <img src="{% static 'images/cd.jpeg' %}"
+    alt="Picture of cats" />
+    <img src="/media/china.jpg" 
+    alt="Picture of a temple" />
+    </div> 
+{%  endblock %}

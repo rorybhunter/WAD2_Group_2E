@@ -13,6 +13,7 @@
         </div>
     </div> -->
 
+
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -45,7 +46,7 @@
                             <ul class="list-group">
                             {% for movie in movies %}
                                 <li class="list-group-item">
-                                    <a href="">{{ movie.name }}</a> 
+                                    <a href="{% url 'RaisinRatings:show_movie' movie.slug %}">{{ movie.movie_name }}</a> 
                                     <p>likes: {{ movie.likes }}</p>
                                 </li>
                             {% endfor %}
@@ -58,5 +59,4 @@
                 </div>
         </div>
     </div>
-
 {% endblock %}

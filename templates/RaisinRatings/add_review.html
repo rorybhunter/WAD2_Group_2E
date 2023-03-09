@@ -1,0 +1,32 @@
+{% extends 'RaisinRatings/base.html' %}
+{% load staticfiles %}
+
+    {% block title_block %}
+        Add a Review to {{ movie.movie_name }}
+    {% endblock %}
+
+    {% block body_block %}
+    <div><h1> Add a review for {{ movie.movie_name }}</h1></div>
+    <div>
+        <form id = "review_form" method="post" action="{% url 'RaisinRatings:add_review' movie.slug %}"> 
+
+            {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+        <div >
+            <p>
+                {{ field.errors }}
+                {{ field.help_text }}
+                {{ field }} 
+            </p>
+            
+        </div>
+         
+        {% endfor %}
+        <input type="submit" name="submit" value="Create Review" />
+
+        </form>
+    </div>
+    {% endblock %}
