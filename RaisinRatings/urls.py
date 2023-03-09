@@ -13,4 +13,5 @@ urlpatterns = [
     path('movie/<slug:movie_title_slug>/like/', views.like, name='like'),
     path('categories/', views.categories, name='categories'),
     path('cat_page/', views.cat_page, name='category'), path('cat_page/', views.cat_page, name='category'),
+    path('search/', views.search, name='search'),
 ]

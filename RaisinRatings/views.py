@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
-
+from RaisinRatings.bing_search import run_query
 
 
 def index(request):
@@ -150,3 +150,13 @@ def cat_page(request):
     #Once we can add categories we can fix this 
     return render(request, 'RaisinRatings/cat_page.html', context=context_dict)
 
+
+def search(request):
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+        if query:
+            result_list = run_query(query)
+
+    return render(request, 'RaisinRatings/search.html', {'result_list': result_list})
