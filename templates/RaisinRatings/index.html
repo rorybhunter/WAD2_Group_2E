@@ -1,0 +1,62 @@
+{% extends 'RaisinRatings/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Homepage
+{% endblock %}
+
+{% block body_block %}
+     
+    <!-- <div class="jumbotron p-6">
+        <div class="container">
+            <h1 class="jumbotron-heading">Raisin Ratings</h1>
+        </div>
+    </div> -->
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-6">
+                    <div class="card-body">
+                        <h2>Most Liked Categories</h2>
+                        <p class="card-text">
+                        {% if categories %}
+                            <ul class="list-group">
+                            {% for category in categories %}
+                                <li class="list-group-item">
+                                    <a href="">{{ category.name }}</a>
+                                    <p>likes: {{ category.likes}}</p>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <strong>There are no categories present.</strong>
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-6">
+                    <div class="card-body">
+                        <h2>Most Viewed Movies</h2>
+                        <p class="card-text">
+                            {% if movies %}
+                            <ul class="list-group">
+                            {% for movie in movies %}
+                                <li class="list-group-item">
+                                    <a href="{% url 'RaisinRatings:show_movie' movie.slug %}">{{ movie.movie_name }}</a> 
+                                    <p>likes: {{ movie.likes }}</p>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                            {% else %}
+                                <strong>There are no movies present.</strong>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+        </div>
+    </div>
+{% endblock %}

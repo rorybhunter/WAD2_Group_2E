@@ -1,0 +1,55 @@
+{% extends 'RaisinRatings/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {{ movie.movie_name }}
+{% endblock %}
+
+{% block body_block %}
+<div>
+    
+    
+    <div>
+        <a href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
+        <a href="{% url 'RaisinRatings:like' movie.slug %}">Like</a>
+        
+        
+    </div>
+
+    <p>
+        <div><h1>{{ movie.movie_name }}</h1></div>
+        <div>Number of likes: <strong>{{ likes }}</strong></div>
+        <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
+        <div>Category: </div>
+        <p><div> {{movie.summary}} </div></p>
+        
+    </p>
+    <div> 
+        <div>
+        <hr />
+        <h2>Reviews</h2>
+        <div>
+        {% if reviews %}
+                {% for r in reviews %}
+                <p>
+                    <ul> 
+                    <strong> {{ r.title }} </strong> 
+                    <div>
+                    {{r.review}}
+                    </div>
+                    </ul>
+                </p>
+                {% endfor %}
+            {% else %}
+            There are no reviews for this movie 
+            {% endif %}
+        </div>
+    </div>
+   
+             
+    </div>
+    
+</div>
+{% endblock %}
+
+
