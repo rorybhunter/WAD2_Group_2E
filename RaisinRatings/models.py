@@ -1,42 +1,49 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-
-
-# Create your models here.
-
+from django.template.defaultfilters import slugify
+import uuid
 
 class Movie(models.Model):
-    movie_name = models.CharField(max_length=128, unique=True)
-    movie_id = models.IntegerField()
-    category_id = models.IntegerField()
-    main_actor = models.CharField(max_length=128)
-    likes = models.IntegerField()
-    username = models.CharField(max_length=128)
-    # poster = models.imageField() #i forgor how to do this
+    MOVIE_TITLE_MAX_LENGTH = 128
+    MAIN_ACTOR_MAX_LENGTH = 128
+    USERNAME_MAX_LENGTH = 128
+    SUMMARY_MAX_LENGTH = 500
+
+    movie_name = models.CharField(max_length=MOVIE_TITLE_MAX_LENGTH, unique=True)
+    main_actor = models.CharField(max_length=MAIN_ACTOR_MAX_LENGTH)
+    likes = models.IntegerField(default=0)
+    username = models.CharField(max_length=USERNAME_MAX_LENGTH)
+    summary = models.CharField(max_length=SUMMARY_MAX_LENGTH)
+    slug = models.SlugField(unique=True)
+    #poster = models.ImageField(upload_to='profile_images', blank=True)
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.movie_name)
+        super(Movie, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.movie_name
 
 class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
+    likes = models.IntegerField(default=0)
+    slug = models.SlugField(unique=True)
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Category, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Categories"
     
     def __str__(self): 
         return self.name
-    
-class Page(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE) 
-    title = models.CharField(max_length=128)
-    url = models.URLField()
-    views = models.IntegerField(default=0)
-    
-    def __str__(self): 
-        return self.title
 
 class UserProfile(models.Model):
     # Link User profile to User model instance.
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
+    likes = models.IntegerField(default=0)
     # additional attributes we wish to store.
     picture = models.ImageField(upload_to='profile_images', blank=True)
 
@@ -54,11 +61,14 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-
 class Review(models.Model):
     title = models.CharField(max_length=20)
     review = models.CharField(max_length=500)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    # username = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self) :
         return self.review 
+
+
+

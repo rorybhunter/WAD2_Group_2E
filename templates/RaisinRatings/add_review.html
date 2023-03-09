@@ -1,6 +1,12 @@
-<!DOCTYPE html>
+{% extends 'RaisinRatings/base.html' %}
+{% load staticfiles %}
 
-<html>
+    {% block title_block %}
+        Add a Review to {{ movie.movie_name }}
+    {% endblock %}
+
+    {% block body_block %}
+    <div><h1> Add a review for {{ movie.movie_name }}</h1></div>
     <div>
         <form id = "review_form" method="post" action="{% url 'RaisinRatings:add_review' movie.slug %}"> 
 
@@ -23,4 +29,4 @@
 
         </form>
     </div>
-</html>
+    {% endblock %}
