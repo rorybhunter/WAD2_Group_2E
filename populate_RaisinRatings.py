@@ -36,7 +36,7 @@ def populate():
             print(f'- {c}: {m}')
 
 def add_page(cat, name, main_actor, poster, likes=0):
-    m = Movie.objects.get_or_create(category=cat, name=name)[0]
+    m = Movie.objects.get_or_create(category=cat, movie_name=name)[0]
     m.main_actor=main_actor
     m.poster = poster
     m.likes = likes

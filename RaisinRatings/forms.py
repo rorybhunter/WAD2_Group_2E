@@ -20,10 +20,10 @@ class UserProfileForm(forms.ModelForm):
 
 
 class MovieForm(forms.ModelForm):
-    movie_name = forms.CharField(max_length=Movie.MOVIE_TITLE_MAX_LENGTH)
-    main_actor = forms.CharField(max_length=Movie.MAIN_ACTOR_MAX_LENGTH)
-    username = forms.CharField(max_length=Movie.USERNAME_MAX_LENGTH)
-    summary = forms.CharField(max_length=Movie.SUMMARY_MAX_LENGTH)
+    movie_name = forms.CharField(max_length=Movie.MOVIE_TITLE_MAX_LENGTH, help_text="Please enter the movie name")
+    main_actor = forms.CharField(max_length=Movie.MAIN_ACTOR_MAX_LENGTH, help_text="Please enter the main actor of the movie")
+    username = forms.CharField(max_length=Movie.USERNAME_MAX_LENGTH, help_text="Enter your username")
+    summary = forms.CharField(max_length=Movie.SUMMARY_MAX_LENGTH, help_text="Please enter the movie summary")
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:

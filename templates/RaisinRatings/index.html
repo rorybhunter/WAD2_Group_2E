@@ -7,19 +7,18 @@
 
 {% block body_block %}
      
-    <!-- <div class="jumbotron p-6">
-        <div class="container">
-            <h1 class="jumbotron-heading">Raisin Ratings</h1>
-        </div>
-    </div> -->
+
+<div class="container p-5 text-center">
+    <h2 class="display-4">Rasin Ratings</h2>
+</div>
 
 
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="card mb-6">
+                <div class="card mb-6 bg-light">
                     <div class="card-body">
-                        <h2>Most Liked Categories</h2>
+                        <h2 class="font-weight-light">Most Liked Categories</h2>
                         <p class="card-text">
                         {% if categories %}
                             <ul class="list-group">
@@ -38,9 +37,9 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card mb-6">
+                <div class="card mb-6 bg-light">
                     <div class="card-body">
-                        <h2>Most Viewed Movies</h2>
+                        <h2 class="font-weight-light">Most Viewed Movies</h2>
                         <p class="card-text">
                             {% if movies %}
                             <ul class="list-group">
