@@ -28,7 +28,7 @@ class MovieForm(forms.ModelForm):
 
     class Meta:
         model = Movie
-        fields = ['movie_name', 'main_actor', 'username', 'summary' ]
+        fields = ['movie_name', 'main_actor', 'username', 'summary', 'poster', ]
         
 class ReviewForm(forms.ModelForm):
     title = forms.CharField(max_length=20, help_text = 'Enter your review title: ')
