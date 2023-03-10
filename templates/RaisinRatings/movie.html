@@ -11,8 +11,8 @@
     
     <div>
         <a href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
-        <a href="{% url 'RaisinRatings:like' movie.slug %}">Like</a>
-        <a href="{% url 'RaisinRatings:dislike' movie.slug %}">Dislike</a>
+        <a href="{% url 'RaisinRatings:like_movie' movie.slug %}">Upvoat</a>
+        <a href="{% url 'RaisinRatings:dislike_movie' movie.slug %}">Downvoat</a>
         
         
     </div>

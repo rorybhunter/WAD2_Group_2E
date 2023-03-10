@@ -6,13 +6,14 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1> {{ category }} </h1> 
-    
+    <h1> {{ category }} </h1>
+    <div> <a href="{% url 'RaisinRatings:like_category' category.slug %}"> Like </a> </div> 
+        <div><strong> {{ likes }} </strong> likes </div>
         <div> {{ description }}</div>
         <div> 
             {% if movies %}
             {% for movie in movies %}
-            <li><a href="{% url 'RaisinRatings:show_movie' movie.slug%}">{{movie.movie_name}}</a></li>
+            <li><a href="{% url 'RaisinRatings:show_movie' movie.slug%}">{{movie.movie_name}}</a></li> 
             {% endfor %}
             {% else %}
             <strong>There are no movies in this category</strong>

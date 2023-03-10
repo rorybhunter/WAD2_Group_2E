@@ -129,23 +129,31 @@ def cat_page(request, category_name_slug):
     context_dict['description'] = category.descrition
     context_dict['name'] = category.name
     context_dict['movies'] = movies
+    context_dict['likes'] = category.likes
     
     return render(request, 'RaisinRatings/cat_page.html', context=context_dict)
 
-def like(request, movie_title_slug):
+def like_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     movie.likes += 1
     movie.save()
     
     return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
 
-def dislike(request, movie_title_slug):
+def dislike_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     movie.likes -= 1
     movie.save()
     
     return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+
+def like_category(request, category_name_slug):
+    category = Category.objects.get(slug=category_name_slug)
+    print("here")
+    category.likes += 1
+    category.save()
     
+    return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
     
 def add_review(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug) 
@@ -168,11 +176,12 @@ def add_review(request, movie_title_slug):
 
 def categories(request):
     category_list = Category.objects.all()
-    #We need to make it possible to add a category 
     context_dict = {}
     context_dict['categories'] = category_list
     
     return render(request, 'RaisinRatings/categories.html', context=context_dict)
+
+
 
 
 
