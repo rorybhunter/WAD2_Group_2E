@@ -36,6 +36,8 @@ def run_query(search_terms):
         response = requests.get(search_url, headers=headers, params=params)
         response.raise_for_status()
         search_results = response.json()
+        import pprint
+        pprint.pprint(search_results)
         results = []
         for result in search_results['webPages']['value']:
             results.append({
@@ -43,6 +45,6 @@ def run_query(search_terms):
                 'link': result['url'],
                 'summary': result['snippet'],
             })
-        return results
+        return results, search_terms
     except Exception as ex:
         raise ex

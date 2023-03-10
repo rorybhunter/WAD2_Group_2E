@@ -153,10 +153,10 @@ def cat_page(request):
 
 def search(request):
     result_list = []
-
+    search_term = ""
     if request.method == 'POST':
         query = request.POST['query'].strip()
         if query:
-            result_list = run_query(query)
-
-    return render(request, 'RaisinRatings/search.html', {'result_list': result_list})
+            result_list, search_term = run_query(query)
+            print(search_term)
+    return render(request, 'RaisinRatings/search.html', {'result_list': result_list, 'search_term' : search_term})

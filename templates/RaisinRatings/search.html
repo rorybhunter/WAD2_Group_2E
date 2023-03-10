@@ -23,7 +23,10 @@
                     type="text"
                     size="50"
                     name="query"
-                    id="query" />
+                    id="query"
+                       {% if search_term %}
+                    value="{{ search_term }}"
+                        {% endif %}/>
             </div>
 
             <button class="btn btn-primary"
