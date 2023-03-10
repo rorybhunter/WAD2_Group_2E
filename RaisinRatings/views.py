@@ -153,10 +153,9 @@ def cat_page(request):
 
 def search(request):
     result_list = []
-    search_term = ""
+    search_term = ""  # included and passed as a parameter to allow the search term to still be in the search box after searching and reloading pasge.
     if request.method == 'POST':
         query = request.POST['query'].strip()
         if query:
             result_list, search_term = run_query(query)
-            print(search_term)
-    return render(request, 'RaisinRatings/search.html', {'result_list': result_list, 'search_term' : search_term})
+    return render(request, 'RaisinRatings/search.html', {'result_list': result_list, 'search_term': search_term})

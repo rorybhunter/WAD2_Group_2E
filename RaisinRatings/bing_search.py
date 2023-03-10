@@ -20,24 +20,18 @@ def read_bing_key():
 
 
 def run_query(search_terms):
-    import requests
-
-    subscription_key = read_bing_key()
-
-    search_url = "https://api.bing.microsoft.com/v7.0/search"
-
     # Construct a request
+    subscription_key = read_bing_key()
+    search_url = "https://api.bing.microsoft.com/v7.0/search"
     mkt = 'en-US'
-    params = { 'q': search_terms, 'mkt': mkt }
-    headers = { 'Ocp-Apim-Subscription-Key': subscription_key }
+    params = {'q': search_terms, 'mkt': mkt}
+    headers = {'Ocp-Apim-Subscription-Key': subscription_key}
 
     # Call the API
     try:
         response = requests.get(search_url, headers=headers, params=params)
         response.raise_for_status()
         search_results = response.json()
-        import pprint
-        pprint.pprint(search_results)
         results = []
         for result in search_results['webPages']['value']:
             results.append({
@@ -45,6 +39,6 @@ def run_query(search_terms):
                 'link': result['url'],
                 'summary': result['snippet'],
             })
-        return results, search_terms
+        return results, search_terms  # s_terms included to allow it to remain in search box after submitting form.
     except Exception as ex:
         raise ex
