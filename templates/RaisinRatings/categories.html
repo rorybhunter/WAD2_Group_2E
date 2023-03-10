@@ -11,7 +11,7 @@
     <div>
         {% if categories %}
         {% for c in categories %}
-        <li>c.name</li>
+        <li><a href="{% url 'RaisinRatings:category' c.slug%}">{{c.name}}</a></li>
         {% endfor %}
         {% else %}
         <strong>There are no categories yet</strong>

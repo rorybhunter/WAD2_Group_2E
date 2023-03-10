@@ -6,14 +6,12 @@
 {% endblock %}
 
 {% block body_block %}
-     
+{{ user }}
     <!-- <div class="jumbotron p-6">
         <div class="container">
             <h1 class="jumbotron-heading">Raisin Ratings</h1>
         </div>
     </div> -->
-
-
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -25,7 +23,7 @@
                             <ul class="list-group">
                             {% for category in categories %}
                                 <li class="list-group-item">
-                                    <a href="">{{ category.name }}</a>
+                                    <a href="{% url 'RaisinRatings:category' category.slug %}">{{ category.name }}</a>
                                     <p>likes: {{ category.likes}}</p>
                                 </li>
                             {% endfor %}

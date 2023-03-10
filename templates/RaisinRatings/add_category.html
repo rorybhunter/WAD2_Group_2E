@@ -2,13 +2,14 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Add movie 
+    Add category 
 {% endblock %}
 
 {% block body_block %}
+
     <div>
         {% block content %}
-            <h1>Add a Movie</h1>
+            <h1>Add a Category</h1>
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}

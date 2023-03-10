@@ -23,7 +23,6 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
     </head>
-    
     <body>
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-0">
@@ -34,11 +33,20 @@
                 
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
+                        
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:index' %}">Home</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:categories' %}">Categories</a></li>
+                        
+                        {% if user.is_authenticated %}
+                        <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:logout' %}">Logout</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:add_movie' %}">Add Movie</a></li>
-                        <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:register' %}">Sign Up</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:add_category' %}">Add Category</a></li>
+                       
+                        {% else %}
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:login' %}">Login</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:register' %}">Sign Up</a></li>
+                        {% endif %}
+
                     </ul>
                 </div>
             </nav>

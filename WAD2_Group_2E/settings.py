@@ -22,9 +22,6 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
-
-MEDIA_ROOT = MEDIA_DIR
-MEDIA_URL = '/media/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -36,7 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'RaisinRatings',
+    
 ]
 
 MIDDLEWARE = [

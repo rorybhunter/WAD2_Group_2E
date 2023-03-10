@@ -12,16 +12,26 @@
     <div>
         <a href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
         <a href="{% url 'RaisinRatings:like' movie.slug %}">Like</a>
+        <a href="{% url 'RaisinRatings:dislike' movie.slug %}">Dislike</a>
         
         
     </div>
 
     <p>
+        <p>
+            {% if movie.username == user %}
+            <div> <strong> Movie added by you </strong></div>
+            <a href="{% url 'RaisinRatings:delete_movie' movie.slug %}"> Delete Movie </a>
+            <div> </div>
+            <a href=""> Eddit Movie </a>
+            {% else %}
+            <div> <strong> Movie added by {{ movie.username }} </strong> </div>
+            {% endif %}
+        </p>
         <div><h1>{{ movie.movie_name }}</h1></div>
         <div>Number of likes: <strong>{{ likes }}</strong></div>
         <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
-        <div>Category: </div>
-        <p><div> {{movie.summary}} </div></p>
+        <div>Category: <strong>{{ movie.category }}</strong></div>
         
     </p>
     <div> 
@@ -36,6 +46,9 @@
                     <strong> {{ r.title }} </strong> 
                     <div>
                     {{r.review}}
+                    </div>
+                    <div>
+                        --  {{r.username}}
                     </div>
                     </ul>
                 </p>
