@@ -20,28 +20,8 @@ def read_bing_key():
 
 
 def run_query(search_terms):
-    # subscription_key = read_bing_key()
-    # # search_url = "https://api.bing.microsoft.com/v7.0/search"
-    # search_url = 'https://api.cognitive.microsoft.com/bing/v7.0/search'
-    # headers = {"Ocp-Apim-Subscription-Key": subscription_key}
-    # params = {"q": search_terms, "textDecorations": True, "textFormat": "HTML"}
-    # response = requests.get(search_url, headers=headers, params=params)
-    # response.raise_for_status()
-    # search_results = response.json()
-    #
-    # results = []
-    # for result in search_results['webPages']['value']:
-    #     results.append({
-    #         'title': result['name'],
-    #         'link': result['url'],
-    #         'summary': result['snippet'],
-    #     })
-    #
-    # return results
-    from pprint import pprint
     import requests
 
-    # Add your Bing Search V7 subscription key and endpoint to your environment variables.
     subscription_key = read_bing_key()
 
     search_url = "https://api.bing.microsoft.com/v7.0/search"
@@ -55,12 +35,6 @@ def run_query(search_terms):
     try:
         response = requests.get(search_url, headers=headers, params=params)
         response.raise_for_status()
-
-        print("Headers:")
-        print(response.headers)
-
-        print("JSON Response: ")
-        pprint(response.json())
         search_results = response.json()
         results = []
         for result in search_results['webPages']['value']:
