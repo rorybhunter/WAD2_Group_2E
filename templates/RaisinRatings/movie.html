@@ -2,53 +2,66 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    {{ movie.movie_name }}
+{{ movie.movie_name }}
 {% endblock %}
 
 {% block body_block %}
-<div>
-    
-    
-    <div>
-        <a href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
-        <a href="{% url 'RaisinRatings:like' movie.slug %}">Like</a>
-        
-        
-    </div>
-
-    <p>
-        <div><h1>{{ movie.movie_name }}</h1></div>
-        <div>Number of likes: <strong>{{ likes }}</strong></div>
-        <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
-        <div>Category: </div>
-        <p><div> {{movie.summary}} </div></p>
-    </p>
-    <div> 
-        <div>
-        <hr />
-        <h2>Reviews</h2>
-        <div>
-        {% if reviews %}
-                {% for r in reviews %}
-                <p>
-                    <ul> 
-                    <strong> {{ r.title }} </strong> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-6 bg-light">
+                <div class="card-body ">
                     <div>
-                    {{r.review}}
+                        <br />
+                        <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
+                        <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:like' movie.slug %}">
+                            <span data-feather="thumbs-up"></span>
+                            Like
+                        </a>
+                        <a class="btn btn-outline-secondary btn-sm" role="button"href="">
+                            <span data-feather="thumbs-down"></span>
+                            Dislike
+                        </a>
+                        <h1 class="font-weight-light">{{ movie.movie_name }}</h1>
                     </div>
-                    </ul>
-                </p>
-                {% endfor %}
-            {% else %}
-            There are no reviews for this movie 
-            {% endif %}
+                    <p>
+                        <div>Number of likes: <strong>{{ likes }}</strong></div>
+                        <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
+                        <div>Category: </div>
+                    </p>
+                    <p>
+                        <div> {{movie.summary}} </div>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
-   
-             
+</div>
+<br />       
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-6 bg-light">
+                <div class="card-body">
+                    <h3 class="font-weight-light">Reviews</h3>
+                    <div>
+                        {% if reviews %}
+                        <ul class="list-group">
+                        {% for r in reviews %}
+                        <li class="list-group-item">
+                            <strong> {{ r.title }} </strong>
+                            <br/>
+                                {{r.review}}
+                        </li>
+                        {% endfor %}
+                        </ul>
+                        {% else %}
+                        There are no reviews for this movie
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
 </div>
 {% endblock %}
-
-
