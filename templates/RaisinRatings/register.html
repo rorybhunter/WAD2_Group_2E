@@ -6,15 +6,15 @@ Register
 {% endblock %}
 
 {% block body_block %}
-<div class="container p-5 text-center">
-    <h2 class="display-4">Register for Raisin Ratings</h2>
-</div>
 
 {% if registered %}
 <strong>thank you for registering!</strong>
 <a href="{% url 'RaisinRatings:index' %}">Return to the homepage.</a><br />
 
 {% else %}
+<div class="container p-5 text-center">
+    <h2 class="display-4">Register for Raisin Ratings</h2>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -48,7 +48,7 @@ Register
                                     <select class="form-control" name="user_type" id="id_user_type">
                                         <option value="COUCH_POTATO" selected="">Couch Potato</option>
                                         <option value="CRITIC">Critic</option>
-                                        <option value="CREATAR">Creatar</option>
+                                        <option value="CREATER">Creater</option>
                                     </select>
                                 </p>
                             <!-- {{ user_form.as_p }}
