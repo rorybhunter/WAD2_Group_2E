@@ -9,7 +9,7 @@
     <div>
         {% block content %}
             <h1>Add a Movie</h1>
-            <form method="post">
+            <form id="movie_form" method="post" action="{% url 'RaisinRatings:add_movie' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit">Save</button>

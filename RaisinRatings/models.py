@@ -16,7 +16,7 @@ class Movie(models.Model):
     username = models.CharField(max_length=USERNAME_MAX_LENGTH)
     summary = models.CharField(max_length=SUMMARY_MAX_LENGTH)
     slug = models.SlugField(unique=True)
-    #poster = models.ImageField(upload_to='profile_images', blank=True)
+    poster = models.ImageField(upload_to='movie_posters', blank=True)
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.movie_name)
