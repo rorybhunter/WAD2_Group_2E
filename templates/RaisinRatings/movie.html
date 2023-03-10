@@ -11,27 +11,30 @@
         <div class="col-md-12">
             <div class="card mb-6 bg-light">
                 <div class="card-body ">
-                    <div>
-                        <br />
-                        <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
-                        <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:like' movie.slug %}">
-                            <span data-feather="thumbs-up"></span>
-                            Like
-                        </a>
-                        <a class="btn btn-outline-secondary btn-sm" role="button"href="">
-                            <span data-feather="thumbs-down"></span>
-                            Dislike
-                        </a>
-                        <h1 class="font-weight-light">{{ movie.movie_name }}</h1>
+                    <div class="media">
+                        <img class="mr-3" alt="{{movie.movie_name}}'s movie poster" width="200" src="{{ MEDIA_URL }}{{ movie.poster }}">
+                        <div class="media-body">
+                            <br />
+                            <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
+                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:like' movie.slug %}">
+                                <span data-feather="thumbs-up"></span>
+                                Like
+                            </a>
+                            <a class="btn btn-outline-secondary btn-sm" role="button"href="">
+                                <span data-feather="thumbs-down"></span>
+                                Dislike
+                            </a>
+                            <h1 class="font-weight-light">{{ movie.movie_name }}</h1>
+                            <p>
+                                <div>Number of likes: <strong>{{ likes }}</strong></div>
+                                <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
+                                <div>Category: </div>
+                            </p>
+                            <p>
+                                <div> {{movie.summary}} </div>
+                            </p>
+                        </div>
                     </div>
-                    <p>
-                        <div>Number of likes: <strong>{{ likes }}</strong></div>
-                        <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
-                        <div>Category: </div>
-                    </p>
-                    <p>
-                        <div> {{movie.summary}} </div>
-                    </p>
                 </div>
             </div>
         </div>
