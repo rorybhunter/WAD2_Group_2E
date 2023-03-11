@@ -50,10 +50,9 @@ class Movie(models.Model):
 
 
 class Comment(models.Model):
-    comment_id = movie_id = models.UUIDField(primary_key= True, default=uuid.uuid4, editable=False)
+    comment_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     content = models.CharField(max_length=1024)
     username = models.ForeignKey(User, on_delete=models.CASCADE)
-    critic = models.ForeignKey(User, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     def __str__(self):
