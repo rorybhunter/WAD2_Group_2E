@@ -1,4 +1,3 @@
-// Get the input field
 var input = document.getElementById("myInput");
 
 // Execute a function when the user presses a key on the keyboard
