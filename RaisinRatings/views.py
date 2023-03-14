@@ -1,5 +1,5 @@
 from RaisinRatings.forms import ReviewForm, UserForm, UserProfileForm, MovieForm, CategoryForm
-from RaisinRatings.models import Review, Category, Movie, User
+from RaisinRatings.models import Review, Category, Movie, User, Permission
 from django.urls import reverse 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -59,7 +59,7 @@ def user_login(request):
         password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
-
+        
         if user:
             if user.is_active:
                 login(request, user)
@@ -180,6 +180,8 @@ def categories(request):
     context_dict['categories'] = category_list
     
     return render(request, 'RaisinRatings/categories.html', context=context_dict)
+
+
 
 
 

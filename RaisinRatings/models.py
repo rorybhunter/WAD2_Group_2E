@@ -1,7 +1,8 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 import uuid
+
 
 class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
@@ -54,7 +55,6 @@ class UserProfile(models.Model):
         ('CRITIC', "Critic"),
         ('CREATOR', "Creator")
     )
-
     user_type = models.CharField(max_length=15,
                           choices=USER_TYPE_CHOICES,
                           default="COUCH_POTATO")
