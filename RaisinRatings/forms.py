@@ -24,11 +24,12 @@ class MovieForm(forms.ModelForm):
     main_actor = forms.CharField(max_length=Movie.MAIN_ACTOR_MAX_LENGTH)
     username = forms.CharField(max_length=Movie.USERNAME_MAX_LENGTH)
     summary = forms.CharField(max_length=Movie.SUMMARY_MAX_LENGTH)
+    trailer_link = forms.CharField(max_length=Movie.TRAILER_MAX_LENGTH)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Movie
-        fields = ['movie_name', 'main_actor', 'username', 'summary' ]
+        fields = ['movie_name', 'main_actor', 'username', 'summary', 'trailer_link', ]
         
 class ReviewForm(forms.ModelForm):
     title = forms.CharField(max_length=20, help_text = 'Enter your review title: ')

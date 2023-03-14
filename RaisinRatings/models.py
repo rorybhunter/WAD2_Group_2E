@@ -9,12 +9,14 @@ class Movie(models.Model):
     MAIN_ACTOR_MAX_LENGTH = 128
     USERNAME_MAX_LENGTH = 128
     SUMMARY_MAX_LENGTH = 500
+    TRAILER_MAX_LENGTH = 128
 
     movie_name = models.CharField(max_length=MOVIE_TITLE_MAX_LENGTH, unique=True)
     main_actor = models.CharField(max_length=MAIN_ACTOR_MAX_LENGTH)
     likes = models.IntegerField(default=0)
     username = models.CharField(max_length=USERNAME_MAX_LENGTH)
     summary = models.CharField(max_length=SUMMARY_MAX_LENGTH)
+    trailer_link = models.CharField(max_length=TRAILER_MAX_LENGTH, default="")
     slug = models.SlugField(unique=True)
     #poster = models.ImageField(upload_to='profile_images', blank=True)
     

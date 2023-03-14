@@ -89,6 +89,7 @@ def user_login(request):
         return render(request, 'RaisinRatings/login.html')
  
 def add_movie(request):
+    request.session.set_test_cookie()
     if request.method == 'POST':
         form = MovieForm(request.POST)
         if form.is_valid():
@@ -104,9 +105,20 @@ def show_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     reviews = Review.objects.filter(movie=movie)
     likes = movie.likes
+    url = movie.trailer_link
+    url = url.replace("/watch?v=", "/embed/")
+    url = url.replace("youtu.be", "youtube.com/embed")
+    try:
+        index = url.index("&")
+        url = url[:index]
+    except:
+        pass
+
     context_dir['movie'] = movie
     context_dir['reviews'] = reviews
     context_dir['likes'] = likes
+    context_dir['trailer_link'] = url
+
 
     return render(request, 'RaisinRatings/movie.html', context=context_dir)
 
@@ -152,6 +164,9 @@ def cat_page(request):
 
 
 def search(request):
+    if request.session.test_cookie_worked():
+        print("TEST COOKIE WORKED!")
+        request.session.delete_test_cookie()
     result_list = []
     search_term = ""  # included and passed as a parameter to allow the search term to still be in the search box after searching and reloading pasge.
     if request.method == 'POST':
