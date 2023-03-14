@@ -1,60 +1,79 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User, Permission
 import uuid
-
-class User(models.Model):
-    ROLES = (('USER', 'User'), ('CREATOR', 'Creator'), ('CRITIC', 'Critic'))
-    username = models.CharField(primary_key=True, max_length=128, unique=True,)
-    password = models.CharField(max_length=128)
-    role = models.CharField(max_length=32, choices=ROLES, default='USER')
-    profile_picture = models.ImageField(upload_to='profilepics', blank=True)
-    tag = models.CharField(max_length=128)
-
-    def __str__(self):
-        return self.username
 
 
 class Category(models.Model):
-    name = models.CharField(primary_key=True, max_length=128, unique=True)
+    name = models.CharField(max_length=128, unique=True)
     likes = models.IntegerField(default=0)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
     slug = models.SlugField(unique=True)
-
-
+    description = models.CharField(max_length=500)
+    
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
 
-    def __str__(self):
-        return self.name
-
     class Meta:
-        verbose_name_plural = 'Categories'
+        verbose_name_plural = "Categories"
+    
+    def __str__(self): 
+        return self.name
 
 class Movie(models.Model):
-    movie_id = models.UUIDField(primary_key= True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length = 128, unique=True)
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE) 
-    main_actor = models.CharField(max_length = 128)
+    MOVIE_TITLE_MAX_LENGTH = 128
+    MAIN_ACTOR_MAX_LENGTH = 128
+    USERNAME_MAX_LENGTH = 128
+    SUMMARY_MAX_LENGTH = 500
+
+    movie_name = models.CharField(max_length=MOVIE_TITLE_MAX_LENGTH, unique=True)
+    main_actor = models.CharField(max_length=MAIN_ACTOR_MAX_LENGTH)
     likes = models.IntegerField(default=0)
-    poster = models.ImageField(upload_to='posters', blank=True)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='Creator', null=True)
-    user_raters = models.ManyToManyField(User, related_name='User')
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    summary = models.CharField(max_length=SUMMARY_MAX_LENGTH)
     slug = models.SlugField(unique=True)
-
-    def __str__(self):
-        return self.name
-
+    poster = models.ImageField(upload_to='profile_image', blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    couch_potatoes = models.ManyToManyField(User)
+    
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        self.slug = slugify(self.movie_name)
         super(Movie, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return self.movie_name
 
-class Comment(models.Model):
-    comment_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    content = models.CharField(max_length=1024)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+class UserProfile(models.Model):
+    # Link User profile to User model instance.
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    likes = models.IntegerField(default=0)
+    # additional attributes we wish to store.
+    picture = models.ImageField(upload_to='profile_images', blank=True)
+
+    USER_TYPE_CHOICES = (
+
+        ('COUCH_POTATO', "Couch Potato"),
+        ('CRITIC', "Critic"),
+        ('CREATOR', "Creator")
+    )
+    user_type = models.CharField(max_length=15,
+                          choices=USER_TYPE_CHOICES,
+                          default="COUCH_POTATO")
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.user.username)
+        super(UserProfile, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.content
+        return self.user.username
+
+class Review(models.Model):
+    title = models.CharField(max_length=20)
+    review = models.CharField(max_length=500)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    # username = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self) :
+        return self.review 
+
+

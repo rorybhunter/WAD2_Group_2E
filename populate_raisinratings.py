@@ -1,105 +1,81 @@
 import os
 import random
+from django.contrib.auth.models import User
+import random
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 
 'WAD2_Group_2E.settings')
-
 import django
 django.setup()
-from RaisinRatings.models import User, Category, Movie, Comment
+from RaisinRatings.models import UserProfile, Category, Movie, Review
 
 def populate():
-    users = [{'username':'testuser1', 'password':'ilikecats123', 'role':'USER', 'tag':'average movie enjoyer'},
-    {'username':'testuser2', 'password':'ilikedogs123', 'role':'USER', 'tag': 'non-average movie enjoyer'},
-    {'username':'testcritic1', 'password':'iliketurtles123', 'role':'CRITIC', 'tag':'best critic in the world'},
-    {'username':'testcritic2', 'password':'ilikerabbits123', 'role':'CRITIC', 'tag':'worst critic in the world'},
-    {'username':'testcreator1', 'password':'ilikebats123', 'role':'CREATOR', 'tag':'your favorite movie creator'},
-    {'username':'testcreator2', 'password':'ilikerats123', 'role':'CREATOR', 'tag':'your least favorite movie creator'},
+    users = [{'username':'testuser1', 'password':'boo', 'role':'COUCH_POTATO'},
+    {'username':'testuser2','password': 'peek', 'role':'COUCH_POTATO'},
+    {'username':'testcritic1', 'password': 'yikes', 'role':'CRITIC'},
+    {'username':'testcritic2', 'password': 'beep', 'role':'CRITIC'},
+    {'username':'testcreator1', 'password' : 'deep', 'role':'CREATOR'},
+    {'username':'testcreator2', 'password': 'meep', 'role':'CREATOR'},
     ]
 
-    cats = [{'name':'Horror'}, {'name':'Drama'}, {'name':'Comedy'}
+    cats = [{'name':'Horror', 'description': 'Scary Movies'}, {'name':'Drama', 'description': 'Dramatic Movies'}, 
+    {'name':'Comedy', 'description': 'Funny Movies'}
     ]
 
-    horror_movie = {'name':'Horror Movie 1', 'main_actor': 'Main Actor 1'}
+    movies = [{'movie_name':'Horror Movie 1', 'main_actor': 'Main Actor 1', 'summary':'blank'}, 
+    {'movie_name':'Drama Movie 1', 'main_actor': 'Main Actor 2', 'summary':'blank'},
+    {'movie_name':'Comedy Movie 1', 'main_actor': 'Main Actor 3', 'summary':'blank'}]
 
-    drama_movie = {'name':'Drama Movie 1', 'main_actor': 'Main Actor 2'}
+    
 
-    comedy_movie = {'name':'Comedy Movie 1', 'main_actor': 'Main Actor 3'}
-
-    comments = [{'content':'I like this movie'}, {'content': 'I do not like this movie'}, 
-    {'content':'this movie is underrated'}, {'content':'this movie is overrated'}
+    reviews = [{'title':'good', 'review':'I like this movie'}, {'title': 'bad', 'review': 'I do not like this movie'}, 
+    {'title': 'underrated', 'review':'this movie is underrated'}, {'title': 'overrated', 'review':'this movie is overrated'}
     ]
 
-    for user in users:
-        u = add_user(user['username'], user['password'], user['role'], user['tag'])
-        print(f'-{u}')
 
-    creators = []
-
-    for creator in User.objects.filter(role='CREATOR'):
-        creators.append(creator)
-
-    users = []
-
-    for user in User.objects.filter(role='USER'):
-        users.append(user)
-
-
-    for c in cats:
-        c = add_category(c['name'], random.choice(creators))
+    for cat in cats:
+        c = add_category(cat['name'], cat['description'])
         print(f'-{c}')
 
-    horror_m = add_movie(horror_movie['name'], category = Category.objects.filter(name = 'Horror')[0], creator = random.choice(creators), rater=random.choice(users))
-    print(f'-{horror_m}')
+    for user in users:
+        u = add_user(user['username'], user['password'], user['role'])
+        print(f'-{u}')
 
-    drama_m = add_movie(drama_movie['name'], category= Category.objects.filter(name = 'Drama')[0], creator = random.choice(creators), rater=random.choice(users))
-    print(f'-{drama_m}')
+    categories = Category.objects.all()
+    creators = UserProfile.objects.filter(role = 'CREATOR')
 
-    comedy_m = add_movie(comedy_movie['name'], category= Category.objects.filter(name = "Comedy")[0], creator = random.choice(creators), rater = random.choice(users))
-    print(f'-{comedy_m}')
+    for movie in movies:
+        m = add_movie(movie['movie_name'], random.choice(categories), movie['main_actor'], movie['summary'], random.choice(creators).user)
+        print(f'-{m}')
+
+    critics = UserProfile.objects.filter(role = 'CRITIC')
+    movies = Movie.objects.all()
     
-    movies = []
-
-    for m in Movie.objects.all():
-        movies.append(m)
+    for review in reviews:
+        add_review(review['title'], review['content'], random.choice(critics), random.choice(movies))
 
 
-    comment1 = comments[0]
-    comment1 = add_comment(content = comment1['content'], user = User.objects.filter(role = 'CRITIC')[0], movie = random.choice(movies))
-
-    comment2 = comments[1]
-    comment2 = add_comment(content = comment2['content'], user = User.objects.filter(role = 'CRITIC')[0], movie = random.choice(movies))
-
-    comment3 = comments[2]
-    comment3 = add_comment(content = comment3['content'], user = User.objects.filter(role = 'CRITIC')[1], movie = random.choice(movies))
-
-    comment4 = comments[3]
-    comment4 = add_comment(content = comment4['content'], user = User.objects.filter(role = 'CRITIC')[1], movie = random.choice(movies))
-
-
-def add_user(username, password, role, tag):
-    u = User.objects.get_or_create(username = username, password = password)[0]
-    role = role
-    u.tag = tag
+def add_user(username, password, role):
+    u = User.objects.create_user(username = username, password = password)
     u.save()
-    return u
+    up = UserProfile.objects.get_or_create(user = u, user_type = role)
+    return up
 
-def add_category(name, creator, likes=0):
-    c = Category.objects.get_or_create(name = name, creator = creator)[0]
-    c.likes = likes
+def add_category(name, description):
+    c = Category.objects.get_or_create(name = name, description = description)[0]
     c.save()
     return c
     
-def add_movie(name, category, main_actor, creator, rater):
-    m = Movie.objects.get_or_create(name = name, category_id =category, creator = creator)[0]
+def add_movie(movie_name, category, main_actor, summary, creator):
+    m = Movie.objects.get_or_create(movie_name = movie_name, category_id =category, username = creator)[0]
+    m.summary = summary
     m.main_actor = main_actor
     m.save()
-    m.user_raters.add(rater)
     return m
 
-def add_comment(content, user, movie):
-    c = Comment.objects.get_or_create(content = content, user = user, movie = movie)[0]
-    c.save()
-    return c
+def add_review(title, content, user, movie):
+    r = Review.objects.get_or_create(title = title, content = content, user = user, movie = movie)[0]
+    r.save()
+    return r
 
 
 if __name__ == '__main__':
