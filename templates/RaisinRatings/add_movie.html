@@ -47,10 +47,18 @@
                                         <textarea class="form-control textarea" type="text" name="summary" maxlength="500" required="" id="id_summary" rows="3"></textarea>
                                     </p>
                                     <!-- uncomment when poster is integrated -->
-                                    <!-- <p>
+                                    <p>
                                         <label for="id_poster">Upload poster:</label>
-                                        <input class="form-control-file" type="file" name="poster" required="" id="id_summary">
-                                    </p> -->
+                                        <input class="form-control-file" type="file" name="poster" required="" id="id_poster">
+                                    </p>
+                                    <p>
+                                        <label for="{{ form.categories.id_for_label }}">Add to Category:</label>
+                                        <select name="{{ form.categories.name }}" id="{{ form.categories.id_for_label }}">
+                                            {% for category in form.categories.field.queryset %}
+                                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </p>
                                     <br />
                                 </div>
                                 <button class="btn btn-primary" type="submit" name="submit">Save</button>
