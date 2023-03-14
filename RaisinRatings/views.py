@@ -126,7 +126,7 @@ def cat_page(request, category_name_slug):
     category = Category.objects.get(slug=category_name_slug)
     movies = Movie.objects.filter(category=category)
     context_dict['category'] = category
-    context_dict['description'] = category.descrition
+    context_dict['description'] = category.description
     context_dict['name'] = category.name
     context_dict['movies'] = movies
     context_dict['likes'] = category.likes
