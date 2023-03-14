@@ -74,7 +74,7 @@ body {
 @media (min-width: 768px) {
   [role="main"] {
     /* changed from 48px */
-    padding-top: 120px; /* Space for fixed navbar */
+    padding-top: 100px; /* Space for fixed navbar */
   }
 }
 

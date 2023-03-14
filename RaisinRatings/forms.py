@@ -20,6 +20,7 @@ class UserProfileForm(forms.ModelForm):
 
 
 class MovieForm(forms.ModelForm):
+
     movie_name = forms.CharField(max_length=Movie.MOVIE_TITLE_MAX_LENGTH)
     main_actor = forms.CharField(max_length=Movie.MAIN_ACTOR_MAX_LENGTH)
     summary = forms.CharField(max_length=Movie.SUMMARY_MAX_LENGTH)
@@ -36,6 +37,7 @@ class CategoryForm(forms.ModelForm):
     class Meta: 
         model = Category 
         fields = ["name", 'descrition']
+
         
 class ReviewForm(forms.ModelForm):
     title = forms.CharField(max_length=20, help_text = 'Enter your review title: ')

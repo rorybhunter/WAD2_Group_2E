@@ -82,7 +82,7 @@ def user_logout(request):
 def add_movie(request):
 
     if request.method == 'POST':
-        form = MovieForm(request.POST)
+        form = MovieForm(request.POST, request.FILES)
         if form.is_valid():
             form.save(commit=True)
 

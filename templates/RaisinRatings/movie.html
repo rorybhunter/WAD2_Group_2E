@@ -2,67 +2,83 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    {{ movie.movie_name }}
+{{ movie.movie_name }}
 {% endblock %}
 
 {% block body_block %}
-<div>
-    
-    
-    <div>
-        <a href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
-        <a href="{% url 'RaisinRatings:like_movie' movie.slug %}">Upvoat</a>
-        <a href="{% url 'RaisinRatings:dislike_movie' movie.slug %}">Downvoat</a>
-        
-        
-    </div>
-
-    <p>
-        <p>
-            {% if movie.username == user %}
-            <div> <strong> Movie added by you </strong></div>
-            <a href="{% url 'RaisinRatings:delete_movie' movie.slug %}"> Delete Movie </a>
-            <div> </div>
-            <a href=""> Eddit Movie </a>
-            {% else %}
-            <div> <strong> Movie added by {{ movie.username }} </strong> </div>
-            {% endif %}
-        </p>
-        <div><h1>{{ movie.movie_name }}</h1></div>
-        <div>Votes: <strong>{{ likes }}</strong></div>
-        <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
-        <div>Category: <strong>{{ movie.category }}</strong></div>
-        
-    </p>
-    <div> 
-        <div>
-        <hr />
-        <h2>Reviews</h2>
-        <div>
-        {% if reviews %}
-                {% for r in reviews %}
-                <p>
-                    <ul> 
-                    <strong> {{ r.title }} </strong> 
-                    <div>
-                    {{r.review}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-6 bg-light">
+                <div class="card-body ">
+                    <div class="media">
+                        <img class="mr-3" alt="{{movie.movie_name}}'s movie poster" width="200" src="{{ MEDIA_URL }}{{ movie.poster }}">
+                        <div class="media-body">
+                            <br />
+                            <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
+                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:like' movie.slug %}">
+                                <span data-feather="thumbs-up"></span>
+                                Upvote
+                            </a>
+                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:dislike_movie' movie.slug %}">
+                                <span data-feather="thumbs-down"></span>
+                                Downvote
+                            </a>
+                            <h1 class="font-weight-light">{{ movie.movie_name }}</h1>
+                            <p>
+                                <div>Number of likes: <strong>{{ likes }}</strong></div>
+                                <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
+                                <div>Category:  <strong>{{ movie.category }}</strong> </div>
+                            </p>
+                           
+                            <p>
+                                <div> {{movie.summary}} </div>
+                            </p>
+                            <p>
+                              {% if movie.username == user %}
+                              <div> <strong> Movie added by you </strong></div>
+                              <a href="{% url 'RaisinRatings:delete_movie' movie.slug %}"> Delete Movie </a>
+                              <div> </div>
+                              <a href=""> Edit movie </a>
+                              {% else %}
+                              <div> <strong> Movie added by {{ movie.username }} </strong> </div>
+                              {% endif %}
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        --  {{r.username}}
-                    </div>
-                    </ul>
-                </p>
-                {% endfor %}
-            {% else %}
-            There are no reviews for this movie 
-            {% endif %}
+                </div>
+            </div>
         </div>
     </div>
-   
-             
+</div>
+<br />       
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-6 bg-light">
+                <div class="card-body">
+                    <h3 class="font-weight-light">Reviews</h3>
+                    <div>
+                        {% if reviews %}
+                        <ul class="list-group">
+                        {% for r in reviews %}
+                        <li class="list-group-item">
+                            <strong> {{ r.title }} </strong>
+                            <div>
+                              --  {{r.username}}
+                            </div>
+                            <br/>
+                                {{r.review}}
+                        </li>
+                        {% endfor %}
+                        </ul>
+                        {% else %}
+                        There are no reviews for this movie
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
 </div>
 {% endblock %}
-
-

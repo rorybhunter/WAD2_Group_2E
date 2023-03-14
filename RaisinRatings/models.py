@@ -32,8 +32,9 @@ class Movie(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     summary = models.CharField(max_length=SUMMARY_MAX_LENGTH)
     slug = models.SlugField(unique=True)
-    poster = models.ImageField(upload_to='profile_image', blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    poster = models.ImageField(upload_to='movie_posters', blank=True)
+
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.movie_name)
