@@ -34,7 +34,6 @@ class Movie(models.Model):
     slug = models.SlugField(unique=True)
     poster = models.ImageField(upload_to='profile_image', blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    couch_potatoes = models.ManyToManyField(User)
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.movie_name)
