@@ -49,7 +49,7 @@ def populate():
 
     critics = UserProfile.objects.filter(role = 'CRITIC')
     movies = Movie.objects.all()
-    
+
     for review in reviews:
         add_review(review['title'], review['content'], random.choice(critics), random.choice(movies))
 
@@ -66,7 +66,7 @@ def add_category(name, description):
     return c
     
 def add_movie(movie_name, category, main_actor, summary, creator):
-    m = Movie.objects.get_or_create(movie_name = movie_name, category_id =category, username = creator)[0]
+    m = Movie.objects.get_or_create(movie_name = movie_name, category =category, username = creator)[0]
     m.summary = summary
     m.main_actor = main_actor
     m.save()
