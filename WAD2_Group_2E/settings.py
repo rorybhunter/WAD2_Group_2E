@@ -35,7 +35,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'RaisinRatings',
+    
 ]
 
 MIDDLEWARE = [
@@ -72,6 +72,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'django.template.context_processors.request',
+                
 
             ],
         },
@@ -147,6 +149,3 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 )
 
-
-MEDIA_ROOT = MEDIA_DIR
-MEDIA_URL = '/media/'

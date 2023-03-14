@@ -18,20 +18,31 @@
                             <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
                             <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:like' movie.slug %}">
                                 <span data-feather="thumbs-up"></span>
-                                Like
+                                Upvote
                             </a>
-                            <a class="btn btn-outline-secondary btn-sm" role="button"href="">
+                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:dislike_movie' movie.slug %}">
                                 <span data-feather="thumbs-down"></span>
-                                Dislike
+                                Downvote
                             </a>
                             <h1 class="font-weight-light">{{ movie.movie_name }}</h1>
                             <p>
                                 <div>Number of likes: <strong>{{ likes }}</strong></div>
                                 <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
-                                <div>Category: </div>
+                                <div>Category:  <strong>{{ movie.category }}</strong> </div>
                             </p>
+                           
                             <p>
                                 <div> {{movie.summary}} </div>
+                            </p>
+                            <p>
+                              {% if movie.username == user %}
+                              <div> <strong> Movie added by you </strong></div>
+                              <a href="{% url 'RaisinRatings:delete_movie' movie.slug %}"> Delete Movie </a>
+                              <div> </div>
+                              <a href=""> Edit movie </a>
+                              {% else %}
+                              <div> <strong> Movie added by {{ movie.username }} </strong> </div>
+                              {% endif %}
                             </p>
                         </div>
                     </div>
@@ -53,6 +64,9 @@
                         {% for r in reviews %}
                         <li class="list-group-item">
                             <strong> {{ r.title }} </strong>
+                            <div>
+                              --  {{r.username}}
+                            </div>
                             <br/>
                                 {{r.review}}
                         </li>
