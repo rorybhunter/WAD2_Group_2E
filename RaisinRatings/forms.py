@@ -1,7 +1,7 @@
 from django import forms
 
 from RaisinRatings.models import Review, Movie
-from .models import Movie
+from .models import Movie, Category
 from django.contrib.auth.models import User
 from RaisinRatings.models import UserProfile
 
@@ -23,14 +23,23 @@ class UserProfileForm(forms.ModelForm):
 class MovieForm(forms.ModelForm):
     movie_name = forms.CharField(max_length=Movie.MOVIE_TITLE_MAX_LENGTH)
     main_actor = forms.CharField(max_length=Movie.MAIN_ACTOR_MAX_LENGTH)
-    username = forms.CharField(max_length=Movie.USERNAME_MAX_LENGTH)
     summary = forms.CharField(max_length=Movie.SUMMARY_MAX_LENGTH)
     trailer_link = forms.CharField(max_length=Movie.TRAILER_MAX_LENGTH)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
+
     class Meta:
         model = Movie
-        fields = ['movie_name', 'main_actor', 'username', 'summary', 'trailer_link', ]
+        fields = ['movie_name', 'main_actor', 'summary', 'trailer_link', 'poster', 'category', ]
+
+
+class CategoryForm(forms.ModelForm):
+    name = forms.CharField(max_length=127, help_text="category name")
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+    class Meta:
+        model = Category
+        fields = ["name", 'descrition']
 
 
 class ReviewForm(forms.ModelForm):
@@ -39,6 +48,17 @@ class ReviewForm(forms.ModelForm):
     
     class Meta:
        model = Review 
-       fields = ('movie', 'title', 'review')
+       fields = ('movie', 'title', 'review', 'username')
+
+class EditMovie(forms.ModelForm):
+    movie_name = forms.CharField(max_length=Movie.MOVIE_TITLE_MAX_LENGTH)
+    main_actor = forms.CharField(max_length=Movie.MAIN_ACTOR_MAX_LENGTH)
+    summary = forms.CharField(max_length=Movie.SUMMARY_MAX_LENGTH)
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+    class Meta:
+        model = Movie
+        fields = ['movie_name', 'main_actor', 'summary', 'poster']
+
 
 
