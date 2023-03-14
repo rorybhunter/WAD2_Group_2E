@@ -36,6 +36,7 @@
 
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:index' %}">Home</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:categories' %}">Categories</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:search' %}">Search</a></li>
 
                         {% if user.is_authenticated %}
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:logout' %}">Logout</a></li>
@@ -44,7 +45,6 @@
 
                         {% else %}
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:login' %}">Login</a></li>
-                        <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:search' %}">Search</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:register' %}">Sign Up</a></li>
                         {% endif %}
 
