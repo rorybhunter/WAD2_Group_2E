@@ -13,6 +13,7 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'password',)
 
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
@@ -30,7 +31,8 @@ class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
         fields = ['movie_name', 'main_actor', 'username', 'summary', 'trailer_link', ]
-        
+
+
 class ReviewForm(forms.ModelForm):
     title = forms.CharField(max_length=20, help_text = 'Enter your review title: ')
     review = forms.CharField(max_length=500, help_text = 'Enter your review: ')

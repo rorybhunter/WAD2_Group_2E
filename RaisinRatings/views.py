@@ -89,7 +89,6 @@ def user_login(request):
         return render(request, 'RaisinRatings/login.html')
  
 def add_movie(request):
-    request.session.set_test_cookie()
     if request.method == 'POST':
         form = MovieForm(request.POST)
         if form.is_valid():
@@ -164,9 +163,6 @@ def cat_page(request):
 
 
 def search(request):
-    if request.session.test_cookie_worked():
-        print("TEST COOKIE WORKED!")
-        request.session.delete_test_cookie()
     result_list = []
     search_term = ""  # included and passed as a parameter to allow the search term to still be in the search box after searching and reloading pasge.
     if request.method == 'POST':
