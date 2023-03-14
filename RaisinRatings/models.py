@@ -29,7 +29,7 @@ class Movie(models.Model):
     movie_name = models.CharField(max_length=MOVIE_TITLE_MAX_LENGTH, unique=True)
     main_actor = models.CharField(max_length=MAIN_ACTOR_MAX_LENGTH)
     likes = models.IntegerField(default=0)
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    # username = models.ForeignKey(User, on_delete=models.CASCADE)
     summary = models.CharField(max_length=SUMMARY_MAX_LENGTH)
     slug = models.SlugField(unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)

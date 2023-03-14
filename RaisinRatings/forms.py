@@ -25,10 +25,11 @@ class MovieForm(forms.ModelForm):
     main_actor = forms.CharField(max_length=Movie.MAIN_ACTOR_MAX_LENGTH)
     summary = forms.CharField(max_length=Movie.SUMMARY_MAX_LENGTH)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False) 
+    
 
     class Meta:
         model = Movie
-        fields = ['movie_name', 'main_actor', 'summary', 'poster', 'username', 'category' ]
+        fields = ['movie_name', 'main_actor', 'summary', 'poster', 'category' ]
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=127, help_text="category name")
@@ -55,7 +56,7 @@ class EditMovie(forms.ModelForm):
 
     class Meta:
         model = Movie
-        fields = ['movie_name', 'main_actor', 'summary', 'poster', 'username' ]
+        fields = ['movie_name', 'main_actor', 'summary', 'poster']
 
 
 

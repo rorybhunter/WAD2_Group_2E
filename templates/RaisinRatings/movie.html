@@ -16,13 +16,13 @@
                         <div class="media-body">
                             <br />
                             <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
-                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:like' movie.slug %}">
+                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:like_movie' movie.slug %}">
                                 <span data-feather="thumbs-up"></span>
-                                Upvote
+                                Like
                             </a>
                             <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:dislike_movie' movie.slug %}">
                                 <span data-feather="thumbs-down"></span>
-                                Downvote
+                                Dislike
                             </a>
                             <h1 class="font-weight-light">{{ movie.movie_name }}</h1>
                             <p>
