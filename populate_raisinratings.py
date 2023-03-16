@@ -23,25 +23,13 @@ def populate():
     {'name':'Comedy', 'description': 'Funny Movies'}
     ]
 
-    def posterLink(name):
-        try:
-            poster1 = os.path.join(MEDIA_DIR, os.path.join('example_posters', 'm3gan.jpg'))
-            if len(poster1) > len('example_posters/m3gan.jpg'):
-                raise TypeError
-                print('fbwfsdiucbiusdbcuisbciusdiucbuadis')
-            else:
-                return poster1
-        except:
-            print("error thrown")
-            poster1 = os.path.join(MEDIA_DIR, '/example_posters/m3gan.jpg')
-            return poster1
 
     movies = [{'movie_name':'Horror Movie 1', 'main_actor': 'Main Actor 1', 'summary':'blank',
-    'poster': posterLink('g'), 'trailer_link':'https://www.youtube.com/watch?v=BRb4U99OU80&ab_channel=UniversalPictures'},
+    'poster': os.path.join('example_posters', 'm3gan.jpg') , 'trailer_link':'https://www.youtube.com/watch?v=BRb4U99OU80&ab_channel=UniversalPictures'},
     {'movie_name':'Drama Movie 1', 'main_actor': 'Main Actor 2', 'summary':'blank',
-    'poster':os.path.join(MEDIA_DIR, '/example_posters/PSILoveYou.jpg'), 'trailer_link':''},
+    'poster':os.path.join('example_posters', 'PSILoveYou.jpg'), 'trailer_link':''},
     {'movie_name':'Comedy Movie 1', 'main_actor': 'Main Actor 3', 'summary':'blank',
-    'poster':os.path.join(MEDIA_DIR, '/example_posters/MamaMia.jpg'), 'trailer_link':''}]
+    'poster':os.path.join('example_posters', 'MamaMia.jpg'), 'trailer_link':''}]
 
     reviews = [{'title':'good', 'review':'I like this movie'}, {'title': 'bad', 'review': 'I do not like this movie'},
     {'title': 'underrated', 'review':'this movie is underrated'}, {'title': 'overrated', 'review':'this movie is overrated'}
