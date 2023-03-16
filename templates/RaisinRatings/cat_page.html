@@ -2,17 +2,25 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Category
+    {{ category }}
 {% endblock %}
 
 {% block body_block %}
-    <h1> Category name </h1> 
-    <div>
-    This is a specific category page. <br />
-    <strong>{{ boldmessage }}</strong><br /> 
-    </div>
-    <div>§
-    <a href="/RaisinRatings/">Return to all categories</a><br />
+    <h1> {{ category }} </h1>
+    <div> <a href="{% url 'RaisinRatings:like_category' category.slug %}"> Like </a> </div> 
+        <div><strong> {{ likes }} </strong> likes </div>
+        <div> {{ description }}</div>
+        <div> 
+            {% if movies %}
+            {% for movie in movies %}
+            <li><a href="{% url 'RaisinRatings:show_movie' movie.slug%}">{{movie.movie_name}}</a></li> 
+            {% endfor %}
+            {% else %}
+            <strong>There are no movies in this category</strong>
+            {% endif %}
+        </div>
+
+        <div>
     <img src="{% static 'images/cd.jpeg' %}"
     alt="Picture of cats" />
     <img src="/media/china.jpg" 

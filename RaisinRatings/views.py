@@ -1,39 +1,23 @@
-from RaisinRatings.forms import ReviewForm, UserForm, UserProfileForm, MovieForm
-from RaisinRatings.models import Review, Category, Movie
+from RaisinRatings.forms import ReviewForm, UserForm, UserProfileForm, MovieForm, CategoryForm
+from RaisinRatings.models import Review, Category, Movie, User, Permission
 from django.urls import reverse 
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 
 
 def index(request):
- 
-    # some example models created to test the categories and movies display correctly
-    #class CategoryExample:
-        #def __init__(self, name, likes):
-            #self.name = name
-            #self.likes = likes
-
-    #class MovieExample:
-        #def __init__(self, name, likes):
-            #self.name = name
-            #self.likes = likes
-
-    #category_list = [CategoryExample("Example movie", 5), CategoryExample("Example movie 2", 3)]
-    #movie_list = [MovieExample("Example movie", 4), CategoryExample("Example movie 2", 2)]
-
     context_dict = {}
     
-    category_list = Category.objects.all()
+    category_list = Category.objects.order_by('-likes')[:8]
     movie_list = Movie.objects.order_by('-likes')[:5]
 
     context_dict['movies'] = movie_list
     context_dict['categories'] = category_list
     response = render(request, 'RaisinRatings/index.html', context=context_dict)
     return response
-
-
 
 
 def register(request):
@@ -75,7 +59,7 @@ def user_login(request):
         password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
-
+        
         if user:
             if user.is_active:
                 login(request, user)
@@ -87,17 +71,43 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'RaisinRatings/login.html')
+
+
+@login_required
+def user_logout(request):
+    logout(request)  
+    return redirect(reverse('RaisinRatings:index'))
+
  
 def add_movie(request):
+
     if request.method == 'POST':
-        form = MovieForm(request.POST)
+        form = MovieForm(request.POST, request.FILES)
         if form.is_valid():
             form.save(commit=True)
+
             return redirect('/RaisinRatings/')  
     else:
         form = MovieForm()
     return render(request, 'RaisinRatings/add_movie.html', {'form': form})
+
+
+def add_category (request):
     
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+
+            return redirect('/RaisinRatings/')
+    else:
+        form = CategoryForm()
+    return render(request, 'RaisinRatings/add_category.html', {'form': form})
+
+def delete_movie(request, movie_title_slug):
+    Movie.objects.get(slug = movie_title_slug).delete()
+    return redirect('/RaisinRatings/')
+   
     
 def show_movie(request, movie_title_slug):
     context_dir = {}
@@ -107,16 +117,43 @@ def show_movie(request, movie_title_slug):
     context_dir['movie'] = movie
     context_dir['reviews'] = reviews
     context_dir['likes'] = likes
-
+    
     return render(request, 'RaisinRatings/movie.html', context=context_dir)
 
-def like(request, movie_title_slug):
+
+def cat_page(request, category_name_slug):
+    context_dict = {}
+    category = Category.objects.get(slug=category_name_slug)
+    movies = Movie.objects.filter(category=category)
+    context_dict['category'] = category
+    context_dict['description'] = category.description
+    context_dict['name'] = category.name
+    context_dict['movies'] = movies
+    context_dict['likes'] = category.likes
+    
+    return render(request, 'RaisinRatings/cat_page.html', context=context_dict)
+
+def like_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     movie.likes += 1
     movie.save()
     
     return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+
+def dislike_movie(request, movie_title_slug):
+    movie = Movie.objects.get(slug=movie_title_slug)
+    movie.likes -= 1
+    movie.save()
     
+    return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+
+def like_category(request, category_name_slug):
+    category = Category.objects.get(slug=category_name_slug)
+    print("here")
+    category.likes += 1
+    category.save()
+    
+    return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
     
 def add_review(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug) 
@@ -139,14 +176,16 @@ def add_review(request, movie_title_slug):
 
 def categories(request):
     category_list = Category.objects.all()
-    #We need to make it possible to add a category 
     context_dict = {}
     context_dict['categories'] = category_list
     
     return render(request, 'RaisinRatings/categories.html', context=context_dict)
 
-def cat_page(request):
-    context_dict = {'boldmessage': 'Hmm'}
-    #Once we can add categories we can fix this 
-    return render(request, 'RaisinRatings/cat_page.html', context=context_dict)
+
+
+
+
+
+
+
 
