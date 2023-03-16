@@ -20,5 +20,6 @@ urlpatterns = [
     path('cat_page/<slug:category_name_slug>/', views.cat_page, name='category'),
     path('add_category/', views.add_category, name='add_category'),
     path('cat_page/<slug:category_name_slug>/like_category/', views.like_category, name = 'like_category'),
+     path('cat_page/<slug:category_name_slug>/dislike_category/', views.dislike_category, name = 'dislike_category'),
 
 ]
