@@ -1,0 +1,26 @@
+{% extends 'RaisinRatings/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Categories
+{% endblock %}
+
+{% block body_block %}
+
+    <h1>Categories</h1> 
+    <div>
+        {% if categories %}
+        {% for c in categories %}
+        <li><a href="{% url 'RaisinRatings:category' c.slug%}">{{c.name}}</a></li>
+        {% endfor %}
+        {% else %}
+        <strong>There are no categories yet</strong>
+        {% endif %}
+    
+    </div>
+
+    <div>
+    <img src="{% static 'images/cd.jpeg' %}"
+    alt=""Picture of cats" />
+    </div> 
+{% endblock %}
