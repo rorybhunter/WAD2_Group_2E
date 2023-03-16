@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     context_dict = {}
     
-    category_list = Category.objects.all()
+    category_list = Category.objects.order_by('-likes')[:8]
     movie_list = Movie.objects.order_by('-likes')[:5]
 
     context_dict['movies'] = movie_list
@@ -134,7 +134,7 @@ def cat_page(request, category_name_slug):
     category = Category.objects.get(slug=category_name_slug)
     movies = Movie.objects.filter(category=category).order_by('-likes')
     context_dict['category'] = category
-    context_dict['description'] = category.descrition
+    context_dict['description'] = category.description
     context_dict['name'] = category.name
     context_dict['movies'] = movies
     context_dict['likes'] = category.likes

@@ -37,9 +37,11 @@ class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=127, help_text="category name")
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
-    class Meta:
-        model = Category
-        fields = ["name", 'descrition']
+
+    class Meta: 
+        model = Category 
+        fields = ["name", 'description']
+
 
 
 class ReviewForm(forms.ModelForm):
