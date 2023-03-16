@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     context_dict = {}
     
-    category_list = Category.objects.all()
+    category_list = Category.objects.order_by('-likes')[:8]
     movie_list = Movie.objects.order_by('-likes')[:5]
 
     context_dict['movies'] = movie_list

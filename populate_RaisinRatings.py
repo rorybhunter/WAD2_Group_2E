@@ -24,8 +24,8 @@ def populate():
     ]
 
     movies = [{'movie_name':'Horror Movie 1', 'main_actor': 'Main Actor 1', 'summary':'blank', 'poster': os.path.join(MEDIA_DIR, os.path.join('example_posters', 'm3gan.jpg'))}, 
-    {'movie_name':'Drama Movie 1', 'main_actor': 'Main Actor 2', 'summary':'blank', 'poster':os.path.join(MEDIA_DIR, os.path.join('example_posters', 'm3gan.jpg'))},
-    {'movie_name':'Comedy Movie 1', 'main_actor': 'Main Actor 3', 'summary':'blank', 'poster':os.path.join(MEDIA_DIR, os.path.join('example_posters', 'm3gan.jpg'))}]
+    {'movie_name':'Drama Movie 1', 'main_actor': 'Main Actor 2', 'summary':'blank', 'poster':os.path.join(MEDIA_DIR, os.path.join('example_posters', 'PSILoveYou.jpg'))},
+    {'movie_name':'Comedy Movie 1', 'main_actor': 'Main Actor 3', 'summary':'blank', 'poster':os.path.join(MEDIA_DIR, os.path.join('example_posters', 'MamaMia.jpg'))}]
 
     
 

@@ -46,8 +46,19 @@
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:login' %}">Login</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:register' %}">Sign Up</a></li>
                         {% endif %}
-
                     </ul>
+                    
+                    {% if user.is_authenticated %}
+                        <div class="nav-item ml-2 mr-1">
+                            <p class="nav-link m-auto text-light" style="float:right;">{{ request.user }}</p>
+                        </div>
+                        <img style="height:3.5rem"src="{{ MEDIA_URL }}/{{ user.userprofile.picture }}" />
+                    {% else %}
+                    <div class="nav-item ml-2 mr-1">
+                        <p class="nav-link m-auto text-light" style="float:right;">Anonymous</p>
+                    </div>
+                        <img style="height:3.5rem"src="{% static 'images/default_profile/default.png' %}" />
+                    {% endif %}
                 </div>
             </nav>
         </header>
@@ -55,6 +66,7 @@
         <div class="container-fluid">
             <div class="row">
                 <main role="main" class="col-md-12  ml-sm-auto col-lg-12 px-4">		
+                    
                     {% block body_block %}{% endblock %}
                     
                     <!-- FOOTER -->
