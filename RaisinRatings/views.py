@@ -132,7 +132,7 @@ def show_movie(request, movie_title_slug):
 def cat_page(request, category_name_slug):
     context_dict = {}
     category = Category.objects.get(slug=category_name_slug)
-    movies = Movie.objects.filter(category=category)
+    movies = Movie.objects.filter(category=category).order_by('-likes')
     context_dict['category'] = category
     context_dict['description'] = category.descrition
     context_dict['name'] = category.name
@@ -163,6 +163,14 @@ def like_category(request, category_name_slug):
 
     return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
 
+def dislike_category(request, category_name_slug):
+    category = Category.objects.get(slug=category_name_slug)
+    print("here")
+    category.likes -= 1
+    category.save()
+
+    return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
+
 def add_review(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug) 
 
@@ -183,7 +191,7 @@ def add_review(request, movie_title_slug):
 
 
 def categories(request):
-    category_list = Category.objects.all()
+    category_list = Category.objects.order_by('-likes')
     context_dict = {}
     context_dict['categories'] = category_list
     
