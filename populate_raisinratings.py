@@ -1,9 +1,10 @@
 import os
 import random
-from django.contrib.auth.models import User
-import random
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 
 'WAD2_Group_2E.settings')
+
+from django.contrib.auth.models import User
+import random
 import django
 django.setup()
 from RaisinRatings.models import UserProfile, Category, Movie, Review
