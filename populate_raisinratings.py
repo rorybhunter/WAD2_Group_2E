@@ -23,13 +23,27 @@ def populate():
     {'name':'Comedy', 'description': 'Funny Movies'}
     ]
 
-    movies = [{'movie_name':'Horror Movie 1', 'main_actor': 'Main Actor 1', 'summary':'blank', 'poster': os.path.join(MEDIA_DIR, os.path.join('example_posters', 'm3gan.jpg'))}, 
-    {'movie_name':'Drama Movie 1', 'main_actor': 'Main Actor 2', 'summary':'blank', 'poster':os.path.join(MEDIA_DIR, os.path.join('example_posters', 'PSILoveYou.jpg'))},
-    {'movie_name':'Comedy Movie 1', 'main_actor': 'Main Actor 3', 'summary':'blank', 'poster':os.path.join(MEDIA_DIR, os.path.join('example_posters', 'MamaMia.jpg'))}]
+    def posterLink(name):
+        try:
+            poster1 = os.path.join(MEDIA_DIR, os.path.join('example_posters', 'm3gan.jpg'))
+            if len(poster1) > len('example_posters/m3gan.jpg'):
+                raise TypeError
+                print('fbwfsdiucbiusdbcuisbciusdiucbuadis')
+            else:
+                return poster1
+        except:
+            print("error thrown")
+            poster1 = os.path.join(MEDIA_DIR, '/example_posters/m3gan.jpg')
+            return poster1
 
-    
+    movies = [{'movie_name':'Horror Movie 1', 'main_actor': 'Main Actor 1', 'summary':'blank',
+    'poster': posterLink('g'), 'trailer_link':'https://www.youtube.com/watch?v=BRb4U99OU80&ab_channel=UniversalPictures'},
+    {'movie_name':'Drama Movie 1', 'main_actor': 'Main Actor 2', 'summary':'blank',
+    'poster':os.path.join(MEDIA_DIR, '/example_posters/PSILoveYou.jpg'), 'trailer_link':''},
+    {'movie_name':'Comedy Movie 1', 'main_actor': 'Main Actor 3', 'summary':'blank',
+    'poster':os.path.join(MEDIA_DIR, '/example_posters/MamaMia.jpg'), 'trailer_link':''}]
 
-    reviews = [{'title':'good', 'review':'I like this movie'}, {'title': 'bad', 'review': 'I do not like this movie'}, 
+    reviews = [{'title':'good', 'review':'I like this movie'}, {'title': 'bad', 'review': 'I do not like this movie'},
     {'title': 'underrated', 'review':'this movie is underrated'}, {'title': 'overrated', 'review':'this movie is overrated'}
     ]
 
@@ -43,10 +57,9 @@ def populate():
         print(f'-{u}')
 
     categories = Category.objects.all()
-    creators = UserProfile.objects.filter(user_type = 'CREATOR')
 
     for movie in movies:
-        m = add_movie(movie['movie_name'], random.choice(categories), movie['main_actor'], movie['summary'], random.choice(creators).user, movie['poster'])
+        m = add_movie(movie['movie_name'], random.choice(categories), movie['main_actor'], movie['summary'],  movie['poster'], movie['trailer_link'])
         print(f'-{m}')
 
     critics = UserProfile.objects.filter(user_type = 'CRITIC')
@@ -66,10 +79,10 @@ def add_category(name, description):
     c = Category.objects.get_or_create(name = name, description = description)[0]
     c.save()
     return c
-    
-# , username = creator
-def add_movie(movie_name, category, main_actor, summary, creator, poster = None):
+
+def add_movie(movie_name, category, main_actor, summary, poster = None, trailer_link = None):
     m = Movie.objects.get_or_create(movie_name = movie_name, category =category)[0]
+    m.trailer_link = trailer_link
     m.summary = summary
     m.main_actor = main_actor
     m.poster = poster

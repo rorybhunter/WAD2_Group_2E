@@ -141,6 +141,7 @@ def cat_page(request, category_name_slug):
 
     return render(request, 'RaisinRatings/cat_page.html', context=context_dict)
 
+
 def like_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     movie.likes += 1
@@ -148,12 +149,14 @@ def like_movie(request, movie_title_slug):
 
     return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
 
+
 def dislike_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     movie.likes -= 1
     movie.save()
 
     return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+
 
 def like_category(request, category_name_slug):
     category = Category.objects.get(slug=category_name_slug)
@@ -163,6 +166,7 @@ def like_category(request, category_name_slug):
 
     return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
 
+
 def dislike_category(request, category_name_slug):
     category = Category.objects.get(slug=category_name_slug)
     print("here")
@@ -171,13 +175,14 @@ def dislike_category(request, category_name_slug):
 
     return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
 
+
 def add_review(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug) 
 
     form = ReviewForm()
     
     if request.method == 'POST':
-        form  = ReviewForm(request.POST)
+        form = ReviewForm(request.POST)
         if form.is_valid():
             form.save(commit=False)
             form.movie = movie 
