@@ -69,7 +69,7 @@ def user_login(request):
                 return HttpResponse("Your RaisinRatings account is disabled.")
         else:
             print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
+            return render(request, 'RaisinRatings/login.html')
     else:
         return render(request, 'RaisinRatings/login.html')
 
@@ -81,18 +81,31 @@ def user_logout(request):
 
 
 def add_movie(request):
+    try:
+        author = User.objects.get(id = request.user.id) 
+    except User.DoesNotExist:
+        author = None
+
+    if author is None:
+        return redirect('/RaisinRatings/')
+
     if request.method == 'POST':
         form = MovieForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save(commit=True)
+            if author:
+                movie = form.save(commit=False) 
+                movie.user = author  
+                movie.save()
+
             return redirect('/RaisinRatings/')  
     else:
         form = MovieForm()
+
     return render(request, 'RaisinRatings/add_movie.html', {'form': form})
 
 
 def add_category (request):
-
+    
     if request.method == "POST":
         form = CategoryForm(request.POST)
         if form.is_valid():
@@ -109,8 +122,10 @@ def delete_movie(request, movie_title_slug):
 
 
 def show_movie(request, movie_title_slug):
+    
     context_dir = {}
     movie = Movie.objects.get(slug=movie_title_slug)
+    print(movie.user)
     reviews = Review.objects.filter(movie=movie)
     likes = movie.likes
     url = movie.trailer_link
@@ -154,6 +169,12 @@ def dislike_movie(request, movie_title_slug):
     movie.save()
 
     return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+
+def delete_movie(request, movie_title_slug):
+    movie = Movie.objects.get(slug=movie_title_slug)
+    movie.delete()
+
+    return redirect('/RaisinRatings/')
 
 def like_category(request, category_name_slug):
     category = Category.objects.get(slug=category_name_slug)
@@ -206,3 +227,30 @@ def search(request):
         if query:
             result_list, search_term = run_query(query)
     return render(request, 'RaisinRatings/search.html', {'result_list': result_list, 'search_term': search_term})
+
+def edit_movie(request, movie_title_slug):
+    
+    try:
+        author = User.objects.get(id = request.user.id) 
+    except User.DoesNotExist:
+        author = None
+
+    if author is None:
+        return redirect('/RaisinRatings/')
+
+    movie = Movie.objects.get(slug=movie_title_slug)
+    form = MovieForm()
+
+    if form.is_valid():
+        if author:
+                movie = form.save(commit=False) 
+                movie.user = author  
+                movie.save()
+        print("we are here")
+        return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+    else:
+        print(form.errors)
+    context_dict = {'form': form, 'movie': movie}
+    movie.delete()
+    return render(request, 'RaisinRatings/edit_movie.html', context_dict)
+

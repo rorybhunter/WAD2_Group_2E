@@ -34,6 +34,7 @@ class Movie(models.Model):
     slug = models.SlugField(unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     poster = models.ImageField(upload_to='movie_posters', blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     
     def save(self, *args, **kwargs):
@@ -50,7 +51,6 @@ class UserProfile(models.Model):
     likes = models.IntegerField(default=0)
     # additional attributes we wish to store.
     picture = models.ImageField(upload_to='profile_images', blank=True)
-
     USER_TYPE_CHOICES = (
 
         ('COUCH_POTATO', "Couch Potato"),

@@ -27,9 +27,14 @@ class MovieForm(forms.ModelForm):
     trailer_link = forms.CharField(max_length=Movie.TRAILER_MAX_LENGTH)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
+    widgets = {
+        'user': forms.HiddenInput(),
+    }
+
 
     class Meta:
         model = Movie
+        exclude = ('user', )
         fields = ['movie_name', 'main_actor', 'summary', 'trailer_link', 'poster', 'category', ]
 
 

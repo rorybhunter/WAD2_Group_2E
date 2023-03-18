@@ -14,12 +14,14 @@ urlpatterns = [
     path('movie/<slug:movie_title_slug>/add_review/', views.add_review, name = 'add_review'),
     path('movie/<slug:movie_title_slug>/like/', views.like_movie, name='like_movie'),
     path('movie/<slug:movie_title_slug>/dislike/', views.dislike_movie, name='dislike_movie'),
+    path('movie/<slug:movie_title_slug>/delete/', views.delete_movie, name = 'delete_movie'),
+    path('movie/<slug:movie_title_slug>/edit/', views.edit_movie, name='edit_move'),
     path('categories/', views.categories, name='categories'),
     path('cat_page/', views.cat_page, name='category'), path('cat_page/', views.cat_page, name='category'),
     path('search/', views.search, name='search'),
     path('cat_page/<slug:category_name_slug>/', views.cat_page, name='category'),
     path('add_category/', views.add_category, name='add_category'),
     path('cat_page/<slug:category_name_slug>/like_category/', views.like_category, name = 'like_category'),
-     path('cat_page/<slug:category_name_slug>/dislike_category/', views.dislike_category, name = 'dislike_category'),
+    path('cat_page/<slug:category_name_slug>/dislike_category/', views.dislike_category, name = 'dislike_category'),
 
 ]
