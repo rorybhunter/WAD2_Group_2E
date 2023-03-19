@@ -45,13 +45,14 @@ def populate():
         print(f'-{u}')
 
     categories = Category.objects.all()
-    critics = UserProfile.objects.filter(user_type = 'CRITIC')
-    movies = Movie.objects.all()
-    creators = UserProfile.objects.filter(user_type='CREATOR')
+    creators = UserProfile.objects.filter(user_type = 'CREATOR')
 
     for movie in movies:
-        m = add_movie(movie['movie_name'], random.choice(categories), random.choise(creators).user, movie['main_actor'], movie['summary'],  movie['poster'], movie['trailer_link'])
+        m = add_movie(movie['movie_name'], random.choice(categories), random.choice(creators).user, movie['main_actor'], movie['summary'],  movie['poster'], movie['trailer_link'])
         print(f'-{m}')
+
+    critics = UserProfile.objects.filter(user_type = 'CRITIC')
+    movies = Movie.objects.all()
 
     for review in reviews:
         add_review(review['title'], review['review'], random.choice(critics).user, random.choice(movies))
@@ -69,7 +70,7 @@ def add_category(name, description):
     return c
 
 def add_movie(movie_name, category, user, main_actor, summary, poster = None, trailer_link = None):
-    m = Movie.objects.get_or_create(movie_name = movie_name, category =category, user = user)[0]
+    m = Movie.objects.get_or_create(movie_name = movie_name, category =category, user=user)[0]
     m.trailer_link = trailer_link
     m.summary = summary
     m.main_actor = main_actor

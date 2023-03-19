@@ -48,7 +48,6 @@ class CategoryForm(forms.ModelForm):
         fields = ["name", 'description']
 
 
-
 class ReviewForm(forms.ModelForm):
     title = forms.CharField(max_length=20, help_text = 'Enter your review title: ')
     review = forms.CharField(max_length=500, help_text = 'Enter your review: ')

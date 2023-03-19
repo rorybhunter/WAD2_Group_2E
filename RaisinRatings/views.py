@@ -229,22 +229,23 @@ def search(request):
     return render(request, 'RaisinRatings/search.html', {'result_list': result_list, 'search_term': search_term})
 
 def edit_movie(request, movie_title_slug):
-    
+    movie = Movie.objects.get(slug=movie_title_slug)
     try:
         author = User.objects.get(id = request.user.id) 
     except User.DoesNotExist:
         author = None
 
+
     if author is None:
         return redirect('/RaisinRatings/')
-
-    movie = Movie.objects.get(slug=movie_title_slug)
+   
+    
     form = MovieForm()
 
     if form.is_valid():
         if author:
                 movie = form.save(commit=False) 
-                movie.user = author  
+                movie.user = author 
                 movie.save()
         print("we are here")
         return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
