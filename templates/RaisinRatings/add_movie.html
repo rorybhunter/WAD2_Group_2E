@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
+{% if categories %}
     <div class="container p-5 text-center">
         <h2 class="display-4">Add a Movie</h2>
     </div>
@@ -58,10 +59,10 @@
                                         <label class="required" for="id_trailer_link">Trailer Link:</label>
                                         <input class="form-control" type="text" name="trailer_link" maxlength="128" required="" id="id_trailer_link" />
                                     </p>
-                                    
+                                    <p>
                                         <label for="id_poster">Upload poster:</label>
                                         <input class="form-control-file" type="file" name="poster" required="" id="id_poster">
-                                    </p> 
+                                    </p>
 
                                     <p>
                                         <label for="{{ form.category.id_for_label }}">Add to Category:</label>
@@ -81,4 +82,29 @@
             </div>
         </div>
     </div>
+{% else %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-6 bg-light">
+                <div class="card-body ">
+                    <div class="media">
+                        <div class="media-body">
+                            <h1 class="font-weight-light">There are no categories yet. Do you want to add one?</h1>
+                            <br />
+                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:add_category' %}">
+                                
+                                Add Category
+                            </a>
+                            <p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+{% endif %}
 {% endblock %}

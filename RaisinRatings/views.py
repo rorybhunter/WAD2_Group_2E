@@ -81,6 +81,8 @@ def user_logout(request):
 
 
 def add_movie(request):
+    categories = Category.objects.all()
+    context_dict = {}
     try:
         author = User.objects.get(id = request.user.id) 
     except User.DoesNotExist:
@@ -101,7 +103,9 @@ def add_movie(request):
     else:
         form = MovieForm()
 
-    return render(request, 'RaisinRatings/add_movie.html', {'form': form})
+    context_dict['form'] = form
+    context_dict['categories'] = categories
+    return render(request, 'RaisinRatings/add_movie.html', context_dict)
 
 
 def add_category (request):
@@ -228,6 +232,8 @@ def search(request):
             result_list, search_term = run_query(query)
     return render(request, 'RaisinRatings/search.html', {'result_list': result_list, 'search_term': search_term})
 
+
+
 def edit_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     try:
@@ -238,7 +244,6 @@ def edit_movie(request, movie_title_slug):
 
     if author is None:
         return redirect('/RaisinRatings/')
-   
     
     form = MovieForm()
 

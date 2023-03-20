@@ -26,6 +26,7 @@ class MovieForm(forms.ModelForm):
     summary = forms.CharField(max_length=Movie.SUMMARY_MAX_LENGTH)
     trailer_link = forms.CharField(max_length=Movie.TRAILER_MAX_LENGTH)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+    poster = forms.ImageField(required=False)
 
     widgets = {
         'user': forms.HiddenInput(),
@@ -61,6 +62,7 @@ class EditMovie(forms.ModelForm):
     main_actor = forms.CharField(max_length=Movie.MAIN_ACTOR_MAX_LENGTH)
     summary = forms.CharField(max_length=Movie.SUMMARY_MAX_LENGTH)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+    poster = forms.ImageField(required=False)
 
     class Meta:
         model = Movie
