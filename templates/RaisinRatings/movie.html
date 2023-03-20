@@ -9,7 +9,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="card mb-6 bg-light">
+            <div class="card mb-6 bg-light-brand">
                 <div class="card-body ">
                     <div class="media">
 <<<<<<< HEAD
@@ -19,7 +19,9 @@
 >>>>>>> 9ed93ccb13abc1ed69d2b1b0db1ff9b89e63517f
                         <div class="media-body">
                             <br />
+                            {% if user.userprofile.user_type == "CRITIC" %}
                             <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
+                            {% endif %}
                             <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:like_movie' movie.slug %}">
                                 <span data-feather="thumbs-up"></span>
                                 Like
@@ -28,36 +30,28 @@
                                 <span data-feather="thumbs-down"></span>
                                 Dislike
                             </a>
+                            {% if movie.user == user %}
+                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:delete_movie' movie.slug %}">
+                                <span data-feather="trash-2"></span>
+                                Delete
+
+                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:edit_move' movie.slug %}">
+                                <span data-feather="edit-3"></span>
+                                Edit
+                            </a>
+                            {% endif %}
                             <h1 class="font-weight-light">{{ movie.movie_name }}</h1>
                             <p>
                                 <div>Number of likes: <strong>{{ likes }}</strong></div>
                                 <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
                                 <div>Category:  <strong>{{ movie.category }}</strong> </div>
+                                <div>Added by: <strong> {{ movie.user }}</strong></div>
                             </p>
 
-                            <p>
-                                <div> {{movie.summary}} </div>
-                            </p>
-                            <p>
-                                    <div>Trailer: {{ trailer_link }} </div>
-                            </p>
-                            <p>
-                                    <div>
-                                        <iframe width="420" height="315"
-                                            src= {{ trailer_link }} allowfullscreen>
-                                        </iframe>
-                                    </div>
-                            </p>
-                            <p>
-                              {% if movie.username == user %}
-                              <div> <strong> Movie added by you </strong></div>
-                              <a href="{% url 'RaisinRatings:delete_movie' movie.slug %}"> Delete Movie </a>
-                              <div> </div>
-                              <a href=""> Edit movie </a>
-                              {% else %}
-                              <div> <strong> Movie added by {{ movie.username }} </strong> </div>
-                              {% endif %}
-                            </p>
+                            <div>
+                                <p> {{movie.summary}} </p>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -69,7 +63,28 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="card mb-6 bg-light">
+            <div class="card mb-6 bg-light-brand">
+                <div class="card-body">
+                    <h2 class="font-weight-light">
+                        Trailer: {{ trailer_link }} 
+                    </p>
+                    <p>
+                        <div>
+                            <iframe width="100%" height="auto"
+                                src= "{{ trailer_link }}" allowfullscreen>
+                            </iframe>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-6 bg-light-brand">
                 <div class="card-body">
                     <h3 class="font-weight-light">Reviews</h3>
                     <div>
