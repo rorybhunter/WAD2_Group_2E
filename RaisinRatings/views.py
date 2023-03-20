@@ -110,6 +110,7 @@ def delete_movie(request, movie_title_slug):
 
 def show_movie(request, movie_title_slug):
     context_dir = {}
+    context_dir['loop_times'] = range(1, 6)
     movie = Movie.objects.get(slug=movie_title_slug)
     reviews = Review.objects.filter(movie=movie)
     likes = movie.likes
@@ -172,15 +173,16 @@ def dislike_category(request, category_name_slug):
     return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
 
 def add_review(request, movie_title_slug):
-    movie = Movie.objects.get(slug=movie_title_slug) 
+    movie = Movie.objects.get(slug=movie_title_slug)
 
     form = ReviewForm()
-    
+
     if request.method == 'POST':
         form  = ReviewForm(request.POST)
         if form.is_valid():
             form.save(commit=False)
-            form.movie = movie 
+            form.starnum = request.POST.get('starnum')
+            form.movie = movie
             form.save(commit=True)
             return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
         else:

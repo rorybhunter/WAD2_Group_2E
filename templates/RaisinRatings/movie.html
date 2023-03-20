@@ -77,6 +77,16 @@
                             <div>
                               --  {{r.username}}
                             </div>
+                            <div>
+                                {% for i in loop_times %}
+                                    {% if i <= r.starnum %}
+                                    <span class="fa fa-star checked"></span>
+                                    {% else %}
+                                    <span class="fa fa-star"></span>
+                                    {% endif %}
+                                {% endfor %}
+                              {{r.starnum}}
+                            </div>
                             <br/>
                                 {{r.review}}
                         </li>
