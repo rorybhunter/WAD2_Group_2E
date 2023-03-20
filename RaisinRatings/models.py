@@ -30,10 +30,11 @@ class Movie(models.Model):
     main_actor = models.CharField(max_length=MAIN_ACTOR_MAX_LENGTH)
     likes = models.IntegerField(default=0)
     summary = models.CharField(max_length=SUMMARY_MAX_LENGTH)
-    trailer_link = models.CharField(max_length=TRAILER_MAX_LENGTH, default="")
+    trailer_link = models.CharField(max_length=TRAILER_MAX_LENGTH, default="", blank=True)
     slug = models.SlugField(unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     poster = models.ImageField(upload_to='movie_posters', blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     
     def save(self, *args, **kwargs):
@@ -50,7 +51,6 @@ class UserProfile(models.Model):
     likes = models.IntegerField(default=0)
     # additional attributes we wish to store.
     picture = models.ImageField(upload_to='profile_images', blank=True)
-
     USER_TYPE_CHOICES = (
 
         ('COUCH_POTATO', "Couch Potato"),

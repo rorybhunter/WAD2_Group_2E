@@ -11,9 +11,33 @@ Register
 </div>
 
 {% if registered %}
-<strong>thank you for registering!</strong>
-<a href="{% url 'RaisinRatings:index' %}">Return to the homepage.</a><br />
-
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-6 bg-light">
+                <div class="card-body ">
+                    <div class="media">
+                        <div class="media-body">
+                            <h1 class="font-weight-light">Thank you for regestering!</h1>
+                            <br />
+                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:index' %}">
+                                
+                                Home 
+                            </a>
+                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:login' %}">
+                                
+                                Login 
+                            </a>
+                            <p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
 {% else %}
 <div class="container">
     <div class="row">

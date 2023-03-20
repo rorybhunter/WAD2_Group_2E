@@ -12,7 +12,9 @@
         RaisinRatings - 
         {% block title_block %}
             This is title_block's default content.
-        {% endblock %}    
+        {% endblock %}  
+
+        
     </title>
     
     <!-- Bootstrap core CSS -->
@@ -22,10 +24,12 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <!-- Brand specific styles for this template -->
+    <link href="{% static 'css/brand.css' %}" rel="stylesheet">
     </head>
     <body>
         <header>
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-0">
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-alert p-0 ">
                 <a class="navbar-brand p-3" href="{% url 'RaisinRatings:index' %}">RaisinRatings</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -40,9 +44,10 @@
 
                         {% if user.is_authenticated %}
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:logout' %}">Logout</a></li>
+                        {% if user.userprofile.user_type == "CREATOR" %}
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:add_movie' %}">Add Movie</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:add_category' %}">Add Category</a></li>
-
+                        {% endif %}
                         {% else %}
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:login' %}">Login</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:register' %}">Sign Up</a></li>
@@ -53,12 +58,14 @@
                         <div class="nav-item ml-2 mr-1">
                             <p class="nav-link m-auto text-light" style="float:right;">{{ request.user }}</p>
                         </div>
-                        <img style="height:3.5rem"src="{{ MEDIA_URL }}/{{ user.userprofile.picture }}" />
+                        <div style="width: 3.5rem; height:3.5rem; overflow:hidden">
+                        <img style="max-width: 3.5rem" src="{{ MEDIA_URL }}/{{ user.userprofile.picture }}" />
+                        </div>
                     {% else %}
                     <div class="nav-item ml-2 mr-1">
                         <p class="nav-link m-auto text-light" style="float:right;">Anonymous</p>
                     </div>
-                        <img style="height:3.5rem"src="{% static 'images/default_profile/default.png' %}" />
+                        <img style="width: 3.5rem; height:3.5rem; overflow: clip;"src="{% static 'images/default_profile/default.png' %}" />
                     {% endif %}
                 </div>
             </nav>
