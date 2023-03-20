@@ -43,16 +43,6 @@
                                 <div>Category:  <strong>{{ movie.category }}</strong> </div>
                                 <div>Added by: <strong> {{ movie.user }}</strong></div>
                             </p>
-                            <p>
-                                {% if movie.username == user %}
-                                <div> <strong> Movie added by you </strong></div>
-                                <a href="{% url 'RaisinRatings:delete_movie' movie.slug %}"> Delete Movie </a>
-                                <div> </div>
-                                <a href=""> Edit movie </a>
-                                {% else %}
-                                <div> <strong> Movie added by {{ movie.username }} </strong> </div>
-                                {% endif %}
-                            </p>
 
                             <div>
                                 <p> {{movie.summary}} </p>
