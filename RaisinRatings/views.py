@@ -162,10 +162,10 @@ def cat_page(request, category_name_slug):
 
 def like_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
-    movie.likes += 1
-    movie.save()
     user = User.objects.get(id = request.user.id)
     if movie not in user.userprofile.movies:
+        movie.likes += 1
+        movie.save()
         user.userprofile.movies.append(movie)
         print(user.userprofile.movies)
 
@@ -174,10 +174,10 @@ def like_movie(request, movie_title_slug):
 
 def dislike_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
-    movie.likes -= 1
-    movie.save()
     user = User.objects.get(id = request.user.id)
     if movie in user.userprofile.movies:
+        movie.likes -= 1
+        movie.save()
         user.userprofile.movies.remove(movie)
         print(user.userprofile.movies)
 
