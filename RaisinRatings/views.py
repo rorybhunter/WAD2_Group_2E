@@ -201,21 +201,34 @@ def dislike_category(request, category_name_slug):
 
 
 def add_review(request, movie_title_slug):
-    movie = Movie.objects.get(slug=movie_title_slug) 
 
-    form = ReviewForm()
-    
+    try:
+        author = User.objects.get(id = request.user.id)
+    except User.DoesNotExist:
+        author = None
+
+    if author is None:
+        return redirect('/RaisinRatings/')
+
+    review = ReviewForm()
+    movie = Movie.objects.get(slug=movie_title_slug)
+
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
+
+        form = ReviewForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save(commit=False)
-            form.movie = movie 
-            form.save(commit=True)
-            return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
-        else:
-            print('form not valid')
-            print(form.errors)
-    context_dict = {'form': form, 'movie': movie}
+            if author:
+                review = form.save(commit=False)
+                review.username = author
+                review.movie = movie
+                review.save()
+                return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+            else:
+                print('form not valid')
+                review = ReviewForm()
+                print(form.errors)
+
+    context_dict = {'form': review, 'movie': movie}
     return render(request, 'RaisinRatings/add_review.html', context=context_dict)
 
 

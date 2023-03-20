@@ -69,8 +69,8 @@ def add_category(name, description):
     return c
 
 
-def add_movie(movie_name, category, main_actor, summary, poster = None, trailer_link = None):
-    m = Movie.objects.get_or_create(movie_name = movie_name, category =category)[0]
+def add_movie(movie_name, category, user, main_actor, summary, poster = None, trailer_link = None):
+    m = Movie.objects.get_or_create(movie_name = movie_name, category =category, user=user)[0]
     m.trailer_link = trailer_link
     m.summary = summary
     m.main_actor = main_actor
