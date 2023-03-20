@@ -7,8 +7,15 @@
 
 {% block body_block %}
     <h1> {{ category }} </h1>
-    <div> <a href="{% url 'RaisinRatings:like_category' category.slug %}"> Like </a> 
-     <a href="{% url 'RaisinRatings:dislike_category' category.slug %}"> Dislike </a> </div> 
+    <div> 
+        <button id = "like_btn"
+                data-categoryname = "{{ name }}"
+                class = "btn btn-primary btn-sm"
+                type = "button">
+            <span data-feather = "thumbs-up"></span>
+            Like Category
+            </button>
+    </div> 
         <div><strong> {{ likes }} </strong> likes </div>
         <div> {{ description }}</div>
         <div> 
