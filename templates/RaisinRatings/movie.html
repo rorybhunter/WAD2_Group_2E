@@ -22,10 +22,25 @@
                                 <span data-feather="thumbs-up"></span>
                                 Like
                             </a>
+
                             <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:dislike_movie' movie.slug %}">
                                 <span data-feather="thumbs-down"></span>
                                 Dislike
                             </a>
+
+                            <form class="form-inline"
+                                id="movie_search"
+                                method="post"
+                                action="{% url 'RaisinRatings:search' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="query" id="query" value="{{ movie.movie_name }}">
+                                <button class="btn btn-primary"
+                                    type="sumbit"
+                                    name="submit">Search the web for this movie {{ movie.movie_title }} </button>
+                            </form>
+
+
+
                             {% if movie.user == user %}
                             <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:delete_movie' movie.slug %}">
                                 <span data-feather="trash-2"></span>

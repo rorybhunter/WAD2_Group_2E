@@ -242,16 +242,19 @@ def categories(request):
 
 def search(request):
     result_list = []
-    search_term = ""  # included and passed as a parameter to allow the search term to still be in the search box after searching and reloading pasge.
+    print("Search")
+
     if request.method == 'POST':
+        print("post")
         query = request.POST['query'].strip()
+        print(query)
         if query:
-            result_list, search_term = run_query(query)
-    return render(request, 'RaisinRatings/search.html', {'result_list': result_list, 'search_term': search_term})
+            result_list, query = run_query(query)
+    return render(request, 'RaisinRatings/search.html', {'result_list': result_list, 'search_term': query})
 
 
 
-def edit_movie(request, movie_title_slug):
+def edit_movie(request, movie_title_slug=""):
     movie = Movie.objects.get(slug=movie_title_slug)
     try:
         author = User.objects.get(id = request.user.id)
