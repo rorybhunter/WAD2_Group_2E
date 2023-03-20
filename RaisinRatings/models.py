@@ -51,6 +51,7 @@ class UserProfile(models.Model):
     likes = models.IntegerField(default=0)
     # additional attributes we wish to store.
     picture = models.ImageField(upload_to='profile_images', blank=True)
+    movies = []
     USER_TYPE_CHOICES = (
 
         ('COUCH_POTATO', "Couch Potato"),

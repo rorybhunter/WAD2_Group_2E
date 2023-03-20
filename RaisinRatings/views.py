@@ -1,5 +1,5 @@
 from RaisinRatings.forms import ReviewForm, UserForm, UserProfileForm, MovieForm, CategoryForm
-from RaisinRatings.models import Review, Category, Movie, User, Permission
+from RaisinRatings.models import Review, Category, Movie, User, Permission, UserProfile
 from django.urls import reverse 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -162,18 +162,27 @@ def cat_page(request, category_name_slug):
 
 def like_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
-    movie.likes += 1
-    movie.save()
+    user = User.objects.get(id = request.user.id)
+    if movie not in user.userprofile.movies:
+        movie.likes += 1
+        movie.save()
+        user.userprofile.movies.append(movie)
+        print(user.userprofile.movies)
 
     return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
 
 
 def dislike_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
-    movie.likes -= 1
-    movie.save()
+    user = User.objects.get(id = request.user.id)
+    if movie in user.userprofile.movies:
+        movie.likes -= 1
+        movie.save()
+        user.userprofile.movies.remove(movie)
+        print(user.userprofile.movies)
 
     return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+
 
 def delete_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
