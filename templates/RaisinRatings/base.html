@@ -53,7 +53,6 @@
                         </li>
                         {% endif %}
                         {% if user.is_authenticated %}
-                        <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:logout' %}">Logout</a></li>
                         {% else %}
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:login' %}">Login</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:register' %}">Sign Up</a></li>
@@ -61,23 +60,30 @@
                     </ul>
                     
                     {% if user.is_authenticated %}
-                        <div class="nav-item ml-2 mr-1">
-                            <a href="{% url 'RaisinRatings:user_page' user.username %}" class="nav-link m-auto text-light" style="float:right;">{{ request.user }}</a>
+                    <div class="nav-item dropdown ml-2 mr-1">
+                        <a class="nav-link dropdown-toggle m-auto text-light" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            href="{% url 'RaisinRatings:user_page' user.username %}" style="float:right;">
+                            {{ request.user }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="{% url 'RaisinRatings:user_page' user.username %}">View Profile</a>
+                            <a class="dropdown-item" href="{% url 'RaisinRatings:logout' %}">Log Out</a>
                         </div>
-                        <div style="width: 3.5rem; height:3.5rem; overflow:hidden">
-                            <a href="{% url 'RaisinRatings:user_page' user.username %}">
-                                {% if request.user.userprofile.picture %}
-                                <img style="height: 3.5rem"src="{{ MEDIA_URL }}{{ user.userprofile.picture }}" />
-                                {% else %}
-                                <img style="height: 3.5rem"src="{% static 'images/default_profile/default.png' %}" />
-                                {% endif %}
-                            </a>
-                        </div>
+                    </div>
+                    <div style="width: 3.5rem; height:3.5rem; overflow:hidden">
+                        <a href="{% url 'RaisinRatings:user_page' user.username %}">
+                            {% if request.user.userprofile.picture %}
+                            <img style="height: 3.5rem"src="{{ MEDIA_URL }}{{ user.userprofile.picture }}" />
+                            {% else %}
+                            <img style="height: 3.5rem"src="{% static 'images/default_profile/default.png' %}" />
+                            {% endif %}
+                        </a>
+                    </div>
                     {% else %}
                     <div class="nav-item ml-2 mr-1">
                         <p class="nav-link m-auto text-light" style="float:right;">Anonymous</p>
                     </div>
-                        <img style="width: 3.5rem; height:3.5rem; overflow: clip;"src="{% static 'images/default_profile/default.png' %}" />
+                        <img style="width: 3.5rem; height:3.5rem; overflow: clip;" src="{% static 'images/default_profile/default.png' %}" />
                     {% endif %}
                 </div>
             </nav>

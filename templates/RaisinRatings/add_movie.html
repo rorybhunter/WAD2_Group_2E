@@ -16,7 +16,7 @@
                 <div class="card mb-6 bg-light">
                     <div class="card-body">
                         <div class="form-group">
-                            <form role="form" id="movie_form" method="post" action="{% url 'RaisinRatings:add_movie' %}" enctype="multipart/form-data">
+                            <form role="form" id="movie_form" method="post" action="#" enctype="multipart/form-data">
                                 {% csrf_token %}
 
                                  <!-- old fields
@@ -29,7 +29,13 @@
                                         {{ field }}<br />
                                         <div class = "p-2"></div>
                                     {% endfor %} -->
-
+                                
+                                {% for field in form.visible_fields %}
+                                    {% if field.errors %}
+                                        There was an error with field {{ field.name }}
+                                        {{ field.errors }}
+                                    {% endif %}
+                                {% endfor %}
                                 <input type="hidden" name="slug" id="id_slug">
                                 <div class="form-group">
                                     <p class="required">
@@ -41,23 +47,12 @@
                                         <input class="form-control" type="text" name="main_actor" maxlength="128" required="" id="id_main_actor" />
                                     </p>
                                     <p>
-                                        <!-- <label class="required" for="id_username">Username:</label>
-                                        <input class="form-control" type="text" name="username" maxlength="128" required="" id="id_username" /> -->
-
-                                        <!-- <label required for="id_username">Username:</label>
-                                        <select name="{{ form.categories.name }}" id="{{ form.categories.id_for_label }}">
-                                            {% for username in form.username.field.queryset %}
-                                                <option value="{{ username.id }}">{{ username }}</option>
-                                            {% endfor %}
-                                        </select> -->
-                                    </p>
-                                    <p>
                                         <label class="required" for="id_summary">Summary:</label><br />
-                                        <textarea class="form-control textarea" type="text" name="summary" maxlength="500" required="" id="id_summary" rows="3"></textarea>
+                                        <textarea class="form-control textarea" type="text" name="summary" maxlength="500" required="" id="id_summary" rows="5"></textarea>
                                     </p>
                                     <p>
                                         <label class="required" for="id_trailer_link">Trailer Link:</label>
-                                        <input class="form-control" type="text" name="trailer_link" maxlength="128" required="" id="id_trailer_link" />
+                                        <input class="form-control" type="text" name="trailer_link" maxlength="128" id="id_trailer_link" />
                                     </p>
                                     <p>
                                         <label for="id_poster">Upload poster:</label>

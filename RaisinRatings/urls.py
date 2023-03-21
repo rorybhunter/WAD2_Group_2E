@@ -15,7 +15,7 @@ urlpatterns = [
     path('movie/<slug:movie_title_slug>/like/', views.like_movie, name='like_movie'),
     path('movie/<slug:movie_title_slug>/dislike/', views.dislike_movie, name='dislike_movie'),
     path('movie/<slug:movie_title_slug>/delete/', views.delete_movie, name = 'delete_movie'),
-    path('movie/<slug:movie_title_slug>/edit/', views.edit_movie, name='edit_move'),
+    path('movie/<slug:movie_title_slug>/edit/', views.edit_movie, name='edit_movie'),
     path('categories/', views.categories, name='categories'),
     path('cat_page/', views.cat_page, name='category'), path('cat_page/', views.cat_page, name='category'),
     path('search/', views.search, name='search'),

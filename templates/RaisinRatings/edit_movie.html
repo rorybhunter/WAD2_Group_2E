@@ -18,6 +18,13 @@
                             <form role="form" id="movie_form" method="post" action="{% url 'RaisinRatings:add_movie' %}" enctype="multipart/form-data">
                                 {% csrf_token %}
 
+                                {% for field in form.visible_fields %}
+                                    {% if field.errors %}
+                                        There was an error with field {{ field.name }}
+                                        {{ field.errors }}
+                                    {% endif %}
+                                {% endfor %}
+
                                  <!-- old fields
                                     {% for hidden in form.hidden_fields %}
                                     {{ hidden }}
@@ -40,27 +47,16 @@
                                         <input class="form-control" type="text" name="main_actor" maxlength="128" required="" id="id_main_actor" value = "{{ movie.main_actor }}" />
                                     </p>
                                     <p>
-                                        <!-- <label class="required" for="id_username">Username:</label>
-                                        <input class="form-control" type="text" name="username" maxlength="128" required="" id="id_username" /> -->
-
-                                        <!-- <label required for="id_username">Username:</label>
-                                        <select name="{{ form.categories.name }}" id="{{ form.categories.id_for_label }}">
-                                            {% for username in form.username.field.queryset %}
-                                                <option value="{{ username.id }}">{{ username }}</option>
-                                            {% endfor %}
-                                        </select> -->
-                                    </p>
-                                    <p>
                                         <label class="required" for="id_summary">Summary:</label><br />
                                         <textarea class="form-control textarea" type="text" name="summary" maxlength="500" required="" id="id_summary" rows="3">{{movie.summary}}</textarea>
                                     </p>
                                     <p>
                                         <label class="required" for="id_trailer_link">Trailer Link:</label>
-                                        <input class="form-control" type="text" name="trailer_link" maxlength="128" required="" id="id_trailer_link" value="{{ movie.trailer_link }}" />
+                                        <input class="form-control" type="text" name="trailer_link" maxlength="128" id="id_trailer_link" value="{{ movie.trailer_link }}" />
                                     </p>
                                     
                                         <label for="id_poster">Upload poster:</label>
-                                        <input class="form-control-file" type="file" name="poster" required="" id="id_poster">
+                                        <input class="form-control-file" type="file" name="poster" id="id_poster">
                                     </p> 
 
                                     <p>
