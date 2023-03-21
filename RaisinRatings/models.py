@@ -55,6 +55,7 @@ class UserProfile(models.Model):
     # additional attributes we wish to store.
     picture = models.ImageField(upload_to='profile_images', blank=True)
     movies = []
+    categories = []
     USER_TYPE_CHOICES = (
 
         ('COUCH_POTATO', "Couch Potato"),
