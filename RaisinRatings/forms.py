@@ -43,24 +43,24 @@ class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=Category.CATEGORY_MAX_LENGTH, help_text="category name")
     description = forms.CharField(max_length=Category.DESCRIPTION_MAX_LENGTH)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
-    
-    class Meta: 
-        model = Category 
+
+    class Meta:
+        model = Category
         fields = ["name", 'description']
 
 
 class ReviewForm(forms.ModelForm):
+    starnum = forms.IntegerField(widget=forms.HiddenInput(), required=True)
     title = forms.CharField(max_length=Review.REVIEW_TITLE_MAX_LENGTH, help_text = 'Enter your review title: ')
     review = forms.CharField(max_length=Review.REVIEW_MAX_LENGTH, help_text = 'Enter your review: ')
     widgets = {
         'user': forms.HiddenInput(),
         'movie': forms.HiddenInput(),
-
     }
     class Meta:
        model = Review
        exclude = ('user', 'movie')
-       fields = ('title', 'review',)
+       fields = ('title', 'review', 'starnum')
 
 class EditMovie(forms.ModelForm):
     movie_name = forms.CharField(max_length=Movie.MOVIE_TITLE_MAX_LENGTH)

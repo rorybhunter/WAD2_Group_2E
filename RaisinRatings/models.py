@@ -78,5 +78,7 @@ class Review(models.Model):
     review = models.CharField(max_length=REVIEW_MAX_LENGTH)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     username = models.ForeignKey(User, on_delete=models.CASCADE)
+    starnum = models.IntegerField(default=0)
+
     def __str__(self) :
         return self.review 

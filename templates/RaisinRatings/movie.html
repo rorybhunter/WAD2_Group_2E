@@ -56,7 +56,7 @@
                                 Edit
                             </a>
 
-                            
+
 
                             {% endif %}
                             <h1 class="font-weight-light">{{ movie.movie_name }}</h1>
@@ -70,7 +70,7 @@
                             <div>
                                 <p> {{movie.summary}} </p>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -86,8 +86,8 @@
             <div class="card mb-6 bg-light-brand">
                 <div class="card-body">
                     <h2 class="font-weight-light">
-                        Trailer: {{ trailer_link }} 
-                    </p>
+                        Trailer:
+                    </h2>
                     <p>
                         <div>
                             <iframe width="100%" height="500px"
@@ -114,7 +114,7 @@
                         {% for r in reviews %}
                         <li class="list-group-item">
                             <div class="media">
-                                <a href="{% url 'RaisinRatings:user_page' r.username %}"> 
+                                <a href="{% url 'RaisinRatings:user_page' r.username %}">
                                     {% if r.username.userprofile.picture %}
                                     <img class="mr-3 rounded align-self-start" alt="{{r.username.userprofile.picture}}'s profile picture " width="75px" src="{{ MEDIA_URL }}{{ r.username.userprofile.picture }}">
                                     {% else %}
@@ -122,16 +122,26 @@
                                     {% endif %}
                                 </a>
                                 <div class="media-body">
-                                    <a href="{% url 'RaisinRatings:user_page' r.username %}" style="text-decoration: none;"> 
+                                    <a href="{% url 'RaisinRatings:user_page' r.username %}" style="text-decoration: none;">
                                         <p class="text-secondary mb-0" >
                                             {{r.username}}
                                         </p>
                                     </a>
+                                    <div>
+                                        {% for i in loop_times %}
+                                            {% if i <= r.starnum %}
+                                            <span class="fa fa-star checked"></span>
+                                            {% else %}
+                                            <span class="fa fa-star"></span>
+                                            {% endif %}
+                                        {% endfor %}
+                                      {{r.starnum}}
+                                    </div>
                                     <strong > {{ r.title }} </strong>
                                     <p class="mb-0">
                                         {{r.review}}
                                     </p>
-                                </div>                   
+                                </div>
                         </li>
                         {% endfor %}
                         </ul>

@@ -127,6 +127,7 @@ def delete_movie(request, movie_title_slug):
 def show_movie(request, movie_title_slug):
 
     context_dir = {}
+    context_dir['loop_times'] = range(1, 6)
     movie = Movie.objects.get(slug=movie_title_slug)
     reviews = Review.objects.filter(movie=movie)
     likes = movie.likes
@@ -226,6 +227,7 @@ def add_review(request, movie_title_slug):
         if form.is_valid():
             if author:
                 review = form.save(commit=False)
+                review.starnum = request.POST.get('starnum')
                 review.username = author
                 review.movie = movie
                 review.save()
