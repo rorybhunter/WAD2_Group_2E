@@ -15,26 +15,49 @@
                         <img class="mr-3 rounded" alt="{{movie.movie_name}}'s movie poster" width="250" src="{{ MEDIA_URL }}{{ movie.poster }}">
                         <div class="media-body">
                             <br />
-                            {% if user.userprofile.user_type == "CRITIC" %}
-                            <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
-                            {% endif %}
-                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:like_movie' movie.slug %}">
+                            <form class="form-inline"
+                                id="movie_search"
+                                method="post"
+                                action="{% url 'RaisinRatings:search' %}"
+                                style="display:inline-block; ">
+                                {% csrf_token %}
+                                <input type="hidden" name="query" id="query" value="{{ movie.movie_name }}">
+                                <button class="btn btn-outline-secondary btn-sm"
+                                    type="sumbit"
+                                    name="submit"> <span data-feather="search"></span>Search the web for {{ movie.movie_name }} </button>
+                            </form>
+
+                            <a class="btn btn-outline-success btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:like_movie' movie.slug %}">
                                 <span data-feather="thumbs-up"></span>
                                 Like
                             </a>
-                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:dislike_movie' movie.slug %}">
+
+                            <a class="btn btn-outline-danger btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:dislike_movie' movie.slug %}">
                                 <span data-feather="thumbs-down"></span>
                                 Dislike
                             </a>
+
+                            {% if user.userprofile.user_type == "CRITIC" %}
+                            <a class="btn btn-outline-dark btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">
+                                Add review
+                            </a>
+                            {% endif %}
+
                             {% if movie.user == user %}
-                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:delete_movie' movie.slug %}">
+                            <a class="btn btn-outline-danger btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:delete_movie' movie.slug %}">
                                 <span data-feather="trash-2"></span>
                                 Delete
+                            </a>
 
-                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:edit_movie' movie.slug %}">
+
+
+                            <a class="btn btn-outline-warning btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:edit_movie' movie.slug %}">
                                 <span data-feather="edit-3"></span>
                                 Edit
                             </a>
+
+                            
+
                             {% endif %}
                             <h1 class="font-weight-light">{{ movie.movie_name }}</h1>
                             <p>
@@ -56,6 +79,7 @@
     </div>
 </div>
 <br />
+{% if movie.trailer_link %}
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -66,7 +90,7 @@
                     </p>
                     <p>
                         <div>
-                            <iframe width="100%" height="auto"
+                            <iframe width="100%" height="500px"
                                 src= "{{ trailer_link }}" allowfullscreen>
                             </iframe>
                         </div>
@@ -77,23 +101,37 @@
     </div>
 </div>
 <br />
+{% endif %}
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-6 bg-light-brand">
                 <div class="card-body">
-                    <h3 class="font-weight-light">Reviews</h3>
+                    <h3 class="font-weight-light ">Reviews</h3>
                     <div>
                         {% if reviews %}
                         <ul class="list-group">
                         {% for r in reviews %}
                         <li class="list-group-item">
-                            <strong> {{ r.title }} </strong>
-                            <div>
-                              --  {{r.username}}
-                            </div>
-                            <br/>
-                                {{r.review}}
+                            <div class="media">
+                                <a href="{% url 'RaisinRatings:user_page' r.username %}"> 
+                                    {% if r.username.userprofile.picture %}
+                                    <img class="mr-3 rounded align-self-start" alt="{{r.username.userprofile.picture}}'s profile picture " width="75px" src="{{ MEDIA_URL }}{{ r.username.userprofile.picture }}">
+                                    {% else %}
+                                    <img class="mr-3 rounded align-self-start" alt="{{r.username.userprofile.picture}}'s profile picture " width="75px" src="{% static 'images/default_profile/default.png' %}">
+                                    {% endif %}
+                                </a>
+                                <div class="media-body">
+                                    <a href="{% url 'RaisinRatings:user_page' r.username %}" style="text-decoration: none;"> 
+                                        <p class="text-secondary mb-0" >
+                                            {{r.username}}
+                                        </p>
+                                    </a>
+                                    <strong > {{ r.title }} </strong>
+                                    <p class="mb-0">
+                                        {{r.review}}
+                                    </p>
+                                </div>                   
                         </li>
                         {% endfor %}
                         </ul>

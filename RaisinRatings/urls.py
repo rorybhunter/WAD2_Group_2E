@@ -19,9 +19,11 @@ urlpatterns = [
     path('categories/', views.categories, name='categories'),
     path('cat_page/', views.cat_page, name='category'), path('cat_page/', views.cat_page, name='category'),
     path('search/', views.search, name='search'),
+    # path('search/<str:search_term>/', views.search, name='search'),
     path('cat_page/<slug:category_name_slug>/', views.cat_page, name='category'),
     path('add_category/', views.add_category, name='add_category'),
     path('cat_page/<slug:category_name_slug>/like_category/', views.like_category, name = 'like_category'),
     path('cat_page/<slug:category_name_slug>/dislike_category/', views.dislike_category, name = 'dislike_category'),
+    path('user_page/<username>/', views.user_page, name='user_page'),
 
 ]
