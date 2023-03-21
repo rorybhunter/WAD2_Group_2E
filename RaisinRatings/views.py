@@ -287,7 +287,7 @@ def edit_movie(request, movie_title_slug=""):
     movie.delete()
     return render(request, 'RaisinRatings/edit_movie.html', context_dict)
 
-@login_required
+
 def user_page(request, username):
     context_dir = {}
     user = User.objects.get(username=username)
