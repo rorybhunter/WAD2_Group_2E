@@ -2,10 +2,19 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Eddit movie 
+    Add movie 
 {% endblock %}
 
 {% block body_block %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+ </form>  
+ 
+{% endblock %}
+
     <div class="container p-5 text-center">
         <h2 class="display-4">Edit Movie</h2>
     </div>
@@ -78,5 +87,6 @@
         </div>
     </div>
 {% endblock %}
+
 
 

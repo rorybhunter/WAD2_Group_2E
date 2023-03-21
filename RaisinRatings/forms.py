@@ -72,6 +72,3 @@ class EditMovie(forms.ModelForm):
     class Meta:
         model = Movie
         fields = ['movie_name', 'main_actor', 'summary', 'poster']
-
-
-

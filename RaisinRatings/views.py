@@ -60,7 +60,6 @@ def user_login(request):
         password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
-
         if user:
             if user.is_active:
                 login(request, user)
@@ -145,6 +144,7 @@ def show_movie(request, movie_title_slug):
     context_dir['reviews'] = reviews
     context_dir['likes'] = likes
     context_dir['trailer_link'] = url
+    
     return render(request, 'RaisinRatings/movie.html', context=context_dir)
 
 
@@ -265,29 +265,27 @@ def search(request):
 @login_required
 def edit_movie(request, movie_title_slug=""):
     movie = Movie.objects.get(slug=movie_title_slug)
-    try:
-        author = User.objects.get(id = request.user.id)
-    except User.DoesNotExist:
-        author = None
-
-
-    if author is None:
-        return redirect('/RaisinRatings/')
-
-    form = MovieForm()
-
-    if form.is_valid():
-        if author:
-                movie = form.save(commit=False)
-                movie.user = author
-                movie.save()
-        print("we are here")
-        return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+   
+    if request.method == 'POST':
+        form = MovieForm(request.POST, request.FILES, instance=movie)
+        
+        if form.is_valid():
+            # update the existing `Band` in the database
+            form.save()
+            # redirect to the detail page of the `Band` we just updated
+            return redirect('/RaisinRatings/')
+        else: 
+            print(form.errors, form.errors)
     else:
-        print(form.errors)
-    context_dict = {'form': form, 'movie': movie}
-    movie.delete()
-    return render(request, 'RaisinRatings/edit_movie.html', context_dict)
+        form = MovieForm(instance=movie)
+
+
+    return render(request, 'RaisinRatings/edit_movie.html', {'form': form, 'movie': movie})
+
+
+
+
+    
 
 
 def user_page(request, username):
