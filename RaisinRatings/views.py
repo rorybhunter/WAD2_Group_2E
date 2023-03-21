@@ -127,6 +127,7 @@ def delete_movie(request, movie_title_slug):
 def show_movie(request, movie_title_slug):
 
     context_dir = {}
+    context_dir['loop_times'] = range(1, 6)
     movie = Movie.objects.get(slug=movie_title_slug)
     reviews = Review.objects.filter(movie=movie)
     likes = movie.likes
@@ -188,23 +189,30 @@ def delete_movie(request, movie_title_slug):
 
     return redirect('/RaisinRatings/')
 
+
 @login_required
 def like_category(request, category_name_slug):
     category = Category.objects.get(slug=category_name_slug)
-    print("here")
-    category.likes += 1
-    category.save()
+    user = User.objects.get(id = request.user.id)
+    if category not in user.userprofile.categories:
+        category.likes +=1
+        category.save()
+        user.userprofile.categories.append(category)
 
     return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
+
 
 @login_required
 def dislike_category(request, category_name_slug):
     category = Category.objects.get(slug=category_name_slug)
-    print("here")
-    category.likes -= 1
-    category.save()
+    user = User.objects.get(id = request.user.id)
+    if category in user.userprofile.categories:
+        category.likes -=1
+        category.save()
+        user.userprofile.categories.remove(category)
 
     return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
+
 
 @login_required
 def add_review(request, movie_title_slug):
@@ -226,6 +234,7 @@ def add_review(request, movie_title_slug):
         if form.is_valid():
             if author:
                 review = form.save(commit=False)
+                review.starnum = request.POST.get('starnum')
                 review.username = author
                 review.movie = movie
                 review.save()

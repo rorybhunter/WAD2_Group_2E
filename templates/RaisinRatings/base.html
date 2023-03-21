@@ -12,9 +12,9 @@
         RaisinRatings - 
         {% block title_block %}
             This is title_block's default content.
-        {% endblock %}  
+        {% endblock %}
 
-        
+
     </title>
     
     <!-- Bootstrap core CSS -->
@@ -24,6 +24,8 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/stars.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Brand specific styles for this template -->
     <link href="{% static 'css/brand.css' %}" rel="stylesheet">
     </head>
@@ -58,7 +60,7 @@
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:register' %}">Sign Up</a></li>
                         {% endif %}
                     </ul>
-                    
+
                     {% if user.is_authenticated %}
                     <div class="nav-item dropdown ml-2 mr-1">
                         <a class="nav-link dropdown-toggle m-auto text-light" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -83,7 +85,7 @@
                     <div class="nav-item ml-2 mr-1">
                         <p class="nav-link m-auto text-light" style="float:right;">Anonymous</p>
                     </div>
-                        <img style="width: 3.5rem; height:3.5rem; overflow: clip;" src="{% static 'images/default_profile/default.png' %}" />
+                        <img style="width: 3.5rem; height:3.5rem;" src="{% static 'images/default_profile/default.png' %}" />
                     {% endif %}
                 </div>
             </nav>
@@ -92,7 +94,7 @@
         <div class="container-fluid">
             <div class="row">
                 <main role="main" class="col-md-12  ml-sm-auto col-lg-12 px-4">		
-                    
+
                     {% block body_block %}{% endblock %}
                     
                     <!-- FOOTER -->

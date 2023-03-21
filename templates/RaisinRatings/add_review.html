@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block body_block %}
-
 <div class="container p-5 text-center">
     <h2 class="display-4">Add a Review</h2>
 </div>
@@ -16,6 +15,12 @@
             <div class="card mb-6 bg-light-brand">
                 <div class="card-body">
                     <div class="form-group">
+                            <div class="stars px-auto" style="display: inline" >
+                                  {% for i in "12345" %}
+                                    <span id="star{{ i }}" class="fa fa-star"></span>
+                                  {% endfor %}
+                            </div>
+
                         <form role="form" id="review_form" method="post" action="#">
                             {% csrf_token %}
                             {% for hidden in form.hidden_fields %}
@@ -33,7 +38,7 @@
                                     <input class="form-control" type="text" name="title" maxlength="20" required="" id="id_title">
                                 </p>
                                 <p>
-                                    <labe class="required" for="id_review">Enter your review here</label><br />
+                                    <label class="required" for="id_review">Enter your review here</label><br />
                                     <textarea class="form-control textarea" type="text" name="review" maxlength="500" required="" id="id_review" rows="3"></textarea>
                                 </p>
                             </div>
@@ -61,14 +66,15 @@
         <p>
             {{ field.errors }}
             {{ field.help_text }}
-            {{ field }} 
+            {{ field }}
         </p>
-        
+
     </div>
-        
+
     {% endfor %}
     <input type="submit" name="submit" value="Create Review" />
 
     </form>
 </div> -->
+    <script type="text/javascript" src="{% static 'js/stars.js' %}"></script>
 {% endblock %}

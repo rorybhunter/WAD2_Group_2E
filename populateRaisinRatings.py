@@ -51,6 +51,17 @@ def populate():
     'poster':os.path.join('example_posters', 'shesAllThat.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=lHGweYtpQKI', 'likes': 85}, 
     ]
 
+    comedyMovies = [ 
+    {'movie_name':'Inside Out', 'main_actor': 'Amy Poehler', 'summary':'After young Riley is uprooted from her Midwest life and moved to San Francisco, her emotions - Joy, Fear, Anger, Disgust and Sadness - conflict on how best to navigate a new city, house, and school.',
+    'poster':os.path.join('example_posters', 'insideOut.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=yRUAzGQ3nSY','likes': 9},
+    {'movie_name':'Toy Story', 'main_actor': 'Tom Hanks', 'summary':"A cowboy doll is profoundly threatened and jealous when a new spaceman action figure supplants him as top toy in a boy's bedroom.",
+    'poster':os.path.join('example_posters', 'toyStory.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=v-PjgYDrg70', 'likes': 500}, 
+    {'movie_name':'Encanto', 'main_actor': 'Stephanie Beatriz', 'summary':'A Colombian teenage girl has to face the frustration of being the only member of her family without magical powers.',
+    'poster':os.path.join('example_posters', 'encanto.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=CaimKeDcudo', 'likes': 3}, 
+     {'movie_name':"Moana", 'main_actor': "Auli'i Cravalho", 'summary':"In Ancient Polynesia, when a terrible curse incurred by the Demigod Maui reaches Moana's island, she answers the Ocean's call to seek out the Demigod to set things right.",
+    'poster':os.path.join('example_posters', 'moana.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=LKFuXETZUsI', 'likes': 72}, 
+    ]
+
     reviews = [{'title':'Good', 'review':'I like this movie a lot!'}, 
     {'title': 'Bad', 'review': 'I do not like this movie'},
     {'title': 'Underrated', 'review':'this movie is underrated.'}, 
@@ -63,6 +74,7 @@ def populate():
     {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.'}, 
     {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.'}, 
     {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.'}]
+
     
     cats = {
         'Horror': {'description': 'Scary Movies', 'movies': horrorMovies, 'likes': 3}, 
