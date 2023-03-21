@@ -287,3 +287,19 @@ def edit_movie(request, movie_title_slug=""):
     movie.delete()
     return render(request, 'RaisinRatings/edit_movie.html', context_dict)
 
+
+def user_page(request, username):
+    context_dir = {}
+    user = User.objects.get(username=username)
+    userprofile = user.userprofile
+    username = user.username
+    picture = userprofile.picture
+    user_type = userprofile.user_type
+    movies = Movie.objects.all()
+
+
+    context_dir['page_user'] = user
+    context_dir['picture'] = picture
+    context_dir['user_type'] = user_type
+    context_dir['movies'] = movies
+    return render(request, 'RaisinRatings/user_page.html', context=context_dir)

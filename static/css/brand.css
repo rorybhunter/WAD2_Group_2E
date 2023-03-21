@@ -2,11 +2,6 @@
     background-color: rgb(52, 32, 140);
     }
 
-.bg-light-brand{
-    background-color:white;
-    opacity:.95;
-}
-
 .text-brand{
     color:darkslateblue
 }
@@ -14,6 +9,10 @@
 /* body{
     background-color: darkslateblue;
 } */
+
+.font-brand{
+    font-family: 'Arial Narrow'
+}
 
 html {
     height:100%;
