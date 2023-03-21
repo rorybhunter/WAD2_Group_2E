@@ -15,46 +15,47 @@
                         <img class="mr-3 rounded" alt="{{movie.movie_name}}'s movie poster" width="250" src="{{ MEDIA_URL }}{{ movie.poster }}">
                         <div class="media-body">
                             <br />
-                            {% if user.userprofile.user_type == "CRITIC" %}
-                            <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">
-                                Add review
-                            </a>
-                            {% endif %}
-                            <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:like_movie' movie.slug %}">
+                            <form class="form-inline"
+                                id="movie_search"
+                                method="post"
+                                action="{% url 'RaisinRatings:search' %}"
+                                style="display:inline-block; ">
+                                {% csrf_token %}
+                                <input type="hidden" name="query" id="query" value="{{ movie.movie_name }}">
+                                <button class="btn btn-outline-secondary btn-sm"
+                                    type="sumbit"
+                                    name="submit"> <span data-feather="search"></span>Search the web for {{ movie.movie_name }} </button>
+                            </form>
+
+                            <a class="btn btn-outline-success btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:like_movie' movie.slug %}">
                                 <span data-feather="thumbs-up"></span>
                                 Like
                             </a>
 
-                            <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:dislike_movie' movie.slug %}">
-
-
+                            <a class="btn btn-outline-danger btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:dislike_movie' movie.slug %}">
                                 <span data-feather="thumbs-down"></span>
                                 Dislike
                             </a>
 
-                            <form class="form-inline"
-                                id="movie_search"
-                                method="post"
-                                action="{% url 'RaisinRatings:search' %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="query" id="query" value="{{ movie.movie_name }}">
-                                <button class="btn btn-primary"
-                                    type="sumbit"
-                                    name="submit">Search the web for this movie {{ movie.movie_title }} </button>
-                            </form>
-
-
+                            {% if user.userprofile.user_type == "CRITIC" %}
+                            <a class="btn btn-outline-dark btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">
+                                Add review
+                            </a>
+                            {% endif %}
 
                             {% if movie.user == user %}
-                            <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:delete_movie' movie.slug %}">
+                            <a class="btn btn-outline-danger btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:delete_movie' movie.slug %}">
                                 <span data-feather="trash-2"></span>
                                 Delete
                             </a>
 
-                            <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:edit_move' movie.slug %}">
+                            <a class="btn btn-outline-warning btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:edit_movie' movie.slug %}">
                                 <span data-feather="edit-3"></span>
                                 Edit
                             </a>
+
+                            
+
                             {% endif %}
                             <h1 class="font-weight-light">{{ movie.movie_name }}</h1>
                             <p>
@@ -119,12 +120,12 @@
                                     {% endif %}
                                 </a>
                                 <div class="media-body">
-                                    <strong class="mt-0"> {{ r.title }} </strong>
-                                    <p>
-                                    <a href="{% url 'RaisinRatings:user_page' r.username %}"> 
-                                        {{r.username}}
+                                    <a href="{% url 'RaisinRatings:user_page' r.username %}" style="text-decoration: none;"> 
+                                        <p class="text-secondary mb-0" >
+                                            {{r.username}}
+                                        </p>
                                     </a>
-                                    </p>
+                                    <strong > {{ r.title }} </strong>
                                     <p class="mb-0">
                                         {{r.review}}
                                     </p>

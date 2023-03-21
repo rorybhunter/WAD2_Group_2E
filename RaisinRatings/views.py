@@ -79,7 +79,7 @@ def user_logout(request):
     logout(request)
     return redirect(reverse('RaisinRatings:index'))
 
-
+@login_required
 def add_movie(request):
     categories = Category.objects.all()
     context_dict = {}
@@ -107,7 +107,7 @@ def add_movie(request):
     context_dict['categories'] = categories
     return render(request, 'RaisinRatings/add_movie.html', context_dict)
 
-
+@login_required
 def add_category (request):
 
     if request.method == "POST":
@@ -159,7 +159,7 @@ def cat_page(request, category_name_slug):
 
     return render(request, 'RaisinRatings/cat_page.html', context=context_dict)
 
-
+@login_required
 def like_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     user = User.objects.get(id = request.user.id)
@@ -170,7 +170,7 @@ def like_movie(request, movie_title_slug):
 
     return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
 
-
+@login_required
 def dislike_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     user = User.objects.get(id = request.user.id)
@@ -181,14 +181,14 @@ def dislike_movie(request, movie_title_slug):
 
     return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
 
-
+@login_required
 def delete_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     movie.delete()
 
     return redirect('/RaisinRatings/')
 
-
+@login_required
 def like_category(request, category_name_slug):
     category = Category.objects.get(slug=category_name_slug)
     print("here")
@@ -197,7 +197,7 @@ def like_category(request, category_name_slug):
 
     return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
 
-
+@login_required
 def dislike_category(request, category_name_slug):
     category = Category.objects.get(slug=category_name_slug)
     print("here")
@@ -206,7 +206,7 @@ def dislike_category(request, category_name_slug):
 
     return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
 
-
+@login_required
 def add_review(request, movie_title_slug):
 
     try:
@@ -250,7 +250,7 @@ def categories(request):
 def search(request):
     result_list = []
     print("Search")
-
+    query = ""
     if request.method == 'POST':
         print("post")
         query = request.POST['query'].strip()
@@ -260,7 +260,7 @@ def search(request):
     return render(request, 'RaisinRatings/search.html', {'result_list': result_list, 'search_term': query})
 
 
-
+@login_required
 def edit_movie(request, movie_title_slug=""):
     movie = Movie.objects.get(slug=movie_title_slug)
     try:
@@ -287,7 +287,7 @@ def edit_movie(request, movie_title_slug=""):
     movie.delete()
     return render(request, 'RaisinRatings/edit_movie.html', context_dict)
 
-
+@login_required
 def user_page(request, username):
     context_dir = {}
     user = User.objects.get(username=username)
@@ -295,7 +295,7 @@ def user_page(request, username):
     username = user.username
     picture = userprofile.picture
     user_type = userprofile.user_type
-    movies = Movie.objects.all()
+    movies = userprofile.movies
 
 
     context_dir['page_user'] = user

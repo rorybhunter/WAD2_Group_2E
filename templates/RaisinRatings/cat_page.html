@@ -6,17 +6,17 @@
 {% endblock %}
 
 {% block body_block %}
-<a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:like_category' category.slug %}">
+<a class="btn btn-outline-success btn-sm" role="button" href="{% url 'RaisinRatings:like_category' category.slug %}">
     <span data-feather="thumbs-up"></span>
     Like
 </a>
-<a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:dislike_category' category.slug %}">
+<a class="btn btn-outline-danger btn-sm" role="button" href="{% url 'RaisinRatings:dislike_category' category.slug %}">
     <span data-feather="thumbs-down"></span>
     Dislike
 </a> 
 
 <div class="container p-2 text-center">
-    <h2 class="display-4 font-brand">{{ category }}</h2>
+    <h2 class="display-4">{{ category }}</h2>
 </div>
 <div class="text-center"> 
     <span class="badge badge-secondary badge-pill">{{ likes }} likes</span>
