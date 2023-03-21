@@ -52,10 +52,15 @@ class CategoryForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     title = forms.CharField(max_length=20, help_text = 'Enter your review title: ')
     review = forms.CharField(max_length=500, help_text = 'Enter your review: ')
-    
+    widgets = {
+        'user': forms.HiddenInput(),
+        'movie': forms.HiddenInput(),
+
+    }
     class Meta:
-       model = Review 
-       fields = ('movie', 'title', 'review', 'username')
+       model = Review
+       exclude = ('user', 'movie')
+       fields = ('title', 'review',)
 
 class EditMovie(forms.ModelForm):
     movie_name = forms.CharField(max_length=Movie.MOVIE_TITLE_MAX_LENGTH)

@@ -1,5 +1,5 @@
 from RaisinRatings.forms import ReviewForm, UserForm, UserProfileForm, MovieForm, CategoryForm
-from RaisinRatings.models import Review, Category, Movie, User, Permission
+from RaisinRatings.models import Review, Category, Movie, User, Permission, UserProfile
 from django.urls import reverse 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -84,7 +84,7 @@ def add_movie(request):
     categories = Category.objects.all()
     context_dict = {}
     try:
-        author = User.objects.get(id = request.user.id) 
+        author = User.objects.get(id = request.user.id)
     except User.DoesNotExist:
         author = None
 
@@ -95,8 +95,8 @@ def add_movie(request):
         form = MovieForm(request.POST, request.FILES)
         if form.is_valid():
             if author:
-                movie = form.save(commit=False) 
-                movie.user = author  
+                movie = form.save(commit=False)
+                movie.user = author
                 movie.save()
 
             return redirect('/RaisinRatings/')  
@@ -109,7 +109,7 @@ def add_movie(request):
 
 
 def add_category (request):
-    
+
     if request.method == "POST":
         form = CategoryForm(request.POST)
         if form.is_valid():
@@ -126,7 +126,7 @@ def delete_movie(request, movie_title_slug):
 
 
 def show_movie(request, movie_title_slug):
-    
+
     context_dir = {}
     movie = Movie.objects.get(slug=movie_title_slug)
     reviews = Review.objects.filter(movie=movie)
@@ -159,25 +159,35 @@ def cat_page(request, category_name_slug):
 
     return render(request, 'RaisinRatings/cat_page.html', context=context_dict)
 
+
 def like_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
-    movie.likes += 1
-    movie.save()
+    user = User.objects.get(id = request.user.id)
+    if movie not in user.userprofile.movies:
+        movie.likes += 1
+        movie.save()
+        user.userprofile.movies.append(movie)
 
     return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+
 
 def dislike_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
-    movie.likes -= 1
-    movie.save()
+    user = User.objects.get(id = request.user.id)
+    if movie in user.userprofile.movies:
+        movie.likes -= 1
+        movie.save()
+        user.userprofile.movies.remove(movie)
 
     return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+
 
 def delete_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     movie.delete()
 
     return redirect('/RaisinRatings/')
+
 
 def like_category(request, category_name_slug):
     category = Category.objects.get(slug=category_name_slug)
@@ -187,6 +197,7 @@ def like_category(request, category_name_slug):
 
     return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
 
+
 def dislike_category(request, category_name_slug):
     category = Category.objects.get(slug=category_name_slug)
     print("here")
@@ -195,22 +206,36 @@ def dislike_category(request, category_name_slug):
 
     return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
 
-def add_review(request, movie_title_slug):
-    movie = Movie.objects.get(slug=movie_title_slug) 
 
-    form = ReviewForm()
-    
+def add_review(request, movie_title_slug):
+
+    try:
+        author = User.objects.get(id = request.user.id)
+    except User.DoesNotExist:
+        author = None
+
+    if author is None:
+        return redirect('/RaisinRatings/')
+
+    review = ReviewForm()
+    movie = Movie.objects.get(slug=movie_title_slug)
+
     if request.method == 'POST':
-        form  = ReviewForm(request.POST)
+
+        form = ReviewForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save(commit=False)
-            form.movie = movie 
-            form.save(commit=True)
-            return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
-        else:
-            print('form not valid')
-            print(form.errors)
-    context_dict = {'form': form, 'movie': movie}
+            if author:
+                review = form.save(commit=False)
+                review.username = author
+                review.movie = movie
+                review.save()
+                return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+            else:
+                print('form not valid')
+                review = ReviewForm()
+                print(form.errors)
+
+    context_dict = {'form': review, 'movie': movie}
     return render(request, 'RaisinRatings/add_review.html', context=context_dict)
 
 
@@ -224,32 +249,35 @@ def categories(request):
 
 def search(request):
     result_list = []
-    search_term = ""  # included and passed as a parameter to allow the search term to still be in the search box after searching and reloading pasge.
+    print("Search")
+
     if request.method == 'POST':
+        print("post")
         query = request.POST['query'].strip()
+        print(query)
         if query:
-            result_list, search_term = run_query(query)
-    return render(request, 'RaisinRatings/search.html', {'result_list': result_list, 'search_term': search_term})
+            result_list, query = run_query(query)
+    return render(request, 'RaisinRatings/search.html', {'result_list': result_list, 'search_term': query})
 
 
 
-def edit_movie(request, movie_title_slug):
+def edit_movie(request, movie_title_slug=""):
     movie = Movie.objects.get(slug=movie_title_slug)
     try:
-        author = User.objects.get(id = request.user.id) 
+        author = User.objects.get(id = request.user.id)
     except User.DoesNotExist:
         author = None
 
 
     if author is None:
         return redirect('/RaisinRatings/')
-    
+
     form = MovieForm()
 
     if form.is_valid():
         if author:
-                movie = form.save(commit=False) 
-                movie.user = author 
+                movie = form.save(commit=False)
+                movie.user = author
                 movie.save()
         print("we are here")
         return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))

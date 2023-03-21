@@ -23,7 +23,6 @@ def populate():
     {'name':'Comedy', 'description': 'Funny Movies'}
     ]
 
-
     movies = [{'movie_name':'Horror Movie 1', 'main_actor': 'Main Actor 1', 'summary':'blank',
     'poster': os.path.join('example_posters', 'm3gan.jpg') , 'trailer_link':'https://www.youtube.com/watch?v=BRb4U99OU80&ab_channel=UniversalPictures'},
     {'movie_name':'Drama Movie 1', 'main_actor': 'Main Actor 2', 'summary':'blank',
@@ -68,6 +67,7 @@ def add_category(name, description):
     c = Category.objects.get_or_create(name = name, description = description)[0]
     c.save()
     return c
+
 
 def add_movie(movie_name, category, user, main_actor, summary, poster = None, trailer_link = None):
     m = Movie.objects.get_or_create(movie_name = movie_name, category =category, user=user)[0]
