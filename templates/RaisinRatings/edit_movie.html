@@ -2,85 +2,14 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Eddit movie 
+    Add movie 
 {% endblock %}
 
 {% block body_block %}
-    <div class="container p-5 text-center">
-        <h2 class="display-4">Edit Movie</h2>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card mb-6 bg-light">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <form role="form" id="movie_form" method="post" action="{% url 'RaisinRatings:add_movie' %}" enctype="multipart/form-data">
-                                {% csrf_token %}
-
-                                 <!-- old fields
-                                    {% for hidden in form.hidden_fields %}
-                                    {{ hidden }}
-                                    {% endfor %}
-                                    {% for field in form.visible_fields %}
-                                        {{ field.errors }}
-                                        {{ field.help_text }}<br />
-                                        {{ field }}<br />
-                                        <div class = "p-2"></div>
-                                    {% endfor %} -->
-
-                                <input type="hidden" name="slug" id="id_slug">
-                                <div class="form-group">
-                                    <p class="required">
-                                        <label class="required" for="id_movie_name">Movie name:</label>
-                                        <input class="form-control" type="text" name="movie_name" maxlength="128" required="" id="id_movie_name" value="{{ movie.movie_name }}">
-                                    </p>
-                                    <p>
-                                        <label class="required" for="id_main_actor">Main actor:</label>
-                                        <input class="form-control" type="text" name="main_actor" maxlength="128" required="" id="id_main_actor" value = "{{ movie.main_actor }}" />
-                                    </p>
-                                    <p>
-                                        <!-- <label class="required" for="id_username">Username:</label>
-                                        <input class="form-control" type="text" name="username" maxlength="128" required="" id="id_username" /> -->
-
-                                        <!-- <label required for="id_username">Username:</label>
-                                        <select name="{{ form.categories.name }}" id="{{ form.categories.id_for_label }}">
-                                            {% for username in form.username.field.queryset %}
-                                                <option value="{{ username.id }}">{{ username }}</option>
-                                            {% endfor %}
-                                        </select> -->
-                                    </p>
-                                    <p>
-                                        <label class="required" for="id_summary">Summary:</label><br />
-                                        <textarea class="form-control textarea" type="text" name="summary" maxlength="500" required="" id="id_summary" rows="3">{{movie.summary}}</textarea>
-                                    </p>
-                                    <p>
-                                        <label class="required" for="id_trailer_link">Trailer Link:</label>
-                                        <input class="form-control" type="text" name="trailer_link" maxlength="128" required="" id="id_trailer_link" value="{{ movie.trailer_link }}" />
-                                    </p>
-                                    
-                                        <label for="id_poster">Upload poster:</label>
-                                        <input class="form-control-file" type="file" name="poster" required="" id="id_poster">
-                                    </p> 
-
-                                    <p>
-                                        <label for="{{ form.category.id_for_label }}">Add to Category:</label>
-                                        <select name="{{ form.category.name }}" id="{{ form.category.id_for_label }}">
-                                            {% for category in form.category.field.queryset %}
-                                                <option value="{{ category.id }}">{{ category.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </p>
-                                    <br />
-                                </div>
-                                <button class="btn btn-primary" type="submit" name="submit">Save</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+ </form>  
+ 
 {% endblock %}
-
-
