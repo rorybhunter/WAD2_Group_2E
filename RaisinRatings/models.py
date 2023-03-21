@@ -3,11 +3,14 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User, Permission
 
 
+
 class Category(models.Model):
-    name = models.CharField(max_length=128, unique=True)
+    CATEGORY_MAX_LENGTH = 128
+    DESCRIPTION_MAX_LENGTH = 500
+    name = models.CharField(max_length=CATEGORY_MAX_LENGTH, unique=True)
     likes = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
-    descrition = models.CharField(max_length=500)
+    description = models.CharField(max_length=DESCRIPTION_MAX_LENGTH)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -23,17 +26,18 @@ class Movie(models.Model):
     MOVIE_TITLE_MAX_LENGTH = 128
     MAIN_ACTOR_MAX_LENGTH = 128
     USERNAME_MAX_LENGTH = 128
-    SUMMARY_MAX_LENGTH = 500
+    SUMMARY_MAX_LENGTH = 2500
     TRAILER_MAX_LENGTH = 128
 
     movie_name = models.CharField(max_length=MOVIE_TITLE_MAX_LENGTH, unique=True)
     main_actor = models.CharField(max_length=MAIN_ACTOR_MAX_LENGTH)
     likes = models.IntegerField(default=0)
     summary = models.CharField(max_length=SUMMARY_MAX_LENGTH)
-    trailer_link = models.CharField(max_length=TRAILER_MAX_LENGTH, default="")
+    trailer_link = models.CharField(max_length=TRAILER_MAX_LENGTH, default="", blank=True)
     slug = models.SlugField(unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     poster = models.ImageField(upload_to='movie_posters', blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     
     def save(self, *args, **kwargs):
@@ -50,7 +54,7 @@ class UserProfile(models.Model):
     likes = models.IntegerField(default=0)
     # additional attributes we wish to store.
     picture = models.ImageField(upload_to='profile_images', blank=True)
-
+    movies = []
     USER_TYPE_CHOICES = (
 
         ('COUCH_POTATO', "Couch Potato"),
@@ -68,8 +72,10 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Review(models.Model):
-    title = models.CharField(max_length=20)
-    review = models.CharField(max_length=500)
+    REVIEW_TITLE_MAX_LENGTH = 128
+    REVIEW_MAX_LENGTH = 2500
+    title = models.CharField(max_length=REVIEW_TITLE_MAX_LENGTH)
+    review = models.CharField(max_length=REVIEW_MAX_LENGTH)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     starnum = models.IntegerField(default=0)

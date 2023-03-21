@@ -6,18 +6,46 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1> {{ category }} </h1>
-    <div> <a href="{% url 'RaisinRatings:like_category' category.slug %}"> Like </a> 
-     <a href="{% url 'RaisinRatings:dislike_category' category.slug %}"> Dislike </a> </div> 
-        <div><strong> {{ likes }} </strong> likes </div>
-        <div> {{ description }}</div>
-        <div> 
-            {% if movies %}
-            {% for movie in movies %}
-            <li><a href="{% url 'RaisinRatings:show_movie' movie.slug%}">{{movie.movie_name}}</a></li> 
-            {% endfor %}
-            {% else %}
-            <strong>There are no movies in this category</strong>
-            {% endif %}
-        </div> 
+<a class="btn btn-outline-success btn-sm" role="button" href="{% url 'RaisinRatings:like_category' category.slug %}">
+    <span data-feather="thumbs-up"></span>
+    Like
+</a>
+<a class="btn btn-outline-danger btn-sm" role="button" href="{% url 'RaisinRatings:dislike_category' category.slug %}">
+    <span data-feather="thumbs-down"></span>
+    Dislike
+</a> 
+
+<div class="container p-2 text-center">
+    <h2 class="display-4">{{ category }}</h2>
+</div>
+<div class="text-center"> 
+    <span class="badge badge-secondary badge-pill">{{ likes }} likes</span>
+    <p> {{ description }}</p> 
+</div>
+
+
+<div class="container" style="text-align: center;">
+    <div class="m-auto p-3">
+        {% if movies %}
+        {% for movie in movies %}
+            <div class="card mb-3 mr-3 bg-light" style="width:15rem; display: inline-block;" >
+                <a style="text-decoration:none" href="{% url 'RaisinRatings:show_movie' movie.slug%}">
+                    <img class="card-img-top mr-3" style="width: 100%; height:320px;" alt="{{movie.movie_name}}'s movie poster" width="100%" src="{{ MEDIA_URL }}{{ movie.poster }}">
+                    <div class="card-body p-0">
+                        <p class="card-text">
+                            <p class="text-dark mb-0">
+                                {{movie.movie_name}}
+                            </p>
+                            <span class="badge badge-secondary badge-pill">{{ movie.likes }} likes</span>
+                        </p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+        {% else %}
+        <p class="text-center">There are no movies in this category</p>
+        {% endif %}
+    </div>
+</div>  
+
 {%  endblock %}
