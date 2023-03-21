@@ -27,6 +27,7 @@
                                     name="submit"> <span data-feather="search"></span>Search the web for {{ movie.movie_name }} </button>
                             </form>
 
+                            {% if user.is_authenticated %}
                             <a class="btn btn-outline-success btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:like_movie' movie.slug %}">
                                 <span data-feather="thumbs-up"></span>
                                 Like
@@ -36,7 +37,7 @@
                                 <span data-feather="thumbs-down"></span>
                                 Dislike
                             </a>
-
+                            {% endif %}
                             {% if user.userprofile.user_type == "CRITIC" %}
                             <a class="btn btn-outline-dark btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">
                                 Add review
