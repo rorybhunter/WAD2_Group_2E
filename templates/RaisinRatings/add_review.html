@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block body_block %}
-
 <div class="container p-5 text-center">
     <h2 class="display-4">Add a Review</h2>
 </div>
@@ -16,11 +15,12 @@
             <div class="card mb-6 bg-light-brand">
                 <div class="card-body">
                     <div class="form-group">
-                        <div class="stars">
-                              {% for i in "12345" %}
-                                <span id="star{{ i }}" class="fa fa-star"></span>
-                              {% endfor %}
-                        </div>
+                            <div class="stars px-auto" style="display: inline" >
+                                  {% for i in "12345" %}
+                                    <span id="star{{ i }}" class="fa fa-star"></span>
+                                  {% endfor %}
+                            </div>
+
                         <form role="form" id="review_form" method="post" action="#">
                             {% csrf_token %}
                             {% for hidden in form.hidden_fields %}
