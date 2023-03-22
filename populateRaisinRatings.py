@@ -11,13 +11,13 @@ from PIL import Image
 from WAD2_Group_2E.settings import MEDIA_DIR
 
 def populate():
-    users = [{'username':'Mark', 'password':'boo', 'user_type':'COUCH_POTATO', 'pricture': os.path.join('example_profiles', 'mark.jpg')},
-    {'username':'Drew','password': 'peek', 'user_type':'COUCH_POTATO', 'pricture': os.path.join('example_profiles', 'drew.jpg')},
-    {'username':'Elize', 'password': 'yikes', 'user_type':'CRITIC', 'pricture': os.path.join('example_profiles', 'elize.jpg')},
-    {'username':'Nina', 'password': 'yikes', 'user_type':'CRITIC', 'pricture': os.path.join('example_profiles', 'runeey.jpg')},
-    {'username':'Anna', 'password': 'beep', 'user_type':'CRITIC', 'pricture': os.path.join('example_profiles', 'anna.jpg')},
-    {'username':'Erik', 'password' : 'deep', 'user_type':'CREATOR', 'pricture': os.path.join('example_profiles', 'erik.jpg')},
-    {'username':'Runeey', 'password': 'meep', 'user_type':'CREATOR', 'pricture': os.path.join('example_profiles', 'runeey.jpg')},
+    users = [{'username':'Mark', 'password':'boo', 'user_type':'COUCH_POTATO', 'picture': os.path.join('example_profiles', 'mark.jpg')},
+    {'username':'Drew','password': 'peek', 'user_type':'COUCH_POTATO', 'picture': os.path.join('example_profiles', 'drew.jpg')},
+    {'username':'Elize', 'password': 'yikes', 'user_type':'CRITIC', 'picture': os.path.join('example_profiles', 'elize.jpg')},
+    {'username':'Nina', 'password': 'yikes', 'user_type':'CRITIC', 'picture': os.path.join('example_profiles', 'runeey.jpg')},
+    {'username':'Anna', 'password': 'beep', 'user_type':'CRITIC', 'picture': os.path.join('example_profiles', 'anna.jpg')},
+    {'username':'Erik', 'password' : 'deep', 'user_type':'CREATOR', 'picture': os.path.join('example_profiles', 'erik.jpg')},
+    {'username':'Runeey', 'password': 'meep', 'user_type':'CREATOR', 'picture': os.path.join('example_profiles', 'runeey.jpg')},
     ]
 
     horrorMovies = [
@@ -125,7 +125,7 @@ def populate():
         "Romantic movies": {'description': "Movies about love", 'movies': romanticMovies, 'likes': 1}, 
     }
     for user in users:
-        u = add_user(user['username'], user['password'], user['user_type'], user['pricture'])
+        u = add_user(user['username'], user['password'], user['user_type'], user['picture'])
         print(f'-{u}')
 
     creators = UserProfile.objects.filter(user_type = 'CREATOR')
@@ -142,10 +142,10 @@ def populate():
         add_review(review['title'], review['review'], random.choice(critics).user, random.choice(movies))
 
 
-def add_user(username, password, user_type, pricture):
+def add_user(username, password, user_type, picture):
     u = User.objects.create_user(username = username, password = password, )
     u.save()
-    up = UserProfile.objects.get_or_create(user = u, user_type = user_type, picture=pricture)
+    up = UserProfile.objects.get_or_create(user = u, user_type = user_type, picture=picture)
     return up
 
 def add_category(name, description, likes):
