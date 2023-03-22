@@ -68,7 +68,7 @@
                                     <strong>{{ movie.likes }} likes</strong></span>
                                 </div>
                                 <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
-                                <div>Category: <a style="text-decoration: none;" href="{% url 'RaisinRatings:cat_page' movie.category.slug %}"> <strong>{{ movie.category }}</strong> </div></a>
+                                <div>Category: <a style="text-decoration: none;" href="{% url 'RaisinRatings:category' movie.category.slug %}"> <strong>{{ movie.category }}</strong> </div></a>
                                 <div>Added by: <a style="text-decoration: none;" href="{% url 'RaisinRatings:user_page' movie.user %}"> <strong>{{ movie.user }}</strong> </div></a>
                             </p>
 

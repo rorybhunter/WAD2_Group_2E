@@ -29,6 +29,9 @@
                                 {% endif %}
                             {% endfor %}
                             <div class="form-group">
+                                <p>
+                                    <label class="required" for="id_title">Star rating:</label>
+                                </p>
                                 <div class="stars px-auto" style="display: inline" >
                                     {% for i in "12345" %}
                                       <span id="star{{ i }}" class="fa fa-star"></span>
