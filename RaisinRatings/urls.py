@@ -12,6 +12,8 @@ urlpatterns = [
     path('logout', views.user_logout, name = 'logout'),
     path('movie/<slug:movie_title_slug>/', views.show_movie, name='show_movie'),
     path('movie/<slug:movie_title_slug>/add_review/', views.add_review, name = 'add_review'),
+    path('movie/<slug:movie_title_slug>/like/', views.like_movie, name='like_movie'),
+    path('movie/<slug:movie_title_slug>/dislike/', views.dislike_movie, name='dislike_movie'),
     path('movie/<slug:movie_title_slug>/delete/', views.delete_movie, name = 'delete_movie'),
     path('movie/<slug:movie_title_slug>/edit/', views.edit_movie, name='edit_movie'),
     path('categories/', views.categories, name='categories'),
@@ -25,8 +27,6 @@ urlpatterns = [
     path('like_category/', views.LikeCategoryView.as_view(), name='like_category'),
     path('dislike_category/', views.DislikeCategoryView.as_view(), name='dislike_category'),
     path('like_movie/', views.LikeMovieView.as_view(), name='like_movie'),
-    path('dislike_movie/', views.DislikeMovieView.as_view, name='dislike_movie')
+    path('dislike_movie/', views.DislikeMovieView.as_view, name='dislike_movie'),
+    path('user_page/<username>/', views.user_page, name='user_page'),
 ]
-
-
-path('user_page/<username>/', views.user_page, name='user_page'),
