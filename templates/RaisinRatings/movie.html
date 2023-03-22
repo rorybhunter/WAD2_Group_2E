@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title_block %}
-{{ movie.movie_name }}
+    {{ movie.movie_name }}
 {% endblock %}
 
 {% block body_block %}
@@ -12,24 +12,16 @@
             <div class="card mb-6 bg-light-brand">
                 <div class="card-body ">
                     <div class="media">
-<<<<<<< HEAD
-                        <img class="mr-3" alt="{{movie.movie_name}}'s movie poster" width="200" src="{{ MEDIA_URL }}{{ movie.poster }}">
-=======
                         <img class="mr-3 rounded" alt="{{movie.movie_name}}'s movie poster" width="250" src="{{ MEDIA_URL }}{{ movie.poster }}">
->>>>>>> 9ed93ccb13abc1ed69d2b1b0db1ff9b89e63517f
                         <div class="media-body">
                             <br />
                             {% if user.userprofile.user_type == "CRITIC" %}
                             <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
                             {% endif %}
-                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:like_movie' movie.slug %}">
-                                <span data-feather="thumbs-up"></span>
-                                Like
-                            </a>
-                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:dislike_movie' movie.slug %}">
-                                <span data-feather="thumbs-down"></span>
-                                Dislike
-                            </a>
+
+                            
+
+                            
                             {% if movie.user == user %}
                             <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:delete_movie' movie.slug %}">
                                 <span data-feather="trash-2"></span>
@@ -42,7 +34,9 @@
                             {% endif %}
                             <h1 class="font-weight-light">{{ movie.movie_name }}</h1>
                             <p>
-                                <div>Number of likes: <strong>{{ likes }}</strong></div>
+                                <div>Number of likes: <span id="like_count" class="badge badge-secondary badge-pill">
+                                    <strong>{{ movie.likes }} likes</strong></span>
+                                </div>
                                 <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
                                 <div>Category:  <strong>{{ movie.category }}</strong> </div>
                                 <div>Added by: <strong> {{ movie.user }}</strong></div>

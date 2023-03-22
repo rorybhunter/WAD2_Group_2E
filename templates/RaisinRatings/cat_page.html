@@ -6,12 +6,12 @@
 {% endblock %}
 
 {% block body_block %}
-<button id="like_btn" data-categoryname = "{{ name }}"
+<button id="like-btn-cat" data-categoryname = "{{ name }}"
         class="btn btn-outline-secondary btn-sm" type = "button" role="button"> 
     <span data-feather="thumbs-up"></span>
     Like
 </button>
-<button id="dislike_btn" data-categoryname = "{{ name }}"
+<button id="dislike-btn-cat" data-categoryname = "{{ name }}"
         class="btn btn-outline-secondary btn-sm" type = "button" role="button"> 
     <span data-feather="thumbs-down"></span>
     Disike
@@ -21,7 +21,7 @@
     <h2 class="display-4">{{ category }}</h2>
 </div>
 <div class="text-center"> 
-    <span class="badge badge-secondary badge-pill">{{ likes }} likes</span>
+    <span id="like_count" class="badge badge-secondary badge-pill">{{ likes }} likes</span>
     <p> {{ description }}</p> 
 </div>
 
