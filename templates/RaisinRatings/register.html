@@ -39,8 +39,14 @@ Register
                     <div class="form-group">
                         <form role="form" id="user_form" method="post" action="#" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <div class="form-group">
-                                {% for field in form.visible_fields %}
+                            <div class="form-group">`
+                                {% for field in user_form %}
+                                    {% if field.errors %}
+                                        There was an error with field {{ field.name }}
+                                        {{ field.errors }}
+                                    {% endif %}
+                                {% endfor %}
+                                {% for field in profile_form %}
                                     {% if field.errors %}
                                         There was an error with field {{ field.name }}
                                         {{ field.errors }}
