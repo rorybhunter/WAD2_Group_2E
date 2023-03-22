@@ -4,9 +4,11 @@ from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
+from django.views import View
 from RaisinRatings.bing_search import run_query
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from django.utils.decorators import method_decorator
 
 def index(request):
     context_dict = {}
@@ -347,3 +349,82 @@ def user_page(request, username):
     context_dir['user_type'] = user_type
     context_dir['movies'] = movies
     return render(request, 'RaisinRatings/user_page.html', context=context_dir)
+
+class LikeCategoryView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        category_name = request.GET['name']
+        user = User.objects.get(id = request.user.id)
+        try:
+            category = Category.objects.get(name = category_name)
+        except Category.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        if category not in user.userprofile.categories:
+            category.likes = category.likes + 1
+            category.save()
+            user.userprofile.categories.append(category)
+
+
+        return HttpResponse(category.likes)
+
+class DislikeCategoryView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        category_name = request.GET['name']
+        user = User.objects.get(id = request.user.id)
+        try:
+            category = Category.objects.get(name = category_name)
+        except Category.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        if category in user.userprofile.categories:
+            category.likes = category.likes - 1
+            category.save()
+            user.userprofile.categories.remove(category)
+
+        return HttpResponse(category.likes)
+
+
+class LikeMovieView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        movie_name = request.GET['movie_name']
+        user = User.objects.get(id = request.user.id)
+        try:
+            movie = Movie.objects.get(movie_name = movie_name)
+        except Movie.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        if movie not in user.userprofile.movies:
+            movie.likes = movie.likes + 1
+            movie.save()
+            user.userprofile.movies.append(movie)
+
+        return HttpResponse(movie.likes)
+
+
+class DislikeMovieView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        movie_name = request.GET['movie_name']
+        user = User.objects.get(id = request.user.id)
+        try:
+            movie = Movie.objects.get(movie_name = movie_name)
+        except Movie.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        if movie in user.userprofile.movies:
+            movie.likes = movie.likes - 1
+            movie.save()
+            user.userprofile.movies.remove(movie)
+
+        return HttpResponse(movie.likes)

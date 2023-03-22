@@ -62,7 +62,9 @@
                             {% endif %}
                             <h1 class="font-weight-light">{{ movie.movie_name }}</h1>
                             <p>
-                                <div>Number of likes: <strong>{{ likes }}</strong></div>
+                                <div>Number of likes: <span id="like_count" class="badge badge-secondary badge-pill">
+                                    <strong>{{ movie.likes }} likes</strong></span>
+                                </div>
                                 <div>Main Star: <strong>{{ movie.main_actor }}</strong></div>
                                 <div>Category:  <strong>{{ movie.category }}</strong> </div>
                                 <div>Added by: <strong> {{ movie.user }}</strong></div>

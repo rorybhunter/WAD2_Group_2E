@@ -7,11 +7,11 @@
 
 {% block body_block %}
 {% if user.is_authenticated %}
-<button id="like_btn" data-categoryname = "{{ name }}" class="btn btn-outline-success btn-sm" type = "button" role="button" >
+<button id="like-btn-cat" data-categoryname = "{{ name }}" class="btn btn-outline-success btn-sm" type = "button" role="button" >
     <span data-feather="thumbs-up"></span>
     Like
 </button>
-<button id="dislike_btn" data-categoryname = "{{ name }}" class="btn btn-outline-danger btn-sm" type = "button" role="button">
+<button id="dislike-btn-cat" data-categoryname = "{{ name }}" class="btn btn-outline-danger btn-sm" type = "button" role="button">
     <span data-feather="thumbs-down"></span>
     Dislike
 </button>
@@ -21,7 +21,7 @@
     <h2 class="display-4">{{ category }}</h2>
 </div>
 <div class="text-center"> 
-    <span class="badge badge-secondary badge-pill">{{ likes }} likes</span>
+    <span id="like_count" class="badge badge-secondary badge-pill">{{ likes }} likes</span>
     <p> {{ description }}</p> 
 </div>
 
@@ -48,6 +48,6 @@
         <p class="text-center">There are no movies in this category</p>
         {% endif %}
     </div>
-</div>  
+</div>
 
 {%  endblock %}
