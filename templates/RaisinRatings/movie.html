@@ -19,9 +19,18 @@
                             <a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">Add review</a>
                             {% endif %}
 
-                            
+                            <button id = "like-btn-movie" data-moviename = "{{ movie.movie_name }}"
+                                class="btn btn-outline-secondary btn-sm" type = "button" role="button">
+                                <span data-feather="thumbs-up"></span>
+                                Like
+                            </button>
 
-                            
+                            <button id = "dislike-btn-movie" data-moviename = "{{ movie.movie_name }}"
+                                class="btn btn-outline-secondary btn-sm" type = "button" role="button">
+                                <span data-feather="thumbs-down"></span>
+                                dislike
+                            </button>
+
                             {% if movie.user == user %}
                             <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:delete_movie' movie.slug %}">
                                 <span data-feather="trash-2"></span>

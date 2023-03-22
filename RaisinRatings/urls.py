@@ -22,5 +22,5 @@ urlpatterns = [
     path('like_category/', views.LikeCategoryView.as_view(), name='like_category'),
     path('dislike_category/', views.DislikeCategoryView.as_view(), name='dislike_category'),
     path('like_movie/', views.LikeMovieView.as_view(), name='like_movie'),
-    path('dislike_movie/', views.DislikeMovieView.as_view, name='dislike_movie')
+    path('dislike_movie/', views.DislikeMovieView.as_view(), name='dislike_movie')
 ]
