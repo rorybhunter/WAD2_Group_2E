@@ -71,7 +71,7 @@ def populate():
     {'movie_name':"Monster's inc", 'main_actor': "Billy Crystal", 'summary':"In order to power the city, monsters have to scare children so that they scream. However, the children are toxic to the monsters, and after a child gets through, two monsters realize things may not be what they think.",
     'poster':os.path.join('example_posters', 'monsters.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=6tCxnHCqqxg', 'likes': 13},
     {'movie_name':"Winnie the pooh", 'main_actor': "Jim Cummings", 'summary':"While searching for honey, Pooh and his friends embark on an adventure to find Eeyore's missing tail and rescue Christopher Robin from an unknown monster called The Backson.",
-    'poster':os.path.join('example_posters', 'winnie.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=hRT86ZggCEk', 'likes': 13}
+    'poster':os.path.join('example_posters', 'winnie.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=izCNXpKfIlE', 'likes': 13}
 
     ]
     musicals = []
@@ -110,8 +110,8 @@ def populate():
         'Drama': {'description': 'Dramatic Movies', 'movies': dramaMovies, 'likes': 8},
         'Comedy': {'description': 'Funny Movies', 'movies': comedyMovies, 'likes': 10},
         "Kid's Movies": {'description': 'Movies for children', 'movies': kidsMovies, 'likes': 10},
-        "Musicals": {'description': "Movies with singing and music", 'movies': musicals, 'likes': 2},
-        "Adventure movies": {'description': "Suspensfull stories", 'movies': adventureMovies, 'likes': 1},
+        "Musicals": {'description': "Movies with singing and music", 'movies': musicals, 'likes': 1},
+        "Adventure movies": {'description': "Suspensfull stories", 'movies': adventureMovies, 'likes': 2},
         "Documenteries": {'description': "Non-fiction movies", 'movies': documenteries, 'likes': 1},
     }
     for user in users:
