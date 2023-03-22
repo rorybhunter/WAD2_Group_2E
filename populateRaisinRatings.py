@@ -87,30 +87,30 @@ def populate():
     thrillers = []
 
 
-    reviews = [{'title':'Good', 'review':'I like this movie a lot!'}, 
-    {'title': 'Bad', 'review': 'I do not like this movie'},
-    {'title': 'Underrated', 'review':'this movie is underrated.'}, 
-    {'title': 'Overrated', 'review':'This movie is overrated'},
-    {'title': 'Fun', 'review': "This movie is fun but don't expect much else."},
-    {'title': 'Bad', 'review': 'I do not like this movie'}, 
-    {'title':'Good', 'review':'I like this movie a lot!'}, 
-    {'title': 'Underrated', 'review':'this movie is underrated.'},
-    {'title': 'Overrated', 'review':'This movie is overrated'},
-    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.'}, 
-    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.'}, 
-    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.'},
-    {'title':'Good', 'review':'I like this movie a lot!'},
-    {'title': 'Bad', 'review': 'I do not like this movie'},
-    {'title': 'Underrated', 'review':'this movie is underrated.'},
-    {'title': 'Overrated', 'review':'This movie is overrated'},
-    {'title': 'Fun', 'review': "This movie is fun but don't expect much else."},
-    {'title': 'Bad', 'review': 'I do not like this movie'},
-    {'title':'Good', 'review':'I like this movie a lot!'},
-    {'title': 'Underrated', 'review':'this movie is underrated.'},
-    {'title': 'Overrated', 'review':'This movie is overrated'},
-    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.'},
-    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.'},
-    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.'}]
+    reviews = [{'title':'Good', 'review':'I like this movie a lot!', 'starnum': 4},
+    {'title': 'Bad', 'review': 'I do not like this movie', 'starnum': 1},
+    {'title': 'Underrated', 'review':'this movie is underrated.', 'starnum': 4},
+    {'title': 'Overrated', 'review':'This movie is overrated', 'starnum': 2},
+    {'title': 'Fun', 'review': "This movie is fun but don't expect much else.", 'starnum': 3},
+    {'title': 'Bad', 'review': 'I do not like this movie', 'starnum': 2},
+    {'title':'Good', 'review':'I like this movie a lot!', 'starnum': 4},
+    {'title': 'Underrated', 'review':'this movie is underrated.', 'starnum': 4},
+    {'title': 'Overrated', 'review':'This movie is overrated', 'starnum': 2},
+    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.', 'starnum': 5},
+    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.', 'starnum': 5},
+    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.', 'starnum': 5},
+    {'title':'Good', 'review':'I like this movie a lot!', 'starnum': 4},
+    {'title': 'Bad', 'review': 'I do not like this movie', 'starnum': 1},
+    {'title': 'Underrated', 'review':'this movie is underrated.', 'starnum': 4},
+    {'title': 'Overrated', 'review':'This movie is overrated', 'starnum': 2},
+    {'title': 'Fun', 'review': "This movie is fun but don't expect much else.", 'starnum': 3},
+    {'title': 'Bad', 'review': 'I do not like this movie', 'starnum': 2},
+    {'title':'Good', 'review':'I like this movie a lot!', 'starnum': 4},
+    {'title': 'Underrated', 'review':'this movie is underrated.', 'starnum': 4},
+    {'title': 'Overrated', 'review':'This movie is overrated', 'starnum': 2},
+    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.', 'starnum': 5},
+    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.', 'starnum': 5},
+    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.', 'starnum': 5},]
 
     
     cats = {
@@ -139,7 +139,7 @@ def populate():
     movies = Movie.objects.all()
 
     for review in reviews:
-        add_review(review['title'], review['review'], random.choice(critics).user, random.choice(movies))
+        add_review(review['title'], review['review'], random.choice(critics).user, random.choice(movies), review['starnum'])
 
 
 def add_user(username, password, user_type, picture):
@@ -165,8 +165,8 @@ def add_movie(movie_name, category, user, main_actor, summary, likes, poster = N
     m.save()
     return m
 
-def add_review(title, review, username, movie):
-    r = Review.objects.get_or_create(title = title, review = review, username = username, movie = movie)[0]
+def add_review(title, review, username, movie, starnum):
+    r = Review.objects.get_or_create(title = title, review = review, username = username, movie = movie, starnum = starnum)[0]
     r.save()
     return r
 
