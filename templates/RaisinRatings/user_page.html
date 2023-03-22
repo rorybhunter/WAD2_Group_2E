@@ -11,13 +11,15 @@
         <div class="col-md-12">
             <div class="card mb-6 bg-light-brand">
                 <div class="card-body ">
-                    <div class="media">
-                        {% if page_user.userprofile.picture %}
-                        <img class="align-self-center mr-3 rounded" alt="{{ page_user.username }}'s profile picture" width="250" src="{{ MEDIA_URL }}{{ page_user.userprofile.picture }}">
-                        {% else %}
-                        <img class="align-self-center mr-3 rounded" alt="{{ page_user.username }}'s profile picture" width="250" src="{% static 'images/default_profile/default.png' %}">
+                    <div class="d-flex align-items-end">
+                        <div class="flex-shrink-0">
+                            {% if page_user.userprofile.picture %}
+                            <img class="rounded" alt="{{ page_user.username }}'s profile picture" width="250" src="{{ MEDIA_URL }}{{ page_user.userprofile.picture }}">
+                            {% else %}
+                            <img class="rounded" alt="{{ page_user.username }}'s profile picture" width="250" src="{% static 'images/default_profile/default.png' %}">
                         {% endif %}
-                        <div class="media-body justify-content-end">
+                        </div>
+                        <div class="flex-grow-1 ml-3">
                             <h1 class="font-weight-light">{{ page_user.username }}</h1>
                             <p>User type: {{ page_user.userprofile.user_type }}</p>
                         </div>

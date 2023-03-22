@@ -51,7 +51,7 @@ def populate():
     'poster':os.path.join('example_posters', 'shesAllThat.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=lHGweYtpQKI', 'likes': 85}, 
     ]
 
-    comedyMovies = [ 
+    kidsMovies = [ 
     {'movie_name':'Inside Out', 'main_actor': 'Amy Poehler', 'summary':'After young Riley is uprooted from her Midwest life and moved to San Francisco, her emotions - Joy, Fear, Anger, Disgust and Sadness - conflict on how best to navigate a new city, house, and school.',
     'poster':os.path.join('example_posters', 'insideOut.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=yRUAzGQ3nSY','likes': 9},
     {'movie_name':'Toy Story', 'main_actor': 'Tom Hanks', 'summary':"A cowboy doll is profoundly threatened and jealous when a new spaceman action figure supplants him as top toy in a boy's bedroom.",
@@ -79,7 +79,8 @@ def populate():
     cats = {
         'Horror': {'description': 'Scary Movies', 'movies': horrorMovies, 'likes': 3}, 
         'Drama': {'description': 'Dramatic Movies', 'movies': dramaMovies, 'likes': 8},
-        'Comedy': {'description': 'Funny Movies', 'movies': comedyMovies, 'likes': 10}
+        'Comedy': {'description': 'Funny Movies', 'movies': comedyMovies, 'likes': 10},
+        'Kids Movies': {'description': 'Movies for children', 'movies': kidsMovies, 'likes': 12}
     }
     for user in users:
         u = add_user(user['username'], user['password'], user['user_type'])
