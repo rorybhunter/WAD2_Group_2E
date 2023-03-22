@@ -11,12 +11,13 @@ from PIL import Image
 from WAD2_Group_2E.settings import MEDIA_DIR
 
 def populate():
-    users = [{'username':'testuser1', 'password':'boo', 'user_type':'COUCH_POTATO'},
-    {'username':'testuser2','password': 'peek', 'user_type':'COUCH_POTATO'},
-    {'username':'testcritic1', 'password': 'yikes', 'user_type':'CRITIC'},
-    {'username':'testcritic2', 'password': 'beep', 'user_type':'CRITIC'},
-    {'username':'testcreator1', 'password' : 'deep', 'user_type':'CREATOR'},
-    {'username':'testcreator2', 'password': 'meep', 'user_type':'CREATOR'},
+    users = [{'username':'Mark', 'password':'boo', 'user_type':'COUCH_POTATO', 'pricture': os.path.join('example_profiles', 'mark.jpg')},
+    {'username':'Drew','password': 'peek', 'user_type':'COUCH_POTATO', 'pricture': os.path.join('example_profiles', 'drew.jpg')},
+    {'username':'Elize', 'password': 'yikes', 'user_type':'CRITIC', 'pricture': os.path.join('example_profiles', 'elize.jpg')},
+    {'username':'Nina', 'password': 'yikes', 'user_type':'CRITIC', 'pricture': os.path.join('example_profiles', 'runeey.jpg')},
+    {'username':'Anna', 'password': 'beep', 'user_type':'CRITIC', 'pricture': os.path.join('example_profiles', 'anna.jpg')},
+    {'username':'Erik', 'password' : 'deep', 'user_type':'CREATOR', 'pricture': os.path.join('example_profiles', 'erik.jpg')},
+    {'username':'Runeey', 'password': 'meep', 'user_type':'CREATOR', 'pricture': os.path.join('example_profiles', 'runeey.jpg')},
     ]
 
     horrorMovies = [
@@ -32,6 +33,10 @@ def populate():
     'poster': os.path.join('example_posters', 'it.jpg') , 'trailer_link':'https://www.youtube.com/watch?v=xKJmEC5ieOk','likes': 50},
     {'movie_name':'Hereditary', 'main_actor': 'Toni Collette', 'summary':'A grieving family is haunted by tragic and disturbing occurrences.',
     'poster': os.path.join('example_posters', 'hereditory.jpg') , 'trailer_link':'https://www.youtube.com/watch?v=V6wWKNij_1M','likes': 51},
+    {'movie_name':'Midsommar', 'main_actor': "Florence Pugh", 'summary':"A couple travels to Northern Europe to visit a rural hometown's fabled Swedish mid-summer festival. What begins as an idyllic retreat quickly devolves into an increasingly violent and bizarre competition at the hands of a pagan cult.",
+    'poster': os.path.join('example_posters', 'midsommar.jpg') , 'trailer_link':'https://www.youtube.com/watch?v=1Vnghdsjmd0','likes': 51},
+    {'movie_name':'World War Z', 'main_actor': "Brad Pitt", 'summary':"Former United Nations employee Gerry Lane traverses the world in a race against time to stop a zombie pandemic that is toppling armies and governments and threatens to destroy humanity itself.",
+    'poster': os.path.join('example_posters', 'worldWarZ.jpg') , 'trailer_link':'https://www.youtube.com/watch?v=Md6Dvxdr0AQ','likes': 38},
     ]
 
     dramaMovies = [
@@ -78,6 +83,9 @@ def populate():
     adventureMovies = [{'movie_name':"The hunger games", 'main_actor': "Jennifer Lawrence", 'summary':"Katniss Everdeen voluntarily takes her younger sister's place in the Hunger Games: a televised competition in which two teenagers from each of the twelve Districts of Panem are chosen at random to fight to the death.",
     'poster':os.path.join('example_posters', 'hungerGames.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=mfmrPu43DF8', 'likes': 117}]
     documenteries = []
+    romanticMovies = []
+    thrillers = []
+    
 
     reviews = [{'title':'Good', 'review':'I like this movie a lot!'}, 
     {'title': 'Bad', 'review': 'I do not like this movie'},
@@ -113,9 +121,11 @@ def populate():
         "Musicals": {'description': "Movies with singing and music", 'movies': musicals, 'likes': 1},
         "Adventure movies": {'description': "Suspensfull stories", 'movies': adventureMovies, 'likes': 2},
         "Documenteries": {'description': "Non-fiction movies", 'movies': documenteries, 'likes': 1},
+        "Thrillers": {'description': "Suspencfull movies", 'movies': thrillers, 'likes': 1}, 
+        "Romantic movies": {'description': "Movies about love", 'movies': romanticMovies, 'likes': 1}, 
     }
     for user in users:
-        u = add_user(user['username'], user['password'], user['user_type'])
+        u = add_user(user['username'], user['password'], user['user_type'], user['pricture'])
         print(f'-{u}')
 
     creators = UserProfile.objects.filter(user_type = 'CREATOR')
@@ -132,10 +142,10 @@ def populate():
         add_review(review['title'], review['review'], random.choice(critics).user, random.choice(movies))
 
 
-def add_user(username, password, user_type):
-    u = User.objects.create_user(username = username, password = password)
+def add_user(username, password, user_type, pricture):
+    u = User.objects.create_user(username = username, password = password, )
     u.save()
-    up = UserProfile.objects.get_or_create(user = u, user_type = user_type)
+    up = UserProfile.objects.get_or_create(user = u, user_type = user_type, picture=pricture)
     return up
 
 def add_category(name, description, likes):
