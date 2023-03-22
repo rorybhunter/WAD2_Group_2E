@@ -28,15 +28,18 @@
                             </form>
 
                             {% if user.is_authenticated %}
-                            <a class="btn btn-outline-success btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:like_movie' movie.slug %}">
+                            <button id = "like-btn-movie" data-moviename = "{{ movie.movie_name }}" 
+                            class="btn btn-outline-success btn-sm mx-1" style="float: right;" type="button" role="button">
                                 <span data-feather="thumbs-up"></span>
                                 Like
-                            </a>
+                            </button>
 
-                            <a class="btn btn-outline-danger btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:dislike_movie' movie.slug %}">
+                            <button id = "dislike-btn-movie" data-moviename = "{{ movie.movie_name }}"
+                            class="btn btn-outline-danger btn-sm mx-1" style="float: right;" type="button" role="button">
                                 <span data-feather="thumbs-down"></span>
                                 Dislike
-                            </a>
+                            </button>
+                            
                             {% endif %}
                             {% if user.userprofile.user_type == "CRITIC" %}
                             <a class="btn btn-outline-dark btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:add_review' movie.slug %}">
@@ -49,7 +52,6 @@
                                 <span data-feather="trash-2"></span>
                                 Delete
                             </a>
-
 
 
                             <a class="btn btn-outline-warning btn-sm mx-1" style="float: right;" role="button" href="{% url 'RaisinRatings:edit_movie' movie.slug %}">

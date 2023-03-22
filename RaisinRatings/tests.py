@@ -89,6 +89,10 @@ class IndexViewTests(TestCase):
         self.assertContains(response, 'Birdman')
         self.assertContains(response, 'Toy Story')
 
+        self.assertContains(response, "2")
+        self.assertContains(response, "5")
+        self.assertContains(response, "7")
+
 
 class CategoriesViewTest(TestCase):
     def test_categories_view_without_categories(self):
@@ -105,15 +109,56 @@ class CategoriesViewTest(TestCase):
         self.assertContains(response, "Horror")
         self.assertContains(response, 'Drama')
         self.assertContains(response, 'Comedy')
+        self.assertContains(response, "2")
+        self.assertContains(response, "5")
+        self.assertContains(response, "7")
 
 class ShowMovieViewTest(TestCase):
     def test_movie(self):
         drama_category = add_category("Drama")
         user = User.objects.create(username = "Norbit", password = "spaceship")
 
-        movie = add_movie("Birdman", "Michael Keaton", drama_category, user)
+        movie = add_movie("Birdman", "Michael Keaton", drama_category, user, 11, "This movie is about a man who is a birdman")
         
         response = self.client.get(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug':movie.slug}))
 
         self.assertEqual(response.status_code, 200)
+
+        self.assertContains(response, "Birdman")
+        self.assertContains(response, "Michael Keaton")
+        self.assertContains(response, "Norbit")
+        self.assertContains(response, "This movie is about a man who is a birdman")
+        self.assertContains(response, "11")
+
+
+class CatPageViewTest(TestCase):
+    def test_cat_page_without_movies(self):
+        comedy_category = add_category("Comedy")
+        response = self.client.get(reverse('RaisinRatings:category', kwargs={"category_name_slug":comedy_category.slug}))
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertContains(response, "There are no movies in this category")
+
+    def test_cat_page_with_movies(self):
+        comedy_category = add_category("Comedy", 55)
+        user = User.objects.create(username = "Norbit", password = "spaceship")
+
+        add_movie("The Truman Show", "Jim Carrey", comedy_category, user, 15)
+        add_movie("Borat", "Sacha Baren Cohen", comedy_category, user, 27)
         
+        response = self.client.get(reverse('RaisinRatings:category', kwargs={"category_name_slug":comedy_category.slug}))
+        self.assertEqual(response.status_code, 200)
+        
+        self.assertContains(response, "Comedy")
+        self.assertContains(response, "55")
+
+        self.assertContains(response, "The Truman Show")
+        self.assertContains(response, "15")
+        
+        self.assertContains(response, "Borat")
+        self.assertContains(response, "27")
+
+
+class EditMovieViewTest(TestCase):
+    pass
