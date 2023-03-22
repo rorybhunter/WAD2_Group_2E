@@ -12,7 +12,7 @@
         <div class="text-center">
             <h1 class="pb-4 display-4">Login</h1>
         </div>
-        <form class="form-signin" role="form" method="post" action="{% url 'RaisinRatings:login' %}">
+        <form class="form-signin" role="form" method="post" action="">
             {% csrf_token %}
             <label for="inputUsername" class="sr-only">Username</label>
             <input type="text" name="username" id="id_username" class="form-control" placeholder="Username" required autofocus value="" size="50" />

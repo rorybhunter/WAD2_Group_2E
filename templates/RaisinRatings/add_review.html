@@ -15,11 +15,7 @@
             <div class="card mb-6 bg-light-brand">
                 <div class="card-body">
                     <div class="form-group">
-                            <div class="stars px-auto" style="display: inline" >
-                                  {% for i in "12345" %}
-                                    <span id="star{{ i }}" class="fa fa-star"></span>
-                                  {% endfor %}
-                            </div>
+                            
 
                         <form role="form" id="review_form" method="post" action="#">
                             {% csrf_token %}
@@ -33,6 +29,11 @@
                                 {% endif %}
                             {% endfor %}
                             <div class="form-group">
+                                <div class="stars px-auto" style="display: inline" >
+                                    {% for i in "12345" %}
+                                      <span id="star{{ i }}" class="fa fa-star"></span>
+                                    {% endfor %}
+                                </div>
                                 <p>
                                     <label class="required" for="id_title">Title:</label>
                                     <input class="form-control" type="text" name="title" maxlength="20" required="" id="id_title">
