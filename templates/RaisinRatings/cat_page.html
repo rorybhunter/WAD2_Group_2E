@@ -7,14 +7,14 @@
 
 {% block body_block %}
 {% if user.is_authenticated %}
-<a class="btn btn-outline-success btn-sm" role="button" href="{% url 'RaisinRatings:like_category' category.slug %}">
+<button id="like_btn" data-categoryname = "{{ name }}" class="btn btn-outline-success btn-sm" type = "button" role="button" >
     <span data-feather="thumbs-up"></span>
     Like
-</a>
-<a class="btn btn-outline-danger btn-sm" role="button" href="{% url 'RaisinRatings:dislike_category' category.slug %}">
+</button>
+<button id="dislike_btn" data-categoryname = "{{ name }}" class="btn btn-outline-danger btn-sm" type = "button" role="button">
     <span data-feather="thumbs-down"></span>
     Dislike
-</a>
+</button>
 {% endif %}
 
 <div class="container p-2 text-center">
