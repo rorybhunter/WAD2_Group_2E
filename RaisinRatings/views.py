@@ -4,10 +4,11 @@ from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
+from django.views import View
 from RaisinRatings.bing_search import run_query
 from django.contrib.auth.decorators import login_required
-
-
+from datetime import datetime
+from django.utils.decorators import method_decorator
 
 def index(request):
     context_dict = {}
@@ -17,6 +18,10 @@ def index(request):
 
     context_dict['movies'] = movie_list
     context_dict['categories'] = category_list
+
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+
     response = render(request, 'RaisinRatings/index.html', context=context_dict)
     return response
 
@@ -144,7 +149,11 @@ def show_movie(request, movie_title_slug):
     context_dir['reviews'] = reviews
     context_dir['likes'] = likes
     context_dir['trailer_link'] = url
-    
+
+
+    recently_viewed = recently_viewed_handler(request, movie.movie_name)
+    context_dir['recently_viewed'] = recently_viewed
+
     return render(request, 'RaisinRatings/movie.html', context=context_dir)
 
 
@@ -269,30 +278,60 @@ def search(request):
     return render(request, 'RaisinRatings/search.html', {'result_list': result_list, 'search_term': query})
 
 
+def get_server_side_cookie(request, cookie, default_val=0):
+    val = request.session.get(cookie)
+    if not val:
+        val = default_val
+    return val
+
+def visitor_cookie_handler(request):
+    visits = int(get_server_side_cookie(request, 'visits', '1'))
+
+
+    last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7],'%Y-%m-%d %H:%M:%S')
+
+    if (datetime.now() - last_visit_time).days > 0:
+        visits += 1
+        request.session['last_visit'] = str(datetime.now())
+    else:
+        request.session['last_visit'] = last_visit_cookie
+
+    request.session['visits'] = visits
+
+def recently_viewed_handler(request, movie):
+    recently_viewed = get_server_side_cookie(request, 'recently_viewed', [])
+
+    if not movie in recently_viewed:
+        recently_viewed.append(movie)
+    else:
+        if movie in recently_viewed:
+            recently_viewed.remove(movie)
+        recently_viewed .insert(0, movie)
+        if len(recently_viewed) > 5:
+            recently_viewed.pop()
+
+    request.session['recently_viewed'] = recently_viewed
+    print(recently_viewed)
+
+
 @login_required
 def edit_movie(request, movie_title_slug=""):
     movie = Movie.objects.get(slug=movie_title_slug)
-   
+
     if request.method == 'POST':
         form = MovieForm(request.POST, request.FILES, instance=movie)
-        
+
         if form.is_valid():
             # update the existing `Band` in the database
             form.save()
             # redirect to the detail page of the `Band` we just updated
             return redirect('/RaisinRatings/')
-        else: 
+        else:
             print(form.errors, form.errors)
     else:
         form = MovieForm(instance=movie)
-
-
     return render(request, 'RaisinRatings/edit_movie.html', {'form': form, 'movie': movie})
-
-
-
-
-    
 
 
 def user_page(request, username):
@@ -310,3 +349,82 @@ def user_page(request, username):
     context_dir['user_type'] = user_type
     context_dir['movies'] = movies
     return render(request, 'RaisinRatings/user_page.html', context=context_dir)
+
+class LikeCategoryView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        category_name = request.GET['name']
+        user = User.objects.get(id = request.user.id)
+        try:
+            category = Category.objects.get(name = category_name)
+        except Category.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        if category not in user.userprofile.categories:
+            category.likes = category.likes + 1
+            category.save()
+            user.userprofile.categories.append(category)
+
+
+        return HttpResponse(category.likes)
+
+class DislikeCategoryView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        category_name = request.GET['name']
+        user = User.objects.get(id = request.user.id)
+        try:
+            category = Category.objects.get(name = category_name)
+        except Category.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        if category in user.userprofile.categories:
+            category.likes = category.likes - 1
+            category.save()
+            user.userprofile.categories.remove(category)
+
+        return HttpResponse(category.likes)
+
+
+class LikeMovieView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        movie_name = request.GET['movie_name']
+        user = User.objects.get(id = request.user.id)
+        try:
+            movie = Movie.objects.get(movie_name = movie_name)
+        except Movie.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        if movie not in user.userprofile.movies:
+            movie.likes = movie.likes + 1
+            movie.save()
+            user.userprofile.movies.append(movie)
+
+        return HttpResponse(movie.likes)
+
+
+class DislikeMovieView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        movie_name = request.GET['movie_name']
+        user = User.objects.get(id = request.user.id)
+        try:
+            movie = Movie.objects.get(movie_name = movie_name)
+        except Movie.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        if movie in user.userprofile.movies:
+            movie.likes = movie.likes - 1
+            movie.save()
+            user.userprofile.movies.remove(movie)
+
+        return HttpResponse(movie.likes)
