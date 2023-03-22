@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-^n6g*fiwhhlgu-ddzzezb(o3m_*k%um($dd$+k^sa#f$)glcsg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://Nelle.pythonanywhere.com/']
+ALLOWED_HOSTS = ['http://nelle.pythonanywhere.com/']
 
 # Application definition
 
