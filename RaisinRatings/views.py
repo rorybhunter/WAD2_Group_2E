@@ -73,9 +73,9 @@ def user_login(request):
                 return HttpResponse("Your RaisinRatings account is disabled.")
         else:
             print(f"Invalid login details: {username}, {password}")
-            return render(request, 'RaisinRatings/login.html')
+            return render(request, 'RaisinRatings/login.html', {'valid': False})
     else:
-        return render(request, 'RaisinRatings/login.html')
+        return render(request, 'RaisinRatings/login.html', {'valid': True})
 
 
 @login_required
