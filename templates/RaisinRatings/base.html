@@ -7,14 +7,14 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="icon" href="{% static 'images/logo.ico' %}">
     <title>
         RaisinRatings - 
         {% block title_block %}
             This is title_block's default content.
-        {% endblock %}  
+        {% endblock %}
 
-        
+
     </title>
     
     <!-- Bootstrap core CSS -->
@@ -24,13 +24,15 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/stars.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Brand specific styles for this template -->
     <link href="{% static 'css/brand.css' %}" rel="stylesheet">
     </head>
     <body>
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-alert p-0 ">
-                <a class="navbar-brand p-3" href="{% url 'RaisinRatings:index' %}">RaisinRatings</a>
+                <a class="navbar-brand p-3 font-brand" href="{% url 'RaisinRatings:index' %}">RaisinRatings</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -41,31 +43,49 @@
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:index' %}">Home</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:categories' %}">Categories</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:search' %}">Search</a></li>
-
-                        {% if user.is_authenticated %}
-                        <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:logout' %}">Logout</a></li>
                         {% if user.userprofile.user_type == "CREATOR" %}
-                        <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:add_movie' %}">Add Movie</a></li>
-                        <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:add_category' %}">Add Category</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Add
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'RaisinRatings:add_movie' %}">Add Movie</a>
+                                <a class="dropdown-item" href="{% url 'RaisinRatings:add_category' %}">Add Category</a>
+                            </div>
+                        </li>
                         {% endif %}
+                        {% if user.is_authenticated %}
                         {% else %}
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:login' %}">Login</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:register' %}">Sign Up</a></li>
                         {% endif %}
                     </ul>
-                    
+
                     {% if user.is_authenticated %}
-                        <div class="nav-item ml-2 mr-1">
-                            <p class="nav-link m-auto text-light" style="float:right;">{{ request.user }}</p>
+                    <div class="nav-item dropdown ml-2 mr-1">
+                        <a class="nav-link dropdown-toggle m-auto text-light" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            href="{% url 'RaisinRatings:user_page' user.username %}" style="float:right;">
+                            {{ request.user }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="{% url 'RaisinRatings:user_page' user.username %}">View Profile</a>
+                            <a class="dropdown-item" href="{% url 'RaisinRatings:logout' %}">Log Out</a>
                         </div>
-                        <div style="width: 3.5rem; height:3.5rem; overflow:hidden">
-                        <img style="max-width: 3.5rem" src="{{ MEDIA_URL }}/{{ user.userprofile.picture }}" />
-                        </div>
+                    </div>
+                    <div style="width: 3.5rem; height:3.5rem; overflow:hidden">
+                        <a href="{% url 'RaisinRatings:user_page' user.username %}">
+                            {% if request.user.userprofile.picture %}
+                            <img style="height: 3.5rem"src="{{ MEDIA_URL }}{{ user.userprofile.picture }}" />
+                            {% else %}
+                            <img style="height: 3.5rem"src="{% static 'images/default_profile/default.png' %}" />
+                            {% endif %}
+                        </a>
+                    </div>
                     {% else %}
                     <div class="nav-item ml-2 mr-1">
                         <p class="nav-link m-auto text-light" style="float:right;">Anonymous</p>
                     </div>
-                        <img style="width: 3.5rem; height:3.5rem; overflow: clip;"src="{% static 'images/default_profile/default.png' %}" />
+                        <img style="width: 3.5rem; height:3.5rem;" src="{% static 'images/default_profile/default.png' %}" />
                     {% endif %}
                 </div>
             </nav>
@@ -74,7 +94,7 @@
         <div class="container-fluid">
             <div class="row">
                 <main role="main" class="col-md-12  ml-sm-auto col-lg-12 px-4">		
-                    
+
                     {% block body_block %}{% endblock %}
                     
                     <!-- FOOTER -->

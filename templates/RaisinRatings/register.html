@@ -14,24 +14,16 @@ Register
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="card mb-6 bg-light">
+            <div class="card mb-6 bg-light-brand">
                 <div class="card-body ">
-                    <div class="media">
-                        <div class="media-body">
-                            <h1 class="font-weight-light">Thank you for regestering!</h1>
-                            <br />
-                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:index' %}">
-                                
-                                Home 
-                            </a>
-                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:login' %}">
-                                
-                                Login 
-                            </a>
-                            <p>
-                            </p>
-                        </div>
-                    </div>
+                    <h1 class="font-weight-light">Thank you for regestering!</h1>
+                    <br />
+                    <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:index' %}">
+                        Home 
+                    </a>
+                    <a class="btn btn-outline-info btn-sm" role="button"href="{% url 'RaisinRatings:login' %}">
+                        Login 
+                    </a>
                 </div>
             </div>
         </div>
@@ -42,12 +34,24 @@ Register
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="card mb-6 bg-light">
+            <div class="card mb-6 bg-light-brand">
                 <div class="card-body">
                     <div class="form-group">
-                        <form role="form" id="user_form" method="post" action="{% url 'RaisinRatings:register' %}" enctype="multipart/form-data">
+                        <form role="form" id="user_form" method="post" action="#" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <div class="form-group">
+                            <div class="form-group">`
+                                {% for field in user_form %}
+                                    {% if field.errors %}
+                                        There was an error with field {{ field.name }}
+                                        {{ field.errors }}
+                                    {% endif %}
+                                {% endfor %}
+                                {% for field in profile_form %}
+                                    {% if field.errors %}
+                                        There was an error with field {{ field.name }}
+                                        {{ field.errors }}
+                                    {% endif %}
+                                {% endfor %}
                                 <p class="required">
                                     <label class="required" for="id_username">Username:</label>
                                     <input class="form-control" id="id_username" maxlength="50" name="username" type="text" />
@@ -88,3 +92,4 @@ Register
 </div>
 {% endif %}
 {% endblock %}
+
