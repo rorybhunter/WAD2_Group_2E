@@ -48,7 +48,7 @@ def populate():
 
     comedyMovies = [ 
     {'movie_name':'Mamma Mia!', 'main_actor': 'Meryl Streep', 'summary':'The story of a bride-to-be trying to find her real father told using hit songs by the popular 1970s group ABBA.',
-    'poster':os.path.join('example_posters', 'MamaMia.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=8RBNHdG35WY&ab_channel=ScreenBites','likes': 9},
+    'poster':os.path.join('example_posters', 'MamaMia.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=iCVpJ8x1Tnc','likes': 9},
     {'movie_name':'Little miss sunshine', 'main_actor': 'Steve Carell', 'summary':'A family determined to get their young daughter into the finals of a beauty pageant take a cross-country trip in their VW bus.',
     'poster':os.path.join('example_posters', 'littleMissSunshine.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=wvwVkllXT80', 'likes': -5}, 
     {'movie_name':'Legally Blonde', 'main_actor': 'Reese Witherspoon', 'summary':'Elle Woods, a fashionable sorority queen, is dumped by her boyfriend. She decides to follow him to law school. While she is there, she figures out that there is more to her than just looks.',
