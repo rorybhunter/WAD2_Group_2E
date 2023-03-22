@@ -28,6 +28,10 @@ def populate():
     'poster': os.path.join('example_posters', 'us.jpg') , 'trailer_link':'https://www.youtube.com/watch?v=hNCmb-4oXJA', 'likes': 25}, 
     {'movie_name':'Sream', 'main_actor': 'Neve Campbell', 'summary':'A year after the murder of her mother, a teenage girl is terrorized by a new killer, who targets the girl and her friends by using horror films as part of a deadly game.',
     'poster': os.path.join('example_posters', 'scream.jpg') , 'trailer_link':'https://www.youtube.com/watch?v=AWm_mkbdpCA','likes': 8},
+    {'movie_name':'It', 'main_actor': 'Bill Skarsgård', 'summary':'In the summer of 1989, a group of bullied kids band together to destroy a shape-shifting monster, which disguises itself as a clown and preys on the children of Derry, their small Maine town.',
+    'poster': os.path.join('example_posters', 'it.jpg') , 'trailer_link':'https://www.youtube.com/watch?v=xKJmEC5ieOk','likes': 50},
+    {'movie_name':'Hereditary', 'main_actor': 'Toni Collette', 'summary':'A grieving family is haunted by tragic and disturbing occurrences.',
+    'poster': os.path.join('example_posters', 'hereditory.jpg') , 'trailer_link':'https://www.youtube.com/watch?v=V6wWKNij_1M','likes': 51},
     ]
 
     dramaMovies = [
@@ -38,7 +42,9 @@ def populate():
     {'movie_name':'Pride and prejudice', 'main_actor': 'Keira Knightley', 'summary':'Sparks fly when spirited Elizabeth Bennet meets single, rich, and proud Mr. Darcy. But Mr. Darcy reluctantly finds himself falling in love with a woman beneath his class. Can each overcome their own pride and prejudice?',
     'poster':os.path.join('example_posters', 'prideandpredjudice.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=Ur_DIHs92NM','likes': 34},
     {'movie_name':'The Fault in Our Stars', 'main_actor': 'Shailene Woodley', 'summary':'Two teenage cancer patients begin a life-affirming journey to visit a reclusive author in Amsterdam.',
-    'poster':os.path.join('example_posters', 'theFaultInOurStars.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=9ItBvH5J6ss', 'likes': 17}]
+    'poster':os.path.join('example_posters', 'theFaultInOurStars.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=9ItBvH5J6ss', 'likes': 17},
+    {'movie_name':'Little Women', 'main_actor': 'Saoirse Ronan', 'summary':'Jo March reflects back and forth on her life, telling the beloved story of the March sisters - four young women, each determined to live life on her own terms.',
+    'poster':os.path.join('example_posters', 'littleWomen.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=AST2-4db4ic', 'likes': 312}]
 
     comedyMovies = [ 
     {'movie_name':'Mamma Mia!', 'main_actor': 'Meryl Streep', 'summary':'The story of a bride-to-be trying to find her real father told using hit songs by the popular 1970s group ABBA.',
@@ -47,26 +53,49 @@ def populate():
     'poster':os.path.join('example_posters', 'littleMissSunshine.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=wvwVkllXT80', 'likes': -5}, 
     {'movie_name':'Legally Blonde', 'main_actor': 'Reese Witherspoon', 'summary':'Elle Woods, a fashionable sorority queen, is dumped by her boyfriend. She decides to follow him to law school. While she is there, she figures out that there is more to her than just looks.',
     'poster':os.path.join('example_posters', 'legallyBlonde.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=vWOHwI_FgAo', 'likes': 3}, 
-     {'movie_name':"She's all that", 'main_actor': 'Rachael Leigh Cook', 'summary':"A high school jock makes a bet that he can turn an unattractive girl into the school's prom queen.",
+    {'movie_name':"She's all that", 'main_actor': 'Rachael Leigh Cook', 'summary':"A high school jock makes a bet that he can turn an unattractive girl into the school's prom queen.",
     'poster':os.path.join('example_posters', 'shesAllThat.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=lHGweYtpQKI', 'likes': 85}, 
     ]
 
-    comedyMovies = [ 
+    kidsMovies = [ 
     {'movie_name':'Inside Out', 'main_actor': 'Amy Poehler', 'summary':'After young Riley is uprooted from her Midwest life and moved to San Francisco, her emotions - Joy, Fear, Anger, Disgust and Sadness - conflict on how best to navigate a new city, house, and school.',
     'poster':os.path.join('example_posters', 'insideOut.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=yRUAzGQ3nSY','likes': 9},
     {'movie_name':'Toy Story', 'main_actor': 'Tom Hanks', 'summary':"A cowboy doll is profoundly threatened and jealous when a new spaceman action figure supplants him as top toy in a boy's bedroom.",
-    'poster':os.path.join('example_posters', 'toyStory.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=v-PjgYDrg70', 'likes': 500}, 
+    'poster':os.path.join('example_posters', 'toyStory.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=v-PjgYDrg70', 'likes': 200}, 
     {'movie_name':'Encanto', 'main_actor': 'Stephanie Beatriz', 'summary':'A Colombian teenage girl has to face the frustration of being the only member of her family without magical powers.',
     'poster':os.path.join('example_posters', 'encanto.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=CaimKeDcudo', 'likes': 3}, 
-     {'movie_name':"Moana", 'main_actor': "Auli'i Cravalho", 'summary':"In Ancient Polynesia, when a terrible curse incurred by the Demigod Maui reaches Moana's island, she answers the Ocean's call to seek out the Demigod to set things right.",
+    {'movie_name':"Moana", 'main_actor': "Auli'i Cravalho", 'summary':"In Ancient Polynesia, when a terrible curse incurred by the Demigod Maui reaches Moana's island, she answers the Ocean's call to seek out the Demigod to set things right.",
     'poster':os.path.join('example_posters', 'moana.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=LKFuXETZUsI', 'likes': 72}, 
+    {'movie_name':"Frozen", 'main_actor': "Kristen Bell", 'summary':"When the newly crowned Queen Elsa accidentally uses her power to turn things into ice to curse her home in infinite winter, her sister Anna teams up with a mountain man, his playful reindeer, and a snowman to change the weather condition.",
+    'poster':os.path.join('example_posters', 'frozen.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=TbQm5doF_Uc', 'likes': 90}, 
+    {'movie_name':"Monster's inc", 'main_actor': "Billy Crystal", 'summary':"In order to power the city, monsters have to scare children so that they scream. However, the children are toxic to the monsters, and after a child gets through, two monsters realize things may not be what they think.",
+    'poster':os.path.join('example_posters', 'monsters.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=6tCxnHCqqxg', 'likes': 13},
+    {'movie_name':"Winnie the pooh", 'main_actor': "Jim Cummings", 'summary':"While searching for honey, Pooh and his friends embark on an adventure to find Eeyore's missing tail and rescue Christopher Robin from an unknown monster called The Backson.",
+    'poster':os.path.join('example_posters', 'winnie.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=hRT86ZggCEk', 'likes': 13}
+
     ]
+    musicals = []
+    adventureMovies = [{'movie_name':"The hunger games", 'main_actor': "Jennifer Lawrence", 'summary':"Katniss Everdeen voluntarily takes her younger sister's place in the Hunger Games: a televised competition in which two teenagers from each of the twelve Districts of Panem are chosen at random to fight to the death.",
+    'poster':os.path.join('example_posters', 'hungerGames.jpg'), 'trailer_link':'https://www.youtube.com/watch?v=mfmrPu43DF8', 'likes': 117}]
+    documenteries = []
 
     reviews = [{'title':'Good', 'review':'I like this movie a lot!'}, 
     {'title': 'Bad', 'review': 'I do not like this movie'},
     {'title': 'Underrated', 'review':'this movie is underrated.'}, 
     {'title': 'Overrated', 'review':'This movie is overrated'},
-     {'title': 'Fun', 'review': "This movie is fun but don't expect much else."},
+    {'title': 'Fun', 'review': "This movie is fun but don't expect much else."},
+    {'title': 'Bad', 'review': 'I do not like this movie'}, 
+    {'title':'Good', 'review':'I like this movie a lot!'}, 
+    {'title': 'Underrated', 'review':'this movie is underrated.'},
+    {'title': 'Overrated', 'review':'This movie is overrated'},
+    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.'}, 
+    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.'}, 
+    {'title': 'Loved it!', 'review': 'This is one of my all time favorite movies! Everyone should watch it.'},
+    {'title':'Good', 'review':'I like this movie a lot!'}, 
+    {'title': 'Bad', 'review': 'I do not like this movie'},
+    {'title': 'Underrated', 'review':'this movie is underrated.'}, 
+    {'title': 'Overrated', 'review':'This movie is overrated'},
+    {'title': 'Fun', 'review': "This movie is fun but don't expect much else."},
     {'title': 'Bad', 'review': 'I do not like this movie'}, 
     {'title':'Good', 'review':'I like this movie a lot!'}, 
     {'title': 'Underrated', 'review':'this movie is underrated.'},
@@ -79,7 +108,11 @@ def populate():
     cats = {
         'Horror': {'description': 'Scary Movies', 'movies': horrorMovies, 'likes': 3}, 
         'Drama': {'description': 'Dramatic Movies', 'movies': dramaMovies, 'likes': 8},
-        'Comedy': {'description': 'Funny Movies', 'movies': comedyMovies, 'likes': 10}
+        'Comedy': {'description': 'Funny Movies', 'movies': comedyMovies, 'likes': 10},
+        "Kid's Movies": {'description': 'Movies for children', 'movies': kidsMovies, 'likes': 10},
+        "Musicals": {'description': "Movies with singing and music", 'movies': musicals, 'likes': 2},
+        "Adventure movies": {'description': "Suspensfull stories", 'movies': adventureMovies, 'likes': 1},
+        "Documenteries": {'description': "Non-fiction movies", 'movies': documenteries, 'likes': 1},
     }
     for user in users:
         u = add_user(user['username'], user['password'], user['user_type'])

@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     context_dict = {}
     
-    category_list = Category.objects.order_by('-likes')[:8]
+    category_list = Category.objects.order_by('-likes')[:5]
     movie_list = Movie.objects.order_by('-likes')[:5]
 
     context_dict['movies'] = movie_list
@@ -262,15 +262,15 @@ def search(request):
 
 @login_required
 def edit_movie(request, movie_title_slug=""):
+    
     movie = Movie.objects.get(slug=movie_title_slug)
-   
+    
     if request.method == 'POST':
         form = MovieForm(request.POST, request.FILES, instance=movie)
-        
+
         if form.is_valid():
-            # update the existing `Band` in the database
             form.save()
-            # redirect to the detail page of the `Band` we just updated
+            
             return redirect('/RaisinRatings/')
         else: 
             print(form.errors, form.errors)
@@ -279,12 +279,6 @@ def edit_movie(request, movie_title_slug=""):
 
 
     return render(request, 'RaisinRatings/edit_movie.html', {'form': form, 'movie': movie})
-
-
-
-
-    
-
 
 def user_page(request, username):
     context_dir = {}

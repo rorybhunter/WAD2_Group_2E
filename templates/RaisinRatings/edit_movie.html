@@ -7,7 +7,7 @@
 
 {% block body_block %}
 
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit">
@@ -34,7 +34,7 @@
                                     {% endif %}
                                 {% endfor %}
 
-                                 <!-- old fields
+                                 <!-old fields
                                     {% for hidden in form.hidden_fields %}
                                     {{ hidden }}
                                     {% endfor %}
@@ -45,7 +45,7 @@
                                         <div class = "p-2"></div>
                                     {% endfor %} -->
 
-                                <input type="hidden" name="slug" id="id_slug">
+                                <!-- <input type="hidden" name="slug" id="id_slug">
                                 <div class="form-group">
                                     <p class="required">
                                         <label class="required" for="id_movie_name">Movie name:</label>
@@ -86,7 +86,7 @@
             </div>
         </div>
     </div> -->
-{% endblock %}
+
 
 
 

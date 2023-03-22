@@ -43,7 +43,7 @@ class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=Category.CATEGORY_MAX_LENGTH, help_text="category name")
     description = forms.CharField(max_length=Category.DESCRIPTION_MAX_LENGTH)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
-    
+
     class Meta: 
         model = Category 
         fields = ["name", 'description']
