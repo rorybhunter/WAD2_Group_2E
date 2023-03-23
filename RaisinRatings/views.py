@@ -170,57 +170,11 @@ def cat_page(request, category_name_slug):
     return render(request, 'RaisinRatings/cat_page.html', context=context_dict)
 
 @login_required
-def like_movie(request, movie_title_slug):
-    movie = Movie.objects.get(slug=movie_title_slug)
-    user = User.objects.get(id = request.user.id)
-    if movie not in user.userprofile.movies:
-        movie.likes += 1
-        movie.save()
-        user.userprofile.movies.append(movie)
-
-    return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
-
-@login_required
-def dislike_movie(request, movie_title_slug):
-    movie = Movie.objects.get(slug=movie_title_slug)
-    user = User.objects.get(id = request.user.id)
-    if movie in user.userprofile.movies:
-        movie.likes -= 1
-        movie.save()
-        user.userprofile.movies.remove(movie)
-
-    return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
-
-@login_required
 def delete_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     movie.delete()
 
     return redirect('/RaisinRatings/')
-
-
-@login_required
-def like_category(request, category_name_slug):
-    category = Category.objects.get(slug=category_name_slug)
-    user = User.objects.get(id = request.user.id)
-    if category not in user.userprofile.categories:
-        category.likes +=1
-        category.save()
-        user.userprofile.categories.append(category)
-
-    return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
-
-
-@login_required
-def dislike_category(request, category_name_slug):
-    category = Category.objects.get(slug=category_name_slug)
-    user = User.objects.get(id = request.user.id)
-    if category in user.userprofile.categories:
-        category.likes -=1
-        category.save()
-        user.userprofile.categories.remove(category)
-
-    return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
 
 
 @login_required
@@ -308,8 +262,8 @@ def recently_viewed_handler(request, movie):
         if movie in recently_viewed:
             recently_viewed.remove(movie)
         recently_viewed .insert(0, movie)
-        if len(recently_viewed) > 5:
-            recently_viewed.pop()
+    if len(recently_viewed) > 5:
+        recently_viewed.pop(0)
 
     request.session['recently_viewed'] = recently_viewed
     print(recently_viewed)
@@ -348,6 +302,12 @@ def user_page(request, username):
     context_dir['picture'] = picture
     context_dir['user_type'] = user_type
     context_dir['movies'] = movies
+    recently_viewed_names =  get_server_side_cookie(request, 'recently_viewed', [])
+
+    context_dir['recently_viewed'] = []
+    for movie in recently_viewed_names:
+        context_dir['recently_viewed'].append(Movie.objects.get(movie_name=movie))
+
     return render(request, 'RaisinRatings/user_page.html', context=context_dir)
 
 class LikeCategoryView(View):
@@ -365,7 +325,6 @@ class LikeCategoryView(View):
         if category not in user.userprofile.categories:
             category.likes = category.likes + 1
             category.save()
-            user.userprofile.categories.append(category)
 
 
         return HttpResponse(category.likes)
@@ -385,7 +344,6 @@ class DislikeCategoryView(View):
         if category in user.userprofile.categories:
             category.likes = category.likes - 1
             category.save()
-            user.userprofile.categories.remove(category)
 
         return HttpResponse(category.likes)
 

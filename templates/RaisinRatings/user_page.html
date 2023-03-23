@@ -61,4 +61,38 @@
     {%endif%}
 </div>
 
+<hr>
+<div class="container">
+    <br />
+    <h1 class="font-weight-light">Recently viewed movies:</h1>
+    <div class="container" style="text-align: center;">
+        <div class="m-auto p-3">
+            <p>recently viewed = {{recently_viewed}}</p>
+            {% if recently_viewed %}
+            {% for movie in recently_viewed %}
+                <div class="card mb-3 mr-3 bg-light" style="width:15rem; display: inline-block;" >
+                    <a style="display:block;height:100%;width:100%;text-decoration:none" href="{% url 'RaisinRatings:show_movie' movie.slug%}">
+                        <img class="card-img-top mr-3" style="width: 100%; height:320px;" alt="{{movie.movie_name}}'s movie poster" width="100%" src="{{ MEDIA_URL }}{{ movie.poster }}">
+                        <div class="card-body p-0">
+                            <p class="card-text">
+                                <p class="text-dark mb-0">
+                                    {{movie.movie_name}}
+                                </p>
+                                <span class="badge badge-secondary badge-pill">{{ movie.likes }} likes</span>
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    {% if page_user.username == user.username %}
+    <p>You haven't viewed any movies</p>
+    {% else %}
+    <p>{{page_user.username}} hasn't viewed any movies</p>
+    {% endif %}
+    {%endif%}
+</div>
+
 {% endblock %}
