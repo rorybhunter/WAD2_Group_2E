@@ -266,8 +266,8 @@ def recently_viewed_handler(request, movie):
         if movie in recently_viewed:
             recently_viewed.remove(movie)
         recently_viewed .insert(0, movie)
-        if len(recently_viewed) > 5:
-            recently_viewed.pop()
+    if len(recently_viewed) > 4:
+        recently_viewed.pop(0)
 
     request.session['recently_viewed'] = recently_viewed
     print(recently_viewed)
@@ -303,13 +303,16 @@ def user_page(request, username):
     user_movies = []
     for m in userprofile.movies.all():
         user_movies.append(m)
-
-    print(user.userprofile.movies.all())
-
+        
     context_dir['page_user'] = user
     context_dir['picture'] = picture
     context_dir['user_type'] = user_type
     context_dir['movies'] = user_movies
+    recently_viewed_names =  get_server_side_cookie(request, 'recently_viewed', [])
+    
+    context_dir['recently_viewed'] = []
+    for movie in recently_viewed_names:
+        context_dir['recently_viewed'].append(Movie.objects.get(movie_name=movie))
 
     return render(request, 'RaisinRatings/user_page.html', context=context_dir)
 
@@ -328,7 +331,6 @@ class LikeCategoryView(View):
         if category not in user.userprofile.categories:
             category.likes = category.likes + 1
             category.save()
-            user.userprofile.categories.append(category)
 
 
         return HttpResponse(category.likes)
@@ -348,7 +350,6 @@ class DislikeCategoryView(View):
         if category in user.userprofile.categories:
             category.likes = category.likes - 1
             category.save()
-            user.userprofile.categories.remove(category)
 
         return HttpResponse(category.likes)
 
