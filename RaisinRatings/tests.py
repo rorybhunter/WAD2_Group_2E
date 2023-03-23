@@ -1,5 +1,5 @@
 from django.test import TestCase
-from RaisinRatings.models import Category, UserProfile, Movie
+from RaisinRatings.models import Category, UserProfile, Movie, Review
 from RaisinRatings.forms import UserForm, MovieForm, CategoryForm, ReviewForm
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -263,11 +263,12 @@ class AddCategoryForm(TestCase):
 
 
 class AddReviewForm(TestCase):
-    def test_add_review_form(self):
-        user = add_user("Dummy", "dummy")
-        cat = add_category("Kids")
-        movie = add_movie("Toy Story", "Tom Hanks", cat, user)
+    def setUp(self):
+        self.user = add_user("Dummy", "dummy")
+        self.cat = add_category("Kids")
+        self.movie = add_movie("Toy Story", "Tom Hanks", self.cat, self.user)
 
+    def test_add_review_form(self):
         form = ReviewForm()
         self.assertIn("title", form.fields)
         self.assertIn("review", form.fields)
@@ -281,9 +282,10 @@ class AddReviewForm(TestCase):
         }
 
         form = ReviewForm(request.POST)
-        form.save()
+        
+        review = Review.objects.get_or_create(title = "test", user = self.user, movie = self.movie)
 
-        response = self.client.get(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug':movie.slug}))
+        response = self.client.get(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug':self.movie.slug}))
 
         self.assertEquals(response.status_code, 200)
         self.assertContains(response, "Toy Story")
