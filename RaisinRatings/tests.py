@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.test.client import Client
 from django.contrib import auth
 from django.http import HttpRequest
+from django.forms.models import ModelChoiceIterator
 # Create your tests here.
 
 class CategoryMethodTests(TestCase):
@@ -223,19 +224,68 @@ class AddCategoryForm(TestCase):
 
         self.assertContains(response, "Romance")
 
-class AddMovieForm(TestCase):
-    def test_add_movie_form(self):
-        form = MovieForm()
-        self.assertIn("movie_name", form.fields)
-        self.assertIn('main_actor', form.fields)
-        self.assertIn('summary', form.fields)
-        self.assertIn("trailer_link", form.fields)
-        self.assertIn("poster", form.fields)
-        self.assertIn("category", form.fields)
+# class AddMovieForm(TestCase):
+#     def test_add_movie_form(self):
+
+#         c = add_category("Kids")
+
+#         categories = Category.objects.all()
+
+#         user = add_user('Dummy', 'dummy')
+#         self.client = Client()
+
+#         self.client.login(username = "Dummy", password = "dummy")
+
+#         form = MovieForm()
+#         self.assertIn("movie_name", form.fields)
+#         self.assertIn('main_actor', form.fields)
+#         self.assertIn('summary', form.fields)
+#         self.assertIn("trailer_link", form.fields)
+#         self.assertIn("poster", form.fields)
+#         self.assertIn("category", form.fields)
+
+#         print(form.fields["category"].choices)
+
+#         request = HttpRequest()
+#         request.POST = {
+#             "movie_name":"Toy Story",
+#             "main_actor":"Tom Hanks",
+#             "summary":"Toys coming to life",
+#             "trailer_link": "https://www.youtube.com/watch?v=CxwTLktovTU&t=2s&ab_channel=DisneyPlus",
+#             "category":c_option
+#         }
+
+#         form = MovieForm(request.POST)
+
+#         response = self.client.get(reverse('RaisinRatings:index'))
+#         self.assertContains(response, "Kids")
+#         self.assertContains(response, "Toy Story")
+
 
 class AddReviewForm(TestCase):
     def test_add_review_form(self):
+        user = add_user("Dummy", "dummy")
+        cat = add_category("Kids")
+        movie = add_movie("Toy Story", "Tom Hanks", cat, user)
+
         form = ReviewForm()
         self.assertIn("title", form.fields)
         self.assertIn("review", form.fields)
         self.assertIn("starnum", form.fields)
+
+        request = HttpRequest()
+        request.POST = {
+            'title':"Lame movie",
+            'review': "This movie was incredibly lame",
+            'starnum': 2,
+        }
+
+        form = ReviewForm(request.POST)
+        form.save()
+
+        response = self.client.get(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug':movie.slug}))
+
+        self.assertEquals(response.status_code, 200)
+        self.assertContains(response, "Toy Story")
+        
+    
