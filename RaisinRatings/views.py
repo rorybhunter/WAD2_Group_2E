@@ -11,6 +11,11 @@ from datetime import datetime
 from django.utils.decorators import method_decorator
 
 def index(request):
+    users = User.objects.all()
+
+    for user in users: 
+        print(user.username)
+        print(user.userprofile.movies)
     context_dict = {}
     
     category_list = Category.objects.order_by('-likes')[:8]
@@ -176,7 +181,6 @@ def delete_movie(request, movie_title_slug):
 
     return redirect('/RaisinRatings/')
 
-
 @login_required
 def add_review(request, movie_title_slug):
 
@@ -295,15 +299,17 @@ def user_page(request, username):
     username = user.username
     picture = userprofile.picture
     user_type = userprofile.user_type
-    movies = userprofile.movies
 
-
+    user_movies = []
+    for m in userprofile.movies.all():
+        user_movies.append(m)
+        
     context_dir['page_user'] = user
     context_dir['picture'] = picture
     context_dir['user_type'] = user_type
-    context_dir['movies'] = movies
+    context_dir['movies'] = user_movies
     recently_viewed_names =  get_server_side_cookie(request, 'recently_viewed', [])
-
+    
     context_dir['recently_viewed'] = []
     for movie in recently_viewed_names:
         context_dir['recently_viewed'].append(Movie.objects.get(movie_name=movie))
@@ -360,10 +366,11 @@ class LikeMovieView(View):
         except ValueError:
             return HttpResponse(-1)
 
-        if movie not in user.userprofile.movies:
+        if movie not in user.userprofile.movies.all():
             movie.likes = movie.likes + 1
             movie.save()
-            user.userprofile.movies.append(movie)
+            
+            user.userprofile.movies.add(movie)
 
         return HttpResponse(movie.likes)
 
@@ -380,7 +387,7 @@ class DislikeMovieView(View):
         except ValueError:
             return HttpResponse(-1)
 
-        if movie in user.userprofile.movies:
+        if movie in user.userprofile.movies.all():
             movie.likes = movie.likes - 1
             movie.save()
             user.userprofile.movies.remove(movie)
