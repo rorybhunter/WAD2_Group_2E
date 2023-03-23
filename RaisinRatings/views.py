@@ -386,7 +386,7 @@ class DislikeMovieView(View):
         except ValueError:
             return HttpResponse(-1)
 
-        if movie in user.userprofile.movies:
+        if movie in user.userprofile.movies.all():
             movie.likes = movie.likes - 1
             movie.save()
             user.userprofile.movies.remove(movie)
