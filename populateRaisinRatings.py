@@ -135,8 +135,11 @@ def populate():
         for m in cat_data['movies']:
             m = add_movie(m['movie_name'], c, random.choice(creators).user, m['main_actor'], m['summary'], m['likes'],  m['poster'], m['trailer_link'])
 
+
+
     critics = UserProfile.objects.filter(user_type = 'CRITIC')
     movies = Movie.objects.all()
+
 
     for review in reviews:
         add_review(review['title'], review['review'], random.choice(critics).user, random.choice(movies), review['starnum'])
