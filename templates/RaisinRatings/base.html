@@ -32,17 +32,15 @@
     <body>
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-alert p-0 ">
-                <a class="navbar-brand p-3 font-brand" href="{% url 'RaisinRatings:index' %}">RaisinRatings</a>
+                <a class="navbar-brand p-3 font-brand" href="{% url 'RaisinRatings:index' %}"><img class="mr-2" src="{% static 'images/logo.jpeg' %}" style="height:1.5rem" >RaisinRatings</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
-
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:index' %}">Home</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:categories' %}">Categories</a></li>
-                        <li class="nav-item mx-2"><a class="nav-link" href="{% url 'RaisinRatings:search' %}">Search</a></li>
                         {% if user.userprofile.user_type == "CREATOR" %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
