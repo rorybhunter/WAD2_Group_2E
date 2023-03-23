@@ -1,0 +1,48 @@
+.navbar{
+    background-color: rgb(52, 32, 140);
+    }
+
+.text-brand{
+    color:darkslateblue
+}
+
+/* body{
+    background-color: darkslateblue;
+} */
+
+.font-brand{
+    font-family: 'Arial Narrow'
+}
+
+html {
+    height:100%;
+    }
+    body {
+    margin:0;
+    }
+    
+    body {
+        /* animation:slide 3s ease-in-out infinite alternate; */
+        background-image: linear-gradient(160deg,rgb(243, 242, 255) 50% 60%, rgb(148, 151, 255) 60% 75%, rgb(52, 32, 140) 75% 100%);
+        background-attachment: fixed;
+        z-index:-1;
+    }
+    
+    .bg2 {
+        animation-direction:alternate-reverse;
+        animation-duration:4s;
+    }
+
+    .bg3 {
+        animation-duration:5s;
+    }
+
+    /* @keyframes slide {
+    0% {
+        transform:translateX(-25%);
+        }
+    
+    100% {
+        transform:translateX(25%);
+    }
+    } */

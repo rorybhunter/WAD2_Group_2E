@@ -1,0 +1,95 @@
+{% extends 'RaisinRatings/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+Register
+{% endblock %}
+
+{% block body_block %}
+<div class="container p-5 text-center">
+    <h2 class="display-4">Register for Raisin Ratings</h2>
+</div>
+
+{% if registered %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-6 bg-light-brand">
+                <div class="card-body ">
+                    <h1 class="font-weight-light">Thank you for regestering!</h1>
+                    <br />
+                    <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:index' %}">
+                        Home 
+                    </a>
+                    <a class="btn btn-outline-info btn-sm" role="button"href="{% url 'RaisinRatings:login' %}">
+                        Login 
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+{% else %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-6 bg-light-brand">
+                <div class="card-body">
+                    <div class="form-group">
+                        <form role="form" id="user_form" method="post" action="#" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">`
+                                {% for field in user_form %}
+                                    {% if field.errors %}
+                                        There was an error with field {{ field.name }}
+                                        {{ field.errors }}
+                                    {% endif %}
+                                {% endfor %}
+                                {% for field in profile_form %}
+                                    {% if field.errors %}
+                                        There was an error with field {{ field.name }}
+                                        {{ field.errors }}
+                                    {% endif %}
+                                {% endfor %}
+                                <p class="required">
+                                    <label class="required" for="id_username">Username:</label>
+                                    <input class="form-control" id="id_username" maxlength="50" name="username" type="text" />
+                                    <span class="helptext">
+                                        Required. 50 charcters or fewer. Letters, digits and @/./+/-/_ only.
+                                    </span>
+                                </p>
+                                <p class="required">
+                                    <label class="required" for="id_email">E-mail:</label>
+                                    <input class="form-control" id="id_email" name="email" type="email" />
+                                </p>
+                                <p class="required">
+                                    <label class="required" for="id_password">Password:</label>
+                                    <input class="form-control" id="id_password" name="password" type="password" />
+                                </p>
+                                <p>
+                                    <label for="id_picture">Picture:</label>
+                                    <input type="file" name="picture" accept="image/*" id="id_picture">
+                                </p>
+                                <p>
+                                    <label for="id_user_type">User type:</label>
+                                    <select class="form-control" name="user_type" id="id_user_type">
+                                        <option value="COUCH_POTATO" selected="">Couch Potato</option>
+                                        <option value="CRITIC">Critic</option>
+                                        <option value="CREATOR">Creator</option>
+                                    </select>
+                                </p>
+                            <!-- {{ user_form.as_p }}
+                            {{ profile_form.as_p }} -->
+                            <button type="submit" class="btn btn-primary" name="submit" value="Register"> Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+

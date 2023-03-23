@@ -1,0 +1,29 @@
+{% extends 'RaisinRatings/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Login
+{% endblock %}
+
+{% block body_block %}
+<link href="{% static 'css/sign-in.css' %}" rel="stylesheet">
+    
+    <div class="container">
+        <div class="text-center">
+            <h1 class="pb-4 display-4">Login</h1>
+        </div>
+        <form class="form-signin" role="form" method="post" action="">
+            {% csrf_token %}
+            
+            <label for="inputUsername" class="sr-only">Username</label>
+            <input type="text" name="username" id="id_username" class="form-control" placeholder="Username" required autofocus value="" size="50" />
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" name="password" id="id_password" class="form-control" placeholder="Password" required value="" size="50" />
+            {% if not valid %}
+                <strong class="text-danger">Invalid username or password</strong>
+            {% endif %}
+            <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Sign in</button>
+        </form>
+    </div>
+
+{% endblock %}

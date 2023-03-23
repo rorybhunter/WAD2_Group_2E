@@ -1,0 +1,105 @@
+{% extends 'RaisinRatings/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Add movie 
+{% endblock %}
+
+{% block body_block %}
+{% if categories %}
+    <div class="container p-5 text-center">
+        <h2 class="display-4">Add a Movie</h2>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-6 bg-light">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <form role="form" id="movie_form" method="post" action="#" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                 <!-- old fields
+                                    {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                    {% endfor %}
+                                    {% for field in form.visible_fields %}
+                                        {{ field.errors }}
+                                        {{ field.help_text }}<br />
+                                        {{ field }}<br />
+                                        <div class = "p-2"></div>
+                                    {% endfor %} -->
+                                
+                                {% for field in form.visible_fields %}
+                                    {% if field.errors %}
+                                        There was an error with field {{ field.name }}
+                                        {{ field.errors }}
+                                    {% endif %}
+                                {% endfor %}
+                                <input type="hidden" name="slug" id="id_slug">
+                                <div class="form-group">
+                                    <p class="required">
+                                        <label class="required" for="id_movie_name">Movie name:</label>
+                                        <input class="form-control" type="text" name="movie_name" maxlength="128" required="" id="id_movie_name">
+                                    </p>
+                                    <p>
+                                        <label class="required" for="id_main_actor">Main actor:</label>
+                                        <input class="form-control" type="text" name="main_actor" maxlength="128" required="" id="id_main_actor" />
+                                    </p>
+                                    <p>
+                                        <label class="required" for="id_summary">Summary:</label><br />
+                                        <textarea class="form-control textarea" type="text" name="summary" maxlength="500" required="" id="id_summary" rows="5"></textarea>
+                                    </p>
+                                    <p>
+                                        <label class="required" for="id_trailer_link">Trailer Link:</label>
+                                        <input class="form-control" type="text" name="trailer_link" maxlength="128" id="id_trailer_link" />
+                                    </p>
+                                    <p>
+                                        <label for="id_poster">Upload poster:</label>
+                                        <input class="form-control-file" type="file" name="poster" required="" id="id_poster">
+                                    </p>
+
+                                    <p>
+                                        <label for="{{ form.category.id_for_label }}">Add to Category:</label>
+                                        <select name="{{ form.category.name }}" id="{{ form.category.id_for_label }}">
+                                            {% for category in form.category.field.queryset %}
+                                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </p>
+                                    <br />
+                                </div>
+                                <button class="btn btn-primary" type="submit" name="submit">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-6 bg-light">
+                <div class="card-body ">
+                    <div class="media">
+                        <div class="media-body">
+                            <h1 class="font-weight-light">There are no categories yet. Do you want to add one?</h1>
+                            <br />
+                            <a class="btn btn-outline-secondary btn-sm" role="button"href="{% url 'RaisinRatings:add_category' %}">
+                                
+                                Add Category
+                            </a>
+                            <p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+{% endif %}
+{% endblock %}

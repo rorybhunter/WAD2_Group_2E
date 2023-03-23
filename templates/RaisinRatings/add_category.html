@@ -1,0 +1,45 @@
+{% extends 'RaisinRatings/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Add category 
+{% endblock %}
+
+{% block body_block %}
+
+   
+<div class="container p-5 text-center">
+    <h2 class="display-4">Add a Category</h2>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-6 bg-light-brand">
+                <div class="card-body">
+                    <div class="form-group">
+                        <form role="form" id="category_form" method="post" action="#">
+                            {% csrf_token %}
+                            {% for field in form.visible_fields %}
+                                    {% if field.errors %}
+                                        There was an error with field {{ field.name }}
+                                        {{ field.errors }}
+                                    {% endif %}
+                            {% endfor %}
+                            <p>
+                                <label class="required" for="id_category">Category:</label>
+                                <input class="form-control" type="text" name="name" maxlength="128" required="" id="id_name">
+                            </p>
+                            <p>
+                                <label class="required" for="id_desciption">Description:</label>
+                                <textarea type="text"class="form-control textarea" name="description" maxlength="500" required="" id="id_description" rows="3"></textarea>
+                            </p>
+                            <br />
+                            <button class="btn btn-primary" type="submit">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
