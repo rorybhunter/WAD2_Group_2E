@@ -31,7 +31,12 @@
 </div>
 <div class="container">
     <br />
+    {% if page_user.username == user.username %}
     <h1 class="font-weight-light">Your movies:</h1>
+    {% else %}
+    <h1 class="font-weight-light">{{ page_user.username }}'s movies:</h1>
+    {% endif %}
+
     {% if movies %}
     <div class="container" style="text-align: center;">
         <div class="m-auto p-3">

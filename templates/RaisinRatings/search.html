@@ -7,10 +7,9 @@
 
 
 {% block body_block %}
-<script src="search.js"></script>
 <div class="container p-5 text-center">
     <h2 class="display-4">Search with RaisinRatings</h2>
-    <h3 class="font-weight-light">Find out more about your favourite movies here!</h2>
+    <h3 class="font-weight-light">Find out more about your favourite movies here!</h3>
 </div>
 <form class="form-inline "
     id="user-form"
@@ -62,4 +61,5 @@
     </div>
 </div>
 {% endif %}
+    <script src="{% static 'js/search.js' %}"></script>
 {% endblock %}
