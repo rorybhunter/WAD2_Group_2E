@@ -262,7 +262,7 @@ def recently_viewed_handler(request, movie):
         if movie in recently_viewed:
             recently_viewed.remove(movie)
         recently_viewed .insert(0, movie)
-    if len(recently_viewed) > 5:
+    if len(recently_viewed) > 4:
         recently_viewed.pop(0)
 
     request.session['recently_viewed'] = recently_viewed
