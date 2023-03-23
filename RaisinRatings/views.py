@@ -181,31 +181,6 @@ def delete_movie(request, movie_title_slug):
 
     return redirect('/RaisinRatings/')
 
-
-@login_required
-def like_category(request, category_name_slug):
-    category = Category.objects.get(slug=category_name_slug)
-    user = User.objects.get(id = request.user.id)
-    if category not in user.userprofile.categories:
-        category.likes +=1
-        category.save()
-        user.userprofile.categories.append(category)
-
-    return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
-
-
-@login_required
-def dislike_category(request, category_name_slug):
-    category = Category.objects.get(slug=category_name_slug)
-    user = User.objects.get(id = request.user.id)
-    if category in user.userprofile.categories:
-        category.likes -=1
-        category.save()
-        user.userprofile.categories.remove(category)
-
-    return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
-
-
 @login_required
 def add_review(request, movie_title_slug):
 
