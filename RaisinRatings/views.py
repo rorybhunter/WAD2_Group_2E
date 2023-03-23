@@ -11,11 +11,6 @@ from datetime import datetime
 from django.utils.decorators import method_decorator
 
 def index(request):
-    users = User.objects.all()
-
-    for user in users: 
-        print(user.username)
-        print(user.userprofile.movies)
     context_dict = {}
     
     category_list = Category.objects.order_by('-likes')[:8]
@@ -225,10 +220,8 @@ def categories(request):
 
 def search(request):
     result_list = []
-    print("Search")
     query = ""
     if request.method == 'POST':
-        print("post")
         query = request.POST['query'].strip()
         print(query)
         if query:
@@ -270,7 +263,6 @@ def recently_viewed_handler(request, movie):
         recently_viewed.pop(0)
 
     request.session['recently_viewed'] = recently_viewed
-    print(recently_viewed)
 
 
 @login_required
@@ -284,7 +276,7 @@ def edit_movie(request, movie_title_slug=""):
             # update the existing `Band` in the database
             form.save()
             # redirect to the detail page of the `Band` we just updated
-            return redirect('/RaisinRatings/')
+            return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
         else:
             print(form.errors, form.errors)
     else:
