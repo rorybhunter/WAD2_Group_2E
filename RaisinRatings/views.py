@@ -124,8 +124,11 @@ def add_category (request):
         form = CategoryForm()
     return render(request, 'RaisinRatings/add_category.html', {'form': form})
 
+
 def delete_movie(request, movie_title_slug):
-    Movie.objects.get(slug = movie_title_slug).delete()
+    movie = Movie.objects.get(slug=movie_title_slug)
+    movie.delete()
+
     return redirect('/RaisinRatings/')
 
 
@@ -168,47 +171,6 @@ def cat_page(request, category_name_slug):
     context_dict['likes'] = category.likes
 
     return render(request, 'RaisinRatings/cat_page.html', context=context_dict)
-
-@login_required
-def like_movie(request, movie_title_slug):
-    movie = Movie.objects.get(slug=movie_title_slug)
-    user = User.objects.get(id = request.user.id)
-    if movie not in user.userprofile.movies:
-        movie.likes += 1
-        movie.save()
-        user.userprofile.movies.append(movie)
-
-    return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
-
-@login_required
-def dislike_movie(request, movie_title_slug):
-    movie = Movie.objects.get(slug=movie_title_slug)
-    user = User.objects.get(id = request.user.id)
-    if movie in user.userprofile.movies:
-        movie.likes -= 1
-        movie.save()
-        user.userprofile.movies.remove(movie)
-
-    return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
-
-@login_required
-def delete_movie(request, movie_title_slug):
-    movie = Movie.objects.get(slug=movie_title_slug)
-    movie.delete()
-
-    return redirect('/RaisinRatings/')
-
-
-@login_required
-def like_category(request, category_name_slug):
-    category = Category.objects.get(slug=category_name_slug)
-    user = User.objects.get(id = request.user.id)
-    if category not in user.userprofile.categories:
-        category.likes +=1
-        category.save()
-        user.userprofile.categories.append(category)
-
-    return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
 
 
 @login_required
@@ -426,5 +388,30 @@ class DislikeMovieView(View):
             movie.likes = movie.likes - 1
             movie.save()
             user.userprofile.movies.remove(movie)
-
         return HttpResponse(movie.likes)
+
+def get_category_list(max_results=0, starts_with=''):
+    category_list = []
+
+    if starts_with:
+        category_list = Category.objects.filter(name__isstartswith=starts_with)
+
+    if max_results > 0:
+        if len(category_list) > max_results:
+            category_list = category_list[:max_results]
+    
+    return category_list
+
+class CategorySuggestionView(View):
+    def get(self, request):
+        if 'suggestion' in request.GET:
+            suggestion = request.GET['suggestion']
+        else:
+            suggestion = ''
+
+        category_list = get_category_list(max_results = 8, starts_with=suggestion)
+
+        if len(category_list) == 0:
+            category_list = Category.objects.order_by('-likes')
+
+        return render(request, 'RaisinRatings/categories.html', {'categories':category_list})
