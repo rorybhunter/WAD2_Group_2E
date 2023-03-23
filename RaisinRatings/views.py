@@ -11,6 +11,11 @@ from datetime import datetime
 from django.utils.decorators import method_decorator
 
 def index(request):
+    users = User.objects.all()
+
+    for user in users: 
+        print(user.username)
+        print(user.userprofile.movies)
     context_dict = {}
     
     category_list = Category.objects.order_by('-likes')[:8]
@@ -170,28 +175,6 @@ def cat_page(request, category_name_slug):
     return render(request, 'RaisinRatings/cat_page.html', context=context_dict)
 
 @login_required
-def like_movie(request, movie_title_slug):
-    movie = Movie.objects.get(slug=movie_title_slug)
-    user = User.objects.get(id = request.user.id)
-    if movie not in user.userprofile.movies:
-        movie.likes += 1
-        movie.save()
-        user.userprofile.movies.append(movie)
-
-    return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
-
-@login_required
-def dislike_movie(request, movie_title_slug):
-    movie = Movie.objects.get(slug=movie_title_slug)
-    user = User.objects.get(id = request.user.id)
-    if movie in user.userprofile.movies:
-        movie.likes -= 1
-        movie.save()
-        user.userprofile.movies.remove(movie)
-
-    return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
-
-@login_required
 def delete_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     movie.delete()
@@ -341,13 +324,18 @@ def user_page(request, username):
     username = user.username
     picture = userprofile.picture
     user_type = userprofile.user_type
-    movies = userprofile.movies
 
+    user_movies = []
+    for m in userprofile.movies.all():
+        user_movies.append(m)
+
+    print(user.userprofile.movies.all())
 
     context_dir['page_user'] = user
     context_dir['picture'] = picture
     context_dir['user_type'] = user_type
-    context_dir['movies'] = movies
+    context_dir['movies'] = user_movies
+
     return render(request, 'RaisinRatings/user_page.html', context=context_dir)
 
 class LikeCategoryView(View):
@@ -402,10 +390,11 @@ class LikeMovieView(View):
         except ValueError:
             return HttpResponse(-1)
 
-        if movie not in user.userprofile.movies:
+        if movie not in user.userprofile.movies.all():
             movie.likes = movie.likes + 1
             movie.save()
-            user.userprofile.movies.append(movie)
+            
+            user.userprofile.movies.add(movie)
 
         return HttpResponse(movie.likes)
 
