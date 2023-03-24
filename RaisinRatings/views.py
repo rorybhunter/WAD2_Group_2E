@@ -124,7 +124,7 @@ def add_category (request):
         form = CategoryForm()
     return render(request, 'RaisinRatings/add_category.html', {'form': form})
 
-
+@login_required
 def delete_movie(request, movie_title_slug):
     movie = Movie.objects.get(slug=movie_title_slug)
     movie.delete()
@@ -171,18 +171,6 @@ def cat_page(request, category_name_slug):
     context_dict['likes'] = category.likes
 
     return render(request, 'RaisinRatings/cat_page.html', context=context_dict)
-
-
-@login_required
-def dislike_category(request, category_name_slug):
-    category = Category.objects.get(slug=category_name_slug)
-    user = User.objects.get(id = request.user.id)
-    if category in user.userprofile.categories:
-        category.likes -=1
-        category.save()
-        user.userprofile.categories.remove(category)
-
-    return redirect(reverse('RaisinRatings:category', kwargs={'category_name_slug': category_name_slug}))
 
 
 @login_required

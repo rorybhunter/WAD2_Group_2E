@@ -1,6 +1,6 @@
 from django.test import TestCase
 from RaisinRatings.models import Category, UserProfile, Movie, Review
-from RaisinRatings.forms import UserForm, MovieForm, CategoryForm, ReviewForm
+from RaisinRatings.forms import UserForm, MovieForm, CategoryForm, ReviewForm, EditMovie
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.test.client import Client
@@ -204,6 +204,30 @@ class DeleteMovieViewTest(TestCase):
 
         self.assertNotContains(response, "Ted")
 
+class UserPageViewTest(TestCase):
+    def test_user_page_view(self):
+        user = add_user("Dummy", "dummy")
+        userprofile = UserProfile.objects.get_or_create(user = user)[0]
+
+        self.client = Client()
+
+        self.client.login(username = "Dummy", password = "dummy")
+
+        response = self.client.get(reverse('RaisinRatings:user_page', kwargs={'username': user.username}))
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertContains(response, "Dummy")
+        self.assertContains(response, 'COUCH_POTATO')
+        self.assertContains(response, "You haven't added any movies")
+
+        category = add_category("Fantasy")
+        movie = add_movie("Harry Potter", "Daniel Radcliffe", category, user)
+        userprofile.movies.add(movie)
+
+        response = self.client.get(reverse('RaisinRatings:user_page', kwargs={'username': user.username}))
+
+        self.assertContains(response, "Harry Potter")
 
 class AddCategoryForm(TestCase):
     def test_add_category_form(self):
@@ -223,44 +247,6 @@ class AddCategoryForm(TestCase):
         response = self.client.get(reverse('RaisinRatings:index'))
 
         self.assertContains(response, "Romance")
-
-# class AddMovieForm(TestCase):
-#     def test_add_movie_form(self):
-
-#         c = add_category("Kids")
-
-#         categories = Category.objects.all()
-
-#         user = add_user('Dummy', 'dummy')
-#         self.client = Client()
-
-#         self.client.login(username = "Dummy", password = "dummy")
-
-#         form = MovieForm()
-#         self.assertIn("movie_name", form.fields)
-#         self.assertIn('main_actor', form.fields)
-#         self.assertIn('summary', form.fields)
-#         self.assertIn("trailer_link", form.fields)
-#         self.assertIn("poster", form.fields)
-#         self.assertIn("category", form.fields)
-
-#         print(form.fields["category"].choices)
-
-#         request = HttpRequest()
-#         request.POST = {
-#             "movie_name":"Toy Story",
-#             "main_actor":"Tom Hanks",
-#             "summary":"Toys coming to life",
-#             "trailer_link": "https://www.youtube.com/watch?v=CxwTLktovTU&t=2s&ab_channel=DisneyPlus",
-#             "category":c_option
-#         }
-
-#         form = MovieForm(request.POST)
-
-#         response = self.client.get(reverse('RaisinRatings:index'))
-#         self.assertContains(response, "Kids")
-#         self.assertContains(response, "Toy Story")
-
 
 class AddReviewForm(TestCase):
     def setUp(self):
@@ -283,11 +269,42 @@ class AddReviewForm(TestCase):
 
         form = ReviewForm(request.POST)
         
-        review = Review.objects.get_or_create(title = "test", user = self.user, movie = self.movie)
-
-        response = self.client.get(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug':self.movie.slug}))
-
-        self.assertEquals(response.status_code, 200)
-        self.assertContains(response, "Toy Story")
+        self.assertTrue(form.is_valid())
         
+class EditMovieForm(TestCase):
+    def test_edit_movie_form(self):
+        form = EditMovie()
+        self.assertIn("movie_name", form.fields)
+        self.assertIn("main_actor", form.fields)
+        self.assertIn("summary", form.fields)
+
+        category = add_category("Kids")
+        user = add_user("Dummy", "dummy")
+        movie = add_movie("Toy Story", "Tom Hanks", category, user, 5, "Toys coming to life")
+
+        response = self.client.get(reverse('RaisinRatings:category', kwargs={"category_name_slug":category.slug}))
+        
+        self.assertContains(response, "Toy Story")
+
+        request = HttpRequest()
+        request.POST = {
+            "movie_name":"Castaway",
+            "main_actor":"Tom Hanks",
+            "summary":"WILSON"
+        }
+
+        form = EditMovie(request.POST, instance = movie)
+
+        self.assertTrue(form.is_valid())
+        
+        form.save()
+
+        response = self.client.get(reverse('RaisinRatings:category', kwargs={"category_name_slug":category.slug}))
+
+
+        self.assertContains(response, "Castaway")
+
+        self.assertNotContains(response, "Toy Story")
+
+
     
