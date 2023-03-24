@@ -40,7 +40,7 @@ class MovieForm(forms.ModelForm):
 
 
 class CategoryForm(forms.ModelForm):
-    name = forms.CharField(max_length=Category.CATEGORY_MAX_LENGTH, help_text="category name")
+    name = forms.CharField(max_length=Category.CATEGORY_MAX_LENGTH)
     description = forms.CharField(max_length=Category.DESCRIPTION_MAX_LENGTH)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
