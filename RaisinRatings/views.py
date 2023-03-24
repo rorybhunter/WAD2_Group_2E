@@ -9,6 +9,7 @@ from RaisinRatings.bing_search import run_query
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.utils.decorators import method_decorator
+from django.template.defaultfilters import slugify
 
 def index(request):
     context_dict = {}
@@ -270,13 +271,14 @@ def edit_movie(request, movie_title_slug=""):
     movie = Movie.objects.get(slug=movie_title_slug)
 
     if request.method == 'POST':
+        
         form = MovieForm(request.POST, request.FILES, instance=movie)
 
         if form.is_valid():
             # update the existing `Band` in the database
-            form.save()
-            # redirect to the detail page of the `Band` we just updated
-            return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': movie_title_slug}))
+            updated_movie = form.save()
+            
+            return redirect(reverse('RaisinRatings:show_movie', kwargs={'movie_title_slug': updated_movie.slug}))
         else:
             print(form.errors, form.errors)
     else:
@@ -304,7 +306,11 @@ def user_page(request, username):
     
     context_dir['recently_viewed'] = []
     for movie in recently_viewed_names:
-        context_dir['recently_viewed'].append(Movie.objects.get(movie_name=movie))
+        try:
+            context_dir['recently_viewed'].append(Movie.objects.get(movie_name=movie))
+        except Movie.DoesNotExist:
+            pass
+        
 
     return render(request, 'RaisinRatings/user_page.html', context=context_dir)
 
