@@ -65,6 +65,7 @@
     {% endif %}
     {%endif%}
 </div>
+{% if page_user.username == user.username %}
 <hr>
 <div class="container">
     <br />
@@ -95,7 +96,8 @@
     {% else %}
     <p>{{page_user.username}} hasn't viewed any movies</p>
     {% endif %}
-    {%endif%}
+    {% endif %}
 </div>
+{% endif %}
 
 {% endblock %}
