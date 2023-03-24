@@ -304,7 +304,11 @@ def user_page(request, username):
     
     context_dir['recently_viewed'] = []
     for movie in recently_viewed_names:
-        context_dir['recently_viewed'].append(Movie.objects.get(movie_name=movie))
+        try:
+            context_dir['recently_viewed'].append(Movie.objects.get(movie_name=movie))
+        except Movie.DoesNotExist:
+            pass
+        
 
     return render(request, 'RaisinRatings/user_page.html', context=context_dir)
 
