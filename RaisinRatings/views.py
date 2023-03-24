@@ -357,9 +357,12 @@ class LikeMovieView(View):
             return HttpResponse(-1)
         except ValueError:
             return HttpResponse(-1)
-
+        print(user.username)
         if movie not in user.userprofile.movies.all():
+            print("here")
             movie.likes = movie.likes + 1
+            if movie in user.userprofile.disliked_movies.all():
+                user.userprofile.disliked_movies.remove(movie)
             movie.save()
             
             user.userprofile.movies.add(movie)
@@ -379,9 +382,11 @@ class DislikeMovieView(View):
         except ValueError:
             return HttpResponse(-1)
 
-        if movie in user.userprofile.movies.all():
+        if movie not in user.userprofile.disliked_movies.all():
             movie.likes = movie.likes - 1
+            user.userprofile.disliked_movies.add(movie)
             movie.save()
+
             user.userprofile.movies.remove(movie)
 
         return HttpResponse(movie.likes)
